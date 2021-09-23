@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors');
+const destinyApi = require('node-destiny-2');
 
 const app = express();
 const port = 3000;
@@ -19,3 +20,4 @@ app.get('/', (req, res) => {
   Welcome to the API homepage for Arc Buddy! There's nothing special to see here right now.
   `)
 });
+
