@@ -1,6 +1,11 @@
 * {
-    width: 100vw;
-    min-height: 100vh;
+    display: block;
+    margin: auto;
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    min-height: 100%;
     background-color: #12171C;
 }
 
@@ -9,6 +14,6 @@ p, h1 {
     font-size: 48px;
     text-align: center;
     margin: auto;
-    margin-top: 64px;
+    margin-top: 32px;
     font-family: Arial,sans-serif;
 }
