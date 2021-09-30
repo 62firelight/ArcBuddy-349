@@ -1,0 +1,14 @@
+* {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #12171C;
+}
+
+p, h1 {
+    color: white;
+    font-size: 48px;
+    text-align: center;
+    margin: auto;
+    margin-top: 64px;
+    font-family: Arial,sans-serif;
+}
