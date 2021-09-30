@@ -11,9 +11,9 @@ app.use(cors());
 
 const apiUrl = `http://localhost:${port}`
 
-app.listen(port, () => {;
-    console.log(`Server running at ${apiUrl}`);
-});
+// app.listen(port, () => {
+//     console.log(`Server running at ${apiUrl}`);
+// });
 
 app.get('/', (req, res) => {
     res.send(`
@@ -22,18 +22,12 @@ app.get('/', (req, res) => {
 });
 
 const destiny = new destinyApi({
-    key: 'ba52571b22ec4bf48c7779794124910e'
+    key: 'api-key'
 });
 
-app.get("/api/players/:name/:id", async (req, res) => {
-    const name = req.params.name;
-    const id = req.params.id;
-
-    const bungieName = name + "#" + id;
-
-    destiny.searchDestinyPlayer(-1, bungieName)
-    .then(response => {
-        const data = response.Response[0];
+destiny.searchDestinyPlayer(-1, 'lxBeasterxl#6494')
+    .then(res => {
+        const data = res.Response[0];
         console.log(data);
 
         const membershipType = data.membershipType;
@@ -41,30 +35,10 @@ app.get("/api/players/:name/:id", async (req, res) => {
 
         console.log(membershipType, membershipId);
         console.log('\n\n');
-
-        res.status(200).send(data);
     })
     .catch(err => {
         console.error(`searchPlayer Error: ${err}`);
-        
-        res.status(404).send('Could not find specified Destiny player');
     });
-});
-
-// destiny.searchDestinyPlayer(-1, 'lxBeasterxl#6494')
-//     .then(res => {
-//         const data = res.Response[0];
-//         console.log(data);
-
-//         const membershipType = data.membershipType;
-//         const membershipId = data.membershipId;
-
-//         console.log(membershipType, membershipId);
-//         console.log('\n\n');
-//     })
-//     .catch(err => {
-//         console.error(`searchPlayer Error: ${err}`);
-//     });
 
 // destiny.getVendors(1, '4611686018452936098', '2305843009278477570', [402])
 //     .then(res => {
