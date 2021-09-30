@@ -1,4 +1,4 @@
-* {
+/* * {
     display: block;
     margin: auto;
     position: absolute;
@@ -6,7 +6,7 @@
     margin: 0px;
     width: 100%;
     min-height: 100%;
-    background-color: #12171C;
+    background-color: #12171C; 
 }
 
 p, h1 {
@@ -15,5 +15,15 @@ p, h1 {
     text-align: center;
     margin: auto;
     margin-top: 32px;
-    font-family: Arial,sans-serif;
+    font-family: Arial, sans-serif;
+} */
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.example-full-width {
+    width: 100%;
 }
