@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Arc Buddy';
+
+  name!: string;
+
+  onSubmit(): void {
+    console.log("Searching for " + this.name);
+  }
 }
