@@ -13,13 +13,14 @@ export class AppComponent {
   name!: string;
   error!: string;
 
-  profile!: Profile;
+  profile!: Profile | undefined;
 
   constructor(private nameService: NameService) { }
 
   onSubmit(): void {
     if (this.name == undefined) {
       this.error = `Error occurred when parsing Bungie Name. A Bungie Name should formatted similarly to "name#1234".`;
+      this.profile = undefined;
       return;
     }
 
@@ -27,6 +28,7 @@ export class AppComponent {
 
     if (nameId == undefined || nameId.length != 2) {
       this.error = `Error occurred when parsing Bungie Name. A Bungie Name should formatted similarly to "name#1234".`;
+      this.profile = undefined;
       return;
     }
 
@@ -42,6 +44,7 @@ export class AppComponent {
       this.profile.iconPath = `https://www.bungie.net${this.profile.iconPath}`;
     }, (error) => {
       this.error = `Couldn't find requested Bungie Name. Are you sure that ${this.name} is a registered Bungie.net user?`;
+      this.profile = undefined;
     });
   }
 }
