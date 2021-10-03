@@ -34,4 +34,5 @@ html, body, .darkMode {
     height: 100vh;
     width: 100vw;
     text-align: center;
+    font-family: Arial, sans-serif;
 }
