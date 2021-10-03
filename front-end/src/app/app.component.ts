@@ -15,6 +15,11 @@ export class AppComponent {
   constructor(private nameService: NameService) { }
 
   onSubmit(): void {
+    if (this.name == undefined) {
+      this.error = `Error occurred when parsing Bungie Name. A Bungie Name should formatted similarly to "name#1234".`;
+      return;
+    }
+
     var nameId = this.name.split("#", 2);
 
     if (nameId == undefined || nameId.length != 2) {
