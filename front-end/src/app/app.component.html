@@ -4,10 +4,11 @@
   <form (ngSubmit)="onSubmit()" class="search-form">
     <mat-form-field class="search-full-width" appearance="fill">
       <mat-label for="text">Search Bungie Name...</mat-label>
-      <input matInput name="text" [(ngModel)]="name" id="text" placeholder="62firelight#8173">
+      <input matInput name="text" [(ngModel)]="name" placeholder="62firelight#8173">
+      <button matSuffix mat-button><mat-icon [ngStyle]="{'color':'white'}">search</mat-icon></button>
     </mat-form-field>
   </form>
   <br>
-
+  
   <mat-error>{{ error }}</mat-error>
 </div>
