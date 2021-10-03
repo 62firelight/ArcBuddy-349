@@ -36,3 +36,7 @@ html, body, .darkMode {
     text-align: center;
     font-family: Arial, sans-serif;
 }
+
+.error {
+    color: red;
+}
