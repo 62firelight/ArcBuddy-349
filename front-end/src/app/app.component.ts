@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NameService } from './services/name.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,18 @@ export class AppComponent {
 
   name!: string;
 
+  constructor(private nameService: NameService) { }
+
   onSubmit(): void {
-    console.log("Searching for " + this.name);
+    var nameId = this.name.split("#", 2);
+
+    if (nameId.length != 2) {
+      console.log("Error occurred when parsing Bungie Name");
+      return;
+    }
+
+    console.log(nameId);
+
+    // this.nameService.subscribe(this.name)
   }
 }
