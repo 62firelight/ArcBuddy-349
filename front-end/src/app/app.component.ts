@@ -24,8 +24,10 @@ export class AppComponent {
     var name = nameId[0];
     var id = nameId[1];
 
-    console.log("Bungie name: " + name + "#" + id);
+    // console.log("Bungie name: " + name + "#" + id);
 
-    // this.nameService.subscribe(this.name)
+    this.nameService.getName(name, id).subscribe((result) => {
+      console.log(result);
+    });
   }
 }
