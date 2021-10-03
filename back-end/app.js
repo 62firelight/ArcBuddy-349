@@ -39,8 +39,8 @@ app.get("/api/players/:name/:id", async (req, res) => {
         const membershipType = data.membershipType;
         const membershipId = data.membershipId;
 
-        console.log(membershipType, membershipId);
-        console.log('\n\n');
+        // console.log(membershipType, membershipId);
+        // console.log('\n\n');
 
         res.status(200).send(data);
     })
