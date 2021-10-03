@@ -45,3 +45,9 @@ button {
 button:hover {
     cursor: pointer;
 }
+
+.profile-card {
+    min-width: 500px;
+    display: inline-block;
+    text-align: left;
+}

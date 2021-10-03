@@ -12,6 +12,8 @@ export class AppComponent {
   name!: string;
   error!: string;
 
+  profile!: string;
+
   constructor(private nameService: NameService) { }
 
   onSubmit(): void {
