@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Profile } from './Profile';
 import { NameService } from './services/name.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class AppComponent {
   name!: string;
   error!: string;
 
-  profile!: string;
+  profile!: Profile;
 
   constructor(private nameService: NameService) { }
 
@@ -37,6 +38,8 @@ export class AppComponent {
     this.nameService.getName(name, id).subscribe((result) => {
       console.log(result);
       this.error = ``;
+      this.profile = result;
+      this.profile.iconPath = `https://www.bungie.net${this.profile.iconPath}`;
     }, (error) => {
       this.error = `Couldn't find requested Bungie Name. Are you sure that ${this.name} is a registered Bungie.net user?`;
     });

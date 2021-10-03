@@ -12,5 +12,8 @@
   
   <mat-error>{{ error }}</mat-error>
 
-  <mat-card class="profile-card" *ngIf="profile != undefined">{{ profile }}</mat-card>
+  <mat-card class="profile-card" *ngIf="profile != undefined">
+    <img [src]="profile.iconPath">
+    {{ profile.displayName }}
+  </mat-card>
 </div>
