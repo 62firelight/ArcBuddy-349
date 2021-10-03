@@ -29,6 +29,7 @@ export class AppComponent {
 
     this.nameService.getName(name, id).subscribe((result) => {
       console.log(result);
+      this.error = ``;
     }, (error) => {
       this.error = `Couldn't find requested Bungie Name. Are you sure that ${this.name} is a registered Bungie.net user?`;
     });
