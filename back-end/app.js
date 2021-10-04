@@ -62,6 +62,8 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
         
         const pveStats = response.Response.mergedAllCharacters.results.allPvE.allTime;
 
+        var characterStats = {}
+
         for (let [key, value] of Object.entries(pveStats)) {
             const statName = key
                 // insert a space before all caps
@@ -71,10 +73,14 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
 
             const statValue = value.basic.displayValue;
 
-            console.log(statName + ": " + statValue);
+            characterStats[`${statName}`] = statValue;
+
+            // console.log(statName + ": " + statValue);
         }
 
-        res.status(200).send(response);
+        // console.log(characterStats);
+
+        res.status(200).send(characterStats);
     })
     .catch(err => {
         console.log(err);
