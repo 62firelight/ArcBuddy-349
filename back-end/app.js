@@ -51,6 +51,24 @@ app.get("/api/players/:name/:id", async (req, res) => {
     });
 });
 
+app.get("/api/players/account/:type/:id", async (req, res) => {
+    const membershipType = req.params.type;
+    const membershipId = req.params.id;
+
+    destiny.getHistoricalStatsForAccount(membershipType, membershipId)
+    .then(response => {
+        console.log(res);
+        console.log('\n\n');
+
+        res.status(200).send(response);
+    })
+    .catch(err => {
+        console.log(err);
+
+        res.status(404).send('Could not find stats for specified Destiny player');
+    });
+});
+
 // destiny.searchDestinyPlayer(-1, 'lxBeasterxl#6494')
 //     .then(res => {
 //         const data = res.Response[0];
