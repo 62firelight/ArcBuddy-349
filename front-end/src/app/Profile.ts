@@ -1,6 +1,8 @@
 export interface Profile {
-    displayName: string;
     iconPath: string;
+    displayName: string;
+    membershipType: string;
+    membershipId: string;
 
     characterStats: Object;
 }
