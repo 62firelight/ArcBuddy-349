@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Profile } from './Profile';
-import { NameService } from './services/name.service';
+import { NameService } from './services/profile.service';
 
 @Component({
   selector: 'app-root',

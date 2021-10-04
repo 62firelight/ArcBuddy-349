@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NameService } from './name.service';
+import { NameService } from './profile.service';
 
 describe('NameService', () => {
   let service: NameService;
