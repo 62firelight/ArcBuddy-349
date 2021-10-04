@@ -6,7 +6,7 @@ import { Profile } from '../Profile';
 @Injectable({
   providedIn: 'root'
 })
-export class NameService {
+export class ProfileService {
   private apiUrl = 'http://localhost:3000';
 
   constructor(private http : HttpClient) { }
