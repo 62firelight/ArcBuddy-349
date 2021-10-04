@@ -46,8 +46,13 @@ button:hover {
     cursor: pointer;
 }
 
+.search-button {
+    width: 2px;
+}
+
 .profile-card {
     min-width: 500px;
+    min-height: 75px;
     display: inline-block;
     text-align: left;
 }
