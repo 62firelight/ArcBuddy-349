@@ -63,10 +63,16 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
         const pveStats = response.Response.mergedAllCharacters.results.allPvE.allTime;
 
         for (let [key, value] of Object.entries(pveStats)) {
-            console.log(key + ": " + value.basic.displayValue);
-        }
+            const statName = key
+                // insert a space before all caps
+                .replace(/([A-Z])/g, ' $1')
+                // uppercase the first character
+                .replace(/^./, function(str){ return str.toUpperCase(); });
 
-        console.log('\n\n');
+            const statValue = value.basic.displayValue;
+
+            console.log(statName + ": " + statValue);
+        }
 
         res.status(200).send(response);
     })
