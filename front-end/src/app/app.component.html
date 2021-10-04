@@ -14,10 +14,11 @@
 
   <mat-error>{{ error }}</mat-error>
 
-  <button mat-raised-button class="profile-card" *ngIf="profile != undefined">
+  <button mat-raised-button class="profile-card" *ngIf="profile != undefined" routerLink="/stats">
 
     <img [src]="profile.iconPath">
     {{ profile.displayName }}
 
   </button>
+  <router-outlet></router-outlet>
 </div>
