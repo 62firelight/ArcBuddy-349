@@ -12,10 +12,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { StatsComponent } from './components/stats/stats.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    StatsComponent
   ],
   imports: [
     BrowserModule,
