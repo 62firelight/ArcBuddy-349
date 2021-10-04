@@ -10,7 +10,8 @@ import { MatCommonModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCard, MatCardModule } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MatCard, MatCardModule } from '@angular/material/card';
     FormsModule,
     HttpClientModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
