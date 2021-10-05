@@ -47,4 +47,14 @@ export class StatsComponent implements OnInit {
     // }
   }
 
+  getStats(profile: Profile): void {
+    this.profile = profile;
+
+    this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
+    .subscribe((result) => {
+      this.profile.characterStats = result;
+      console.log(this.profile.characterStats);
+    })
+  }
+
 }

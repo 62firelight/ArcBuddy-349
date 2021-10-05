@@ -46,7 +46,7 @@ export class SearchComponent implements OnInit {
       this.error = ``;
       this.profile = result;
       this.profile.iconPath = `https://www.bungie.net${this.profile.iconPath}`;
-      this.stats.ngOnInit();
+      this.stats.getStats(this.profile); // force update
     }, (error) => {
       this.error = `Couldn't find requested Bungie Name. Are you sure that ${this.name} is a registered Bungie.net user?`;
       this.profile = undefined;
