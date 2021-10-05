@@ -3,7 +3,7 @@
 <div class="grid">
     <mat-card class="stat-card" *ngFor="let stat of profile.characterStats | keyvalue">
         <mat-card-title>
-            {{ stat.key }}
+            <b>{{ stat.key }}</b>
         </mat-card-title>
         <mat-card-content>
             {{ stat.value }}
