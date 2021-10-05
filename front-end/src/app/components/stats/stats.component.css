@@ -4,6 +4,18 @@
     justify-content: stretch;
 }
 
+@media (min-width: 300px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1000px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
 @media (min-width: 1400px) {
     .grid {
         grid-template-columns: repeat(6, 1fr);
@@ -21,4 +33,9 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
+}
+
+.mat-card-content {
+    font-size: 36px;
+    text-align: center;
 }
