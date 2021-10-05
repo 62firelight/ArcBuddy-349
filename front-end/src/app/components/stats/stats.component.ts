@@ -8,7 +8,7 @@ import { Profile } from 'src/app/Profile';
 })
 export class StatsComponent implements OnInit {
 
-  @Input() profile!: Profile | undefined;
+  @Input() profile!: Profile;
 
   constructor() { }
 
