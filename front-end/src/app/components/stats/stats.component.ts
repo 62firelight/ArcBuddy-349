@@ -20,6 +20,14 @@ export class StatsComponent implements OnInit {
     //   console.log(this.profile.characterStats);
     // })
 
+    this.profile = {
+      displayName: "62firelight#8173",
+      iconPath: "",
+      membershipId: "222",
+      membershipType: "3",
+      characterStats: {}
+    };
+
     this.profile.characterStats = {
       "Activities Cleared": '1711', 
       "Activities Entered": '3761', 
