@@ -14,6 +14,8 @@ export class SearchComponent implements OnInit {
 
   profile!: Profile | undefined;
 
+  statsVisibility = false;
+
   constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
@@ -48,6 +50,10 @@ export class SearchComponent implements OnInit {
       this.error = `Couldn't find requested Bungie Name. Are you sure that ${this.name} is a registered Bungie.net user?`;
       this.profile = undefined;
     });
+  }
+
+  toggleStats() {
+    this.statsVisibility = !this.statsVisibility;
   }
 
 }
