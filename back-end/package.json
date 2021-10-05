@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.35.0",
     "express": "^4.17.1",
     "js": "^0.1.0",
     "node-destiny-2": "^0.2.9"
