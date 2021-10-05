@@ -1,0 +1,36 @@
+.grid {
+    margin: 10px;
+    display: grid;
+    justify-content: stretch;
+}
+
+@media (min-width: 300px) {
+    .grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (min-width: 1000px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1400px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.stat-card {
+    max-width: 275px;
+    align-self: start;
+    margin: 10px 10px 10px 10px;
+}
+
+.row {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
