@@ -14,11 +14,17 @@ export class StatsComponent implements OnInit {
   constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
-    this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
-    .subscribe((result) => {
-      this.profile.characterStats = result;
-      console.log(this.profile.characterStats);
-    })
+    // this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
+    // .subscribe((result) => {
+    //   this.profile.characterStats = result;
+    //   console.log(this.profile.characterStats);
+    // })
+
+    this.profile.characterStats = {
+      "Activities Cleared": '1711', 
+      "Activities Entered": '3761', 
+      "Assists": '49808'
+    }
   }
 
 }
