@@ -12,10 +12,8 @@
 <mat-error>{{ error }}</mat-error>
 
 <button mat-raised-button class="profile-card" *ngIf="profile != undefined" (click)="toggleStats()">
-
     <img [src]="profile.iconPath">
     {{ profile.displayName }}
-
 </button>
 
 <app-stats *ngIf="statsVisibility"></app-stats>
