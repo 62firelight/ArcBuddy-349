@@ -16,4 +16,4 @@
     {{ profile.displayName }}
 </button>
 
-<app-stats></app-stats>
+<app-stats *ngIf="statsVisibility && profile != undefined" [profile]="profile"></app-stats>
