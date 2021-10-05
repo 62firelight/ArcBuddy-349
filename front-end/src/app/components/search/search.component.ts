@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service'
+import { StatsComponent } from '../stats/stats.component';
 
 @Component({
   selector: 'app-search',
@@ -11,10 +12,9 @@ export class SearchComponent implements OnInit {
 
   name!: string;
   error!: string;
-
   profile!: Profile | undefined;
-
   statsVisibility = true;
+  @ViewChild(StatsComponent) stats!: StatsComponent;
 
   constructor(private profileService: ProfileService) { }
 
@@ -46,6 +46,7 @@ export class SearchComponent implements OnInit {
       this.error = ``;
       this.profile = result;
       this.profile.iconPath = `https://www.bungie.net${this.profile.iconPath}`;
+      this.stats.ngOnInit();
     }, (error) => {
       this.error = `Couldn't find requested Bungie Name. Are you sure that ${this.name} is a registered Bungie.net user?`;
       this.profile = undefined;
