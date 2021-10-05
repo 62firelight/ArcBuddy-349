@@ -14,7 +14,7 @@ export class SearchComponent implements OnInit {
 
   profile!: Profile | undefined;
 
-  statsVisibility = false;
+  statsVisibility = true;
 
   constructor(private profileService: ProfileService) { }
 
