@@ -15,6 +15,7 @@ html, body, .darkMode {
     width: 100vw;
     text-align: center;
     font-family: Arial, sans-serif;
+    overflow: scroll;
 }
 
 button {
