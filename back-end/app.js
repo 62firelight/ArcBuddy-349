@@ -26,7 +26,7 @@ const client = new SecretsManagerClient({region: "us-east-1"});
 
 const getApiKey = async () => {
     const command = new GetSecretValueCommand({
-        SecretId: "arc-buddy-api-key"
+        SecretId: "arc-buddy-349-api-key"
     });
     try {
         const data = await client.send(command);
@@ -39,7 +39,7 @@ const getApiKey = async () => {
 const createClient = async() => {
     try {
         const response = await getApiKey();
-        const apiKey = Object.keys(JSON.parse(response.SecretString))[0];
+        const apiKey = JSON.parse(response.SecretString).apiKey;
 
         console.log(`Successfully retrieved API key`);
 
