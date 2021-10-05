@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-stats',
@@ -11,7 +12,7 @@ export class StatsComponent implements OnInit {
 
   @Input() profile!: Profile;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService, public spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
     this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
