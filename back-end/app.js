@@ -66,7 +66,7 @@ app.get("/api/players/:name/:id", async (req, res) => {
     destiny.searchDestinyPlayer(-1, bungieName)
     .then(response => {
         const data = response.Response[0];
-        console.log(data);
+        // console.log(data);
 
         const membershipType = data.membershipType;
         const membershipId = data.membershipId;
