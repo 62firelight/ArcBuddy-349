@@ -2,10 +2,13 @@
 
     <h1>{{ title }}</h1>
     <mat-drawer #drawer class="stat-sidenav" mode="side">
-        <h2>Saved Profiles</h2>
+        <h2>Saved Profiles</h2> 
+        <mat-icon><div class="refresh" (click)="ngOnInit()"> refresh</div></mat-icon>
+        <br>
+        <mat-spinner [diameter]="50" *ngIf="spinnerService.visibility | async"></mat-spinner>
         <button mat-raised-button *ngFor="let profile of profiles" (click)="setProfile(profile)">
             {{ profile.Key }}
-            <mat-icon (click)="deleteProfile(profile)">close</mat-icon>
+            <mat-icon (click)="deleteProfile(profile)"><div class="delete">close</div></mat-icon>
         </button>
     </mat-drawer>
 

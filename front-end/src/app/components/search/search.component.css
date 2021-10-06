@@ -64,9 +64,20 @@ img {
     margin-right: 8px;
 }
 
-mat-icon {
+mat-icon, .delete {
     color: red;
 }
+
+mat-icon, .refresh {
+    color: white;
+    align-items: center;
+}
+
+mat-spinner {
+    margin: auto;
+    margin-top: 32px;
+}
+
 .search-form {
     min-width: 150px;
     max-width: 500px;

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MAT_OPTION_PARENT_COMPONENT } from '@angular/material/core';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
 import { SpinnerService } from 'src/app/services/spinner.service';

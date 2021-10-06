@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service'
+import { SpinnerService } from 'src/app/services/spinner.service';
 import { StatsComponent } from '../stats/stats.component';
 
 @Component({
@@ -19,7 +20,7 @@ export class SearchComponent implements OnInit {
   statsVisibility = true;
   @ViewChild(StatsComponent) stats!: StatsComponent;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService, public spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
     this.profileService.getProfiles().subscribe((profiles) => {
