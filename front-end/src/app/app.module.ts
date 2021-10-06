@@ -17,6 +17,7 @@ import { SearchComponent } from './components/search/search.component';
 import { CustomHttpInterceptor } from './http-interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SavedStatsComponent } from './components/saved-stats/saved-stats.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { SavedStatsComponent } from './components/saved-stats/saved-stats.compon
     MatIconModule,
     MatCardModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSidenavModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
