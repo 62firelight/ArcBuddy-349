@@ -18,6 +18,7 @@
 
 <button mat-raised-button class="profile-card" *ngFor="let profile of profiles" (click)="setProfile(profile)">
     {{ profile.Key }}
+    <mat-icon>close</mat-icon>
 </button>
 
 <app-stats *ngIf="statsVisibility && profile != undefined" [profile]="profile"></app-stats>

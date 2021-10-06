@@ -62,3 +62,7 @@ img {
     height: 35px;
     margin-right: 8px;
 }
+
+mat-icon {
+    color: red;
+}
