@@ -76,4 +76,10 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  deleteProfile(profile: Profile) {
+    this.profileService.deleteProfile(profile.Key).subscribe((result) => {
+      this.ngOnInit();
+    })
+  }
+
 }

@@ -41,4 +41,9 @@ export class ProfileService {
     const url = `${this.apiUrl}/api/players/stats`;
     return this.http.post<Profile>(url, profile, httpOptions);
   }
+
+  deleteProfile(name: string | undefined): Observable<Profile> {
+    const url = `${this.apiUrl}/api/players/stats/${name}`;
+    return this.http.delete<Profile>(url);
+  }
 }
