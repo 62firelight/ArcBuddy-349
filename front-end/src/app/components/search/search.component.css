@@ -64,6 +64,10 @@ img {
     margin-right: 8px;
 }
 
+mat-icon {
+    cursor: pointer;
+}
+
 mat-icon, .delete {
     color: red;
 }
