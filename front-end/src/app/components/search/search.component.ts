@@ -13,12 +13,23 @@ export class SearchComponent implements OnInit {
   name!: string;
   error!: string;
   profile!: Profile | undefined;
+  profiles!: Profile[];
   statsVisibility = true;
   @ViewChild(StatsComponent) stats!: StatsComponent;
 
   constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
+    this.profileService.getProfiles().subscribe((profiles) => {
+      this.profiles = profiles;
+
+      // take ".json" out of the key
+      this.profiles.forEach(function (profile) {
+        profile.Key = profile.Key?.slice(0, -5);
+      });
+      
+      console.log(profiles);
+    });
   }
 
   onSubmit(): void {

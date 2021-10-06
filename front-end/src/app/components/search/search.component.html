@@ -16,6 +16,8 @@
     {{ profile.displayName }}
 </button> -->
 
-<app-stats *ngIf="statsVisibility && profile != undefined" [profile]="profile"></app-stats>
+<button mat-raised-button class="profile-card" *ngFor="let profile of profiles" >
+    {{ profile.Key }}
+</button>
 
-<app-saved-stats></app-saved-stats>
+<app-stats *ngIf="statsVisibility && profile != undefined" [profile]="profile"></app-stats>
