@@ -1,7 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Profile } from '../Profile';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+  }),
+};
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +30,10 @@ export class ProfileService {
   getProfiles(): Observable<Profile[]> {
     const url = `${this.apiUrl}/api/players/stats`;
     return this.http.get<Profile[]>(url);
+  }
+
+  createProfile(profile: Profile): Observable<Profile> {
+    const url = `${this.apiUrl}/api/players/stats`;
+    return this.http.post<Profile>(url, profile, httpOptions);
   }
 }
