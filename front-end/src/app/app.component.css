@@ -45,5 +45,6 @@ img {
 }
 
 .stat-sidenav {
-    padding: 80px;
+    padding: 20px;
+    text-align: top;
 }
