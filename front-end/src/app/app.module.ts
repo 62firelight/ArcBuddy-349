@@ -16,12 +16,14 @@ import { StatsComponent } from './components/stats/stats.component';
 import { SearchComponent } from './components/search/search.component';
 import { CustomHttpInterceptor } from './http-interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SavedStatsComponent } from './components/saved-stats/saved-stats.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StatsComponent,
-    SearchComponent
+    SearchComponent,
+    SavedStatsComponent
   ],
   imports: [
     BrowserModule,
