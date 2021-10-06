@@ -27,6 +27,11 @@ export class ProfileService {
     return this.http.get<Object>(url);
   }
 
+  getProfile(name: string | undefined): Observable<Profile> {
+    const url = `${this.apiUrl}/api/players/stats/${name}`;
+    return this.http.get<Profile>(url);
+  }
+
   getProfiles(): Observable<Profile[]> {
     const url = `${this.apiUrl}/api/players/stats`;
     return this.http.get<Profile[]>(url);
