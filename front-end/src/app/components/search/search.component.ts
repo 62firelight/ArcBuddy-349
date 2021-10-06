@@ -70,25 +70,6 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  toggleStats() {
-    this.statsVisibility = !this.statsVisibility;
-  }
-
-  setProfile(profile: Profile) {
-    console.log(profile);
-
-    this.profileService.getProfile(profile.Key).subscribe((result) => {
-      this.profile = result;
-    });
-  }
-
-  deleteProfile(profile: Profile) {
-    this.profileService.deleteProfile(profile.Key).subscribe((result) => {
-      this.ngOnInit();
-      this.fetchingProfiles = false;
-    })
-  }
-
   getStats(profile: Profile): void {
     this.profile = profile;
 
@@ -100,6 +81,21 @@ export class SearchComponent implements OnInit {
     });
 
     this.fetchingStats = true;
+  }
+
+  setProfile(profile: Profile): void {
+    console.log(profile);
+
+    this.profileService.getProfile(profile.Key).subscribe((result) => {
+      this.profile = result;
+    });
+  }
+
+  deleteProfile(profile: Profile): void {
+    this.profileService.deleteProfile(profile.Key).subscribe((result) => {
+      this.ngOnInit();
+      this.fetchingProfiles = false;
+    })
   }
 
   addProfile(profile: Profile): void {
