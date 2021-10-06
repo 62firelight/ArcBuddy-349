@@ -40,6 +40,7 @@ html, body, .darkMode {
 button {
     background: none;
     border: none;
+    margin: 20px;
 }
 
 button:hover {
