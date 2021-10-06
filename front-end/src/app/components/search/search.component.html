@@ -6,7 +6,7 @@
         <mat-icon matRipple (click)="ngOnInit()">
             <div class="refresh"> refresh</div>
         </mat-icon>
-        <mat-spinner [diameter]="50" *ngIf="spinnerService.visibility | async"></mat-spinner>
+        <mat-spinner [diameter]="50" *ngIf="fetchingProfiles"></mat-spinner>
         <br>
 
         <ul>

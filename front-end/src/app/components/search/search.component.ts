@@ -21,6 +21,7 @@ export class SearchComponent implements OnInit {
   // @ViewChild(StatsComponent) stats!: StatsComponent;
 
   fetchingStats = false;
+  fetchingProfiles = false;
 
   constructor(private profileService: ProfileService, public spinnerService: SpinnerService) { }
 
@@ -34,7 +35,10 @@ export class SearchComponent implements OnInit {
       });
       
       console.log(profiles);
+      this.fetchingProfiles = false;
     });
+
+    this.fetchingProfiles = true;
   }
 
   onSubmit(): void {
