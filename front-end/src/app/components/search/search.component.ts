@@ -10,6 +10,8 @@ import { StatsComponent } from '../stats/stats.component';
 })
 export class SearchComponent implements OnInit {
 
+  title = "Arc Buddy";
+
   name!: string;
   error!: string;
   profile!: Profile | undefined;

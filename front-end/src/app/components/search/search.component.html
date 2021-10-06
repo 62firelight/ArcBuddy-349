@@ -1,24 +1,36 @@
-<form (ngSubmit)="onSubmit()" class="search-form">
-    <mat-form-field class="search-full-width" appearance="fill">
-        <mat-label for="text">Search Bungie Name...</mat-label>
-        <input matInput name="text" [(ngModel)]="name" placeholder="62firelight#8173">
-        <button matSuffix mat-button class="search-button">
-            <mat-icon [ngStyle]="{'color':'white'}">search</mat-icon>
-        </button>
-    </mat-form-field>
-</form>
-<br>
+<mat-drawer-container class="content mat-app-background darkMode" autosize>
 
-<mat-error>{{ error }}</mat-error>
+    <h1>{{ title }}</h1>
+    <mat-drawer #drawer class="stat-sidenav" mode="side">
+        <h2>Saved Profiles</h2>
+        <mat-card mat-raised-button class="profile-card" *ngFor="let profile of profiles" (click)="setProfile(profile)">
+            {{ profile.Key }}
+            <mat-icon (click)="deleteProfile(profile)">close</mat-icon>
+        </mat-card>
+    </mat-drawer>
 
-<!-- <button mat-raised-button class="profile-card" *ngIf="profile != undefined" (click)="toggleStats()">
+    <button type="button" mat-button (click)="drawer.toggle()">
+        View Saved Profiles
+    </button>
+    <br>
+
+    <form (ngSubmit)="onSubmit()" class="search-form">
+        <mat-form-field class="search-full-width" appearance="fill">
+            <mat-label for="text">Search Bungie Name...</mat-label>
+            <input matInput name="text" [(ngModel)]="name" placeholder="62firelight#8173">
+            <button matSuffix mat-button class="search-button">
+                <mat-icon [ngStyle]="{'color':'white'}">search</mat-icon>
+            </button>
+        </mat-form-field>
+    </form>
+    <br>
+
+    <mat-error>{{ error }}</mat-error>
+
+    <!-- <button mat-raised-button class="profile-card" *ngIf="profile != undefined" (click)="toggleStats()">
     <img [src]="profile.iconPath">
     {{ profile.displayName }}
 </button> -->
 
-<mat-card mat-raised-button class="profile-card" *ngFor="let profile of profiles" (click)="setProfile(profile)">
-    {{ profile.Key }}
-    <mat-icon (click)="deleteProfile(profile)">close</mat-icon>
-</mat-card>
-
-<app-stats *ngIf="statsVisibility && profile != undefined" [profile]="profile"></app-stats>
+    <app-stats *ngIf="statsVisibility && profile != undefined" [profile]="profile"></app-stats>
+</mat-drawer-container>
