@@ -22,7 +22,10 @@ app.get('/', (req, res) => {
 });
 
 const { SecretsManagerClient, GetSecretValueCommand } = require("@aws-sdk/client-secrets-manager");
-const client = new SecretsManagerClient({region: "us-east-1"});
+const client = new SecretsManagerClient({
+    region: "us-east-1",
+    profile: "personal"
+});
 
 const getApiKey = async () => {
     const command = new GetSecretValueCommand({
