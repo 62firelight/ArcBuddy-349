@@ -138,3 +138,52 @@ ul {
     padding: 0;
     margin: 0;
 }
+
+.grid {
+    margin: 10px;
+    display: grid;
+    justify-content: stretch;
+}
+
+@media (min-width: 300px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1000px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1400px) {
+    .grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+.stat-card {
+    max-width: 275px;
+    min-height: 200px;
+    align-self: start;
+    margin: 10px 10px 10px 10px;
+}
+
+.row {
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mat-card-content {
+    font-size: 36px;
+    font-weight: 1;
+    text-align: center;
+}
+
+mat-spinner {
+    margin: auto;
+    margin-top: 32px;
+}

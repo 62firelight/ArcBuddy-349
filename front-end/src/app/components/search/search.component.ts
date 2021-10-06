@@ -15,10 +15,10 @@ export class SearchComponent implements OnInit {
 
   name!: string;
   error!: string;
-  profile!: Profile | undefined;
+  profile!: Profile;
   profiles!: Profile[];
   statsVisibility = true;
-  @ViewChild(StatsComponent) stats!: StatsComponent;
+  // @ViewChild(StatsComponent) stats!: StatsComponent;
 
   constructor(private profileService: ProfileService, public spinnerService: SpinnerService) { }
 
@@ -38,7 +38,6 @@ export class SearchComponent implements OnInit {
   onSubmit(): void {
     if (this.name == undefined) {
       this.error = `Error occurred when parsing Bungie Name. A Bungie Name should formatted similarly to "name#1234".`;
-      this.profile = undefined;
       return;
     }
 
@@ -46,7 +45,6 @@ export class SearchComponent implements OnInit {
 
     if (nameId == undefined || nameId.length != 2) {
       this.error = `Error occurred when parsing Bungie Name. A Bungie Name should formatted similarly to "name#1234".`;
-      this.profile = undefined;
       return;
     }
 
@@ -60,10 +58,9 @@ export class SearchComponent implements OnInit {
       this.error = ``;
       this.profile = result;
       this.profile.iconPath = `https://www.bungie.net${this.profile.iconPath}`;
-      this.stats.getStats(this.profile); // force update
+      this.getStats(this.profile); // force update
     }, (error) => {
       this.error = `Couldn't find requested Bungie Name. Are you sure that ${this.name} is a registered Bungie.net user?`;
-      this.profile = undefined;
     });
   }
 
@@ -83,6 +80,22 @@ export class SearchComponent implements OnInit {
     this.profileService.deleteProfile(profile.Key).subscribe((result) => {
       this.ngOnInit();
     })
+  }
+
+  getStats(profile: Profile): void {
+    this.profile = profile;
+
+    this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
+    .subscribe((result) => {
+      this.profile.characterStats = result;
+      console.log(this.profile.characterStats);
+    })
+  }
+
+  addProfile(profile: Profile): void {
+    this.profileService.addProfile(profile).subscribe(() => {
+      console.log("Successfully saved profile");
+    });
   }
 
 }
