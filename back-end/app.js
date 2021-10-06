@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 });
 
 const { SecretsManagerClient, GetSecretValueCommand } = require("@aws-sdk/client-secrets-manager");
-const client = new SecretsManagerClient({
+const secretsClient = new SecretsManagerClient({
     region: "us-east-1",
     profile: "personal"
 });
@@ -32,7 +32,7 @@ const getApiKey = async () => {
         SecretId: "arc-buddy-349-api-key"
     });
     try {
-        const data = await client.send(command);
+        const data = await secretsClient.send(command);
         return data;
     } catch (error) {
         console.log(":(", error);
