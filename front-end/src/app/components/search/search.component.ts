@@ -20,6 +20,8 @@ export class SearchComponent implements OnInit {
   statsVisibility = true;
   // @ViewChild(StatsComponent) stats!: StatsComponent;
 
+  fetchingStats = false;
+
   constructor(private profileService: ProfileService, public spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
@@ -89,7 +91,10 @@ export class SearchComponent implements OnInit {
     .subscribe((result) => {
       this.profile.characterStats = result;
       console.log(this.profile.characterStats);
-    })
+      this.fetchingStats = false;
+    });
+
+    this.fetchingStats = true;
   }
 
   addProfile(profile: Profile): void {
