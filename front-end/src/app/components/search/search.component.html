@@ -1,6 +1,8 @@
 <mat-drawer-container class="content mat-app-background darkMode" autosize>
 
     <h1>{{ title }}</h1>
+
+    <!-- Sidenav -->
     <mat-drawer #drawer class="stat-sidenav" mode="side">
         <h2>Saved Profiles</h2>
         <mat-icon matRipple (click)="ngOnInit()">
@@ -20,11 +22,13 @@
         </ul>
     </mat-drawer>
 
+    <!-- View Saved Profiles button that toggles sidenav -->
     <button mat-raised-button type="button" mat-button (click)="drawer.toggle()">
         View Saved Profiles
     </button>
     <br>
 
+    <!-- Search bar -->
     <form (ngSubmit)="onSubmit()" class="search-form">
         <mat-form-field class="search-full-width" appearance="fill">
             <mat-label for="text">Search Bungie Name...</mat-label>
@@ -38,11 +42,7 @@
 
     <mat-error>{{ error }}</mat-error>
 
-    <!-- <button mat-raised-button class="profile-card" *ngIf="profile != undefined" (click)="toggleStats()">
-    <img [src]="profile.iconPath">
-    {{ profile.displayName }}
-</button> -->
-
+    <!-- Stats display -->
     <div *ngIf="profile != undefined">
         <h1> {{ profile.displayName }} stats </h1>
 
