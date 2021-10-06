@@ -27,10 +27,12 @@ export class SearchComponent implements OnInit {
     this.profileService.getProfiles().subscribe((profiles) => {
       this.profiles = profiles;
 
-      // take ".json" out of the key
-      this.profiles.forEach(function (profile) {
-        profile.Key = profile.Key?.slice(0, -5);
-      });
+      if (profiles != null) {
+        // take ".json" out of the key
+        this.profiles.forEach(function (profile) {
+          profile.Key = profile.Key?.slice(0, -5);
+        });
+      }
       
       console.log(profiles);
       this.fetchingProfiles = false;
@@ -83,6 +85,7 @@ export class SearchComponent implements OnInit {
   deleteProfile(profile: Profile) {
     this.profileService.deleteProfile(profile.Key).subscribe((result) => {
       this.ngOnInit();
+      this.fetchingProfiles = false;
     })
   }
 
@@ -102,6 +105,7 @@ export class SearchComponent implements OnInit {
   addProfile(profile: Profile): void {
     this.profileService.addProfile(profile).subscribe(() => {
       console.log("Successfully saved profile");
+      this.ngOnInit();
     });
   }
 
