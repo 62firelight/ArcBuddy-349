@@ -42,7 +42,6 @@ const listObjectsCommand = async (params) => {
     const command = new ListObjectsCommand(params);
     try {
         const data = await s3Client.send(command);
-        console.log(await data);
         return data;
     } catch (error) {
         console.log(":(", error);
@@ -53,7 +52,6 @@ const getObjectCommand = async (params) => {
     const command = new GetObjectCommand(params);
     try {
         const data = await s3Client.send(command);
-        console.log(await data);
         return data;
     } catch (error) {
         console.log(":(", error);
@@ -109,6 +107,24 @@ listObjectsCommand(params).then((response) => {
 
     objects.forEach(function (object, index) {
         console.log(object.Key);
+
+        const objectParams = {
+            Bucket: "arc-buddy",
+            Key: object.Key
+        };
+
+        getObjectCommand(objectParams).then((response) => {
+            // Store all of data chunks returned from the response data stream 
+            // into an array then use Array#join() to use the returned contents as a String
+            let responseDataChunks = [];
+
+            // Attach a 'data' listener to add the chunks of data to our array
+            // Each chunk is a Buffer instance
+            response.Body.on('data', chunk => responseDataChunks.push(chunk));
+        
+            // Once the stream has no more data, join the chunks into a string and return the string
+            response.Body.once('end', () => console.log(JSON.parse(responseDataChunks.join(''))));
+        })
     });
 });
 
