@@ -11,9 +11,9 @@ app.use(cors());
 
 const apiUrl = `http://localhost:${port}`
 
-// app.listen(port, () => {;
-//     console.log(`Server running at ${apiUrl}`);
-// });
+app.listen(port, () => {;
+    console.log(`Server running at ${apiUrl}`);
+});
 
 app.get('/', (req, res) => {
     res.send(`
@@ -75,7 +75,7 @@ const getApiKey = async () => {
     }
 }
 
-const createClient = async() => {
+const createClient = async () => {
     try {
         const response = await getApiKey();
         const apiKey = JSON.parse(response.SecretString).apiKey;
@@ -92,51 +92,68 @@ const createClient = async() => {
 
 var destiny = undefined;
 
-// createClient().then((destinyClient) => {
-//     destiny = destinyClient;
-// });
-
-const params = {
-    Bucket: "arc-buddy"
-};
-
-const testProfile = {
-    membershipId: "3",
-    membershipType: "32187318236712",
-    date: (new Date()).toLocaleString('en-NZ')
-};
-
-putObjectCommand({
-    Bucket: "arc-buddy",
-    Key: "test-profile.json",
-    Body: JSON.stringify(testProfile)
+createClient().then((destinyClient) => {
+    destiny = destinyClient;
 });
 
-// loop over each object in the list
-listObjectsCommand(params).then((response) => {
-    const objects = response.Contents;
+app.get("/api/players/stats", async (req, res) => {
+    try {
+        const response = await listObjectsCommand({
+            Bucket: "arc-buddy"
+        });
 
-    objects.forEach(function (object, index) {
-        console.log(object.Key);
+        res.status(200).send(response.Contents);
+    } catch (error) {
+        console.log(error);
 
-        const objectParams = {
+        res.status(404).send("Can't find snapshots");
+    }
+});
+
+app.get("/api/players/stats/:name", async (req, res) => {
+    try {
+        const response = await getObjectCommand({
             Bucket: "arc-buddy",
-            Key: object.Key
-        };
+            Key: req.params.name + ".json"
+        });
 
-        getObjectCommand(objectParams).then((response) => {
-            // Store all of data chunks returned from the response data stream 
-            // into an array then use Array#join() to use the returned contents as a String
-            let responseDataChunks = [];
+        // Store all of data chunks returned from the response data stream 
+        // into an array then use Array#join() to use the returned contents as a String
+        let responseDataChunks = [];
 
-            // Attach a 'data' listener to add the chunks of data to our array
-            // Each chunk is a Buffer instance
-            response.Body.on('data', chunk => responseDataChunks.push(chunk));
-        
-            // Once the stream has no more data, join the chunks into a string and return the string
-            response.Body.once('end', () => console.log(JSON.parse(responseDataChunks.join(''))));
-        })
-    });
+        // Attach a 'data' listener to add the chunks of data to our array
+        // Each chunk is a Buffer instance
+        response.Body.on('data', chunk => responseDataChunks.push(chunk));
+
+        var profile = undefined;
+
+        // Once the stream has no more data, join the chunks into a string and return the string
+        response.Body.once('end', () => {
+            profile = JSON.parse(responseDataChunks.join(''));
+            res.status(200).send(profile);
+        });
+    } catch (error) {
+        console.log(error);
+
+        res.status(404).send("Can't find snapshot for specified Destiny player");
+    }
+    
+});
+
+app.post("/api/players/stats", async (req, res) => {
+    try {
+        const response = await putObjectCommand({
+            Bucket: "arc-buddy",
+            Key: req.body.displayName + ".json",
+            Body: JSON.stringify(req.body)
+        });
+
+        res.status(201).send("Successfully saved snapshot in S3");
+    } catch (error) {
+        console.log(error);
+
+        res.status(404).send("Couldn't create snapshot for specified Destiny player");
+    }
 });
 
 app.get("/api/players/:name/:id", async (req, res) => {
@@ -146,23 +163,23 @@ app.get("/api/players/:name/:id", async (req, res) => {
     const bungieName = name + "#" + id;
 
     destiny.searchDestinyPlayer(-1, bungieName)
-    .then(response => {
-        const data = response.Response[0];
-        // console.log(data);
+        .then(response => {
+            const data = response.Response[0];
+            // console.log(data);
 
-        const membershipType = data.membershipType;
-        const membershipId = data.membershipId;
+            const membershipType = data.membershipType;
+            const membershipId = data.membershipId;
 
-        // console.log(membershipType, membershipId);
-        // console.log('\n\n');
+            // console.log(membershipType, membershipId);
+            // console.log('\n\n');
 
-        res.status(200).send(data);
-    })
-    .catch(err => {
-        console.error(`searchPlayer Error: ${err}`);
-        
-        res.status(404).send('Could not find specified Destiny player');
-    });
+            res.status(200).send(data);
+        })
+        .catch(err => {
+            console.error(`searchPlayer Error: ${err}`);
+
+            res.status(404).send('Could not find specified Destiny player');
+        });
 });
 
 app.get("/api/players/account/:type/:id", async (req, res) => {
@@ -170,37 +187,37 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
     const membershipId = req.params.id;
 
     destiny.getHistoricalStatsForAccount(membershipType, membershipId)
-    .then(response => {
-        // console.log(response.Response);
-        // console.log(response.Response.mergedAllCharacters.results.allPvE.allTime);
-        
-        const pveStats = response.Response.mergedAllCharacters.results.allPvE.allTime;
+        .then(response => {
+            // console.log(response.Response);
+            // console.log(response.Response.mergedAllCharacters.results.allPvE.allTime);
 
-        var characterStats = {}
+            const pveStats = response.Response.mergedAllCharacters.results.allPvE.allTime;
 
-        for (let [key, value] of Object.entries(pveStats)) {
-            const statName = key
-                // insert a space before all caps
-                .replace(/([A-Z])/g, ' $1')
-                // uppercase the first character
-                .replace(/^./, function(str){ return str.toUpperCase(); });
+            var characterStats = {}
 
-            const statValue = value.basic.displayValue;
+            for (let [key, value] of Object.entries(pveStats)) {
+                const statName = key
+                    // insert a space before all caps
+                    .replace(/([A-Z])/g, ' $1')
+                    // uppercase the first character
+                    .replace(/^./, function (str) { return str.toUpperCase(); });
 
-            characterStats[`${statName}`] = statValue;
+                const statValue = value.basic.displayValue;
 
-            // console.log(statName + ": " + statValue);
-        }
+                characterStats[`${statName}`] = statValue;
 
-        // console.log(characterStats);
+                // console.log(statName + ": " + statValue);
+            }
 
-        res.status(200).send(characterStats);
-    })
-    .catch(err => {
-        console.log(err);
+            // console.log(characterStats);
 
-        res.status(404).send('Could not find stats for specified Destiny player');
-    });
+            res.status(200).send(characterStats);
+        })
+        .catch(err => {
+            console.log(err);
+
+            res.status(404).send('Could not find stats for specified Destiny player');
+        });
 });
 
 // destiny.searchDestinyPlayer(-1, 'lxBeasterxl#6494')
