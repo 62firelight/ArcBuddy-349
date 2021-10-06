@@ -11,15 +11,54 @@ app.use(cors());
 
 const apiUrl = `http://localhost:${port}`
 
-app.listen(port, () => {;
-    console.log(`Server running at ${apiUrl}`);
-});
+// app.listen(port, () => {;
+//     console.log(`Server running at ${apiUrl}`);
+// });
 
 app.get('/', (req, res) => {
     res.send(`
   Welcome to the API homepage for Arc Buddy! There's nothing special to see here right now.
   `)
 });
+
+const { S3Client, PutObjectCommand, ListObjectsCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
+const s3Client = new S3Client({
+    region: "us-east-1",
+    profile: "personal"
+});
+
+const putObjectCommand = async (params) => {
+    const command = new PutObjectCommand(params);
+    try {
+        const data = await s3Client.send(command);
+        console.log(await data);
+        return data;
+    } catch (error) {
+        console.log(":(", error);
+    }
+}
+
+const listObjectsCommand = async (params) => {
+    const command = new ListObjectsCommand(params);
+    try {
+        const data = await s3Client.send(command);
+        console.log(await data);
+        return data;
+    } catch (error) {
+        console.log(":(", error);
+    }
+}
+
+const getObjectCommand = async (params) => {
+    const command = new GetObjectCommand(params);
+    try {
+        const data = await s3Client.send(command);
+        console.log(await data);
+        return data;
+    } catch (error) {
+        console.log(":(", error);
+    }
+}
 
 const { SecretsManagerClient, GetSecretValueCommand } = require("@aws-sdk/client-secrets-manager");
 const secretsClient = new SecretsManagerClient({
@@ -56,8 +95,21 @@ const createClient = async() => {
 
 var destiny = undefined;
 
-createClient().then((destinyClient) => {
-    destiny = destinyClient;
+// createClient().then((destinyClient) => {
+//     destiny = destinyClient;
+// });
+
+const params = {
+    Bucket: "arc-buddy"
+};
+
+// loop over each object in the list
+listObjectsCommand(params).then((response) => {
+    const objects = response.Contents;
+
+    objects.forEach(function (object, index) {
+        console.log(object.Key);
+    });
 });
 
 app.get("/api/players/:name/:id", async (req, res) => {
