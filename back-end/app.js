@@ -31,7 +31,6 @@ const putObjectCommand = async (params) => {
     const command = new PutObjectCommand(params);
     try {
         const data = await s3Client.send(command);
-        console.log(await data);
         return data;
     } catch (error) {
         console.log(":(", error);
@@ -100,6 +99,18 @@ var destiny = undefined;
 const params = {
     Bucket: "arc-buddy"
 };
+
+const testProfile = {
+    membershipId: "3",
+    membershipType: "32187318236712",
+    date: (new Date()).toLocaleString('en-NZ')
+};
+
+putObjectCommand({
+    Bucket: "arc-buddy",
+    Key: "test-profile.json",
+    Body: JSON.stringify(testProfile)
+});
 
 // loop over each object in the list
 listObjectsCommand(params).then((response) => {
