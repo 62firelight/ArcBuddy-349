@@ -34,7 +34,7 @@ export class SearchComponent implements OnInit {
         });
       }
       
-      console.log(profiles);
+      // console.log(profiles);
       this.fetchingProfiles = false;
     });
 
@@ -60,7 +60,7 @@ export class SearchComponent implements OnInit {
     // console.log("Bungie name: " + name + "#" + id);
 
     this.profileService.getName(name, id).subscribe((result) => {
-      console.log(result);
+      // console.log(result);
       this.error = ``;
       this.profile = result;
       this.profile.iconPath = `https://www.bungie.net${this.profile.iconPath}`;
@@ -76,7 +76,7 @@ export class SearchComponent implements OnInit {
     this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
     .subscribe((result) => {
       this.profile.characterStats = result;
-      console.log(this.profile.characterStats);
+      // console.log(this.profile.characterStats);
       this.fetchingStats = false;
     });
 
@@ -84,7 +84,7 @@ export class SearchComponent implements OnInit {
   }
 
   setProfile(profile: Profile): void {
-    console.log(profile);
+    // console.log(profile);
 
     this.profileService.getProfile(profile.Key).subscribe((result) => {
       this.profile = result;
@@ -100,7 +100,7 @@ export class SearchComponent implements OnInit {
 
   addProfile(profile: Profile): void {
     this.profileService.addProfile(profile).subscribe(() => {
-      console.log("Successfully saved profile");
+      // console.log("Successfully saved profile");
       this.ngOnInit();
     });
   }
