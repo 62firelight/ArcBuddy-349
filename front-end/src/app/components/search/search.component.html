@@ -16,7 +16,7 @@
     {{ profile.displayName }}
 </button> -->
 
-<button mat-raised-button class="profile-card" *ngFor="let profile of profiles" >
+<button mat-raised-button class="profile-card" *ngFor="let profile of profiles" (click)="setProfile(profile)">
     {{ profile.Key }}
 </button>
 

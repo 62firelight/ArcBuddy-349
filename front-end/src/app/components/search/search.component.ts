@@ -68,4 +68,12 @@ export class SearchComponent implements OnInit {
     this.statsVisibility = !this.statsVisibility;
   }
 
+  setProfile(profile: Profile) {
+    console.log(profile);
+
+    this.profileService.getProfile(profile.Key).subscribe((result) => {
+      this.profile = result;
+    });
+  }
+
 }
