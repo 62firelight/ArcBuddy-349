@@ -32,7 +32,7 @@ export class ProfileService {
     return this.http.get<Profile[]>(url);
   }
 
-  createProfile(profile: Profile): Observable<Profile> {
+  addProfile(profile: Profile): Observable<Profile> {
     const url = `${this.apiUrl}/api/players/stats`;
     return this.http.post<Profile>(url, profile, httpOptions);
   }
