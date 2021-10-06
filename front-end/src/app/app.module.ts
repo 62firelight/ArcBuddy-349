@@ -12,20 +12,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { StatsComponent } from './components/stats/stats.component';
 import { SearchComponent } from './components/search/search.component';
-import { CustomHttpInterceptor } from './http-interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { SavedStatsComponent } from './components/saved-stats/saved-stats.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
     AppComponent,
-    StatsComponent,
-    SearchComponent,
-    SavedStatsComponent
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -43,11 +38,7 @@ import { MatRippleModule } from '@angular/material/core';
     MatSidenavModule,
     MatRippleModule
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: CustomHttpInterceptor,
-    multi: true
-  }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

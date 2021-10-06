@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service'
-import { SpinnerService } from 'src/app/services/spinner.service';
-import { StatsComponent } from '../stats/stats.component';
 
 @Component({
   selector: 'app-search',
@@ -23,7 +21,7 @@ export class SearchComponent implements OnInit {
   fetchingStats = false;
   fetchingProfiles = false;
 
-  constructor(private profileService: ProfileService, public spinnerService: SpinnerService) { }
+  constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
     this.profileService.getProfiles().subscribe((profiles) => {
