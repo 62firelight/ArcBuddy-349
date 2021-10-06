@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
   `)
 });
 
-const { S3Client, PutObjectCommand, ListObjectsCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
+const { S3Client, PutObjectCommand, ListObjectsCommand, GetObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
 const s3Client = new S3Client({
     region: "us-east-1",
     profile: "personal"
@@ -49,6 +49,16 @@ const listObjectsCommand = async (params) => {
 
 const getObjectCommand = async (params) => {
     const command = new GetObjectCommand(params);
+    try {
+        const data = await s3Client.send(command);
+        return data;
+    } catch (error) {
+        console.log(":(", error);
+    }
+}
+
+const deleteObjectCommand = async (params) => {
+    const command = new DeleteObjectCommand(params);
     try {
         const data = await s3Client.send(command);
         return data;
@@ -132,6 +142,22 @@ app.get("/api/players/stats/:name", async (req, res) => {
             profile = JSON.parse(responseDataChunks.join(''));
             res.status(200).send(profile);
         });
+    } catch (error) {
+        console.log(error);
+
+        res.status(404).send("Can't find snapshot for specified Destiny player");
+    }
+    
+});
+
+app.delete("/api/players/stats/:name", async (req, res) => {
+    try {
+        const response = await deleteObjectCommand({
+            Bucket: "arc-buddy",
+            Key: req.params.name + ".json"
+        });
+
+        res.status(204).send();
     } catch (error) {
         console.log(error);
 
