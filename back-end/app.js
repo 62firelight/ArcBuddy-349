@@ -172,7 +172,7 @@ app.post("/api/players/stats", async (req, res) => {
             Body: JSON.stringify(req.body)
         });
 
-        res.status(201).send("Successfully saved snapshot in S3");
+        res.status(201).send("");
     } catch (error) {
         console.log(error);
 
