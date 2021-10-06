@@ -13,8 +13,8 @@
 
         <ul>
             <li *ngFor="let profile of profiles" id="buttons">
-                <mat-card>
-                    <div matRipple class="profile-card" (click)="setProfile(profile)">
+                <mat-card class="profile-card">
+                    <div matRipple (click)="setProfile(profile)">
                         {{ profile.Key }}
                     </div>
                     <div class="profile-card-delete">
@@ -52,6 +52,7 @@
         <h1> {{ profile.displayName }} stats </h1>
 
         <button mat-raised-button (click)="addProfile(profile)">Save</button>
+        <p *ngIf="saved" class="saved">Profile successfully saved</p>
 
         <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
 

@@ -178,4 +178,10 @@ mat-spinner {
 .profile-card {
     cursor: pointer;
     max-width: 150px;
+    padding: 0px;
+    margin: 16px;
+}
+
+.saved {
+    color: green;
 }

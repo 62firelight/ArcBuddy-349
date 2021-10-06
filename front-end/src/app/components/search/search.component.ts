@@ -20,6 +20,7 @@ export class SearchComponent implements OnInit {
 
   fetchingStats = false;
   fetchingProfiles = false;
+  saved = false;
 
   constructor(private profileService: ProfileService) { }
 
@@ -65,6 +66,7 @@ export class SearchComponent implements OnInit {
       this.profile = result;
       this.profile.iconPath = `https://www.bungie.net${this.profile.iconPath}`;
       this.getStats(this.profile); // force update
+      this.saved = false;
     }, (error) => {
       this.error = `Couldn't find requested Bungie Name. Are you sure that ${this.name} is a registered Bungie.net user?`;
     });
@@ -78,6 +80,7 @@ export class SearchComponent implements OnInit {
       this.profile.characterStats = result;
       // console.log(this.profile.characterStats);
       this.fetchingStats = false;
+      this.saved = false;
     });
 
     this.fetchingStats = true;
@@ -88,6 +91,7 @@ export class SearchComponent implements OnInit {
 
     this.profileService.getProfile(profile.Key).subscribe((result) => {
       this.profile = result;
+      this.saved = false;
     });
   }
 
@@ -95,6 +99,7 @@ export class SearchComponent implements OnInit {
     this.profileService.deleteProfile(profile.Key).subscribe((result) => {
       this.ngOnInit();
       this.fetchingProfiles = false;
+      this.saved = false;
     })
   }
 
@@ -102,6 +107,7 @@ export class SearchComponent implements OnInit {
     this.profileService.addProfile(profile).subscribe(() => {
       // console.log("Successfully saved profile");
       this.ngOnInit();
+      this.saved = true;
     });
   }
 
