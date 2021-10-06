@@ -57,4 +57,10 @@ export class StatsComponent implements OnInit {
     })
   }
 
+  addProfile(profile: Profile): void {
+    this.profileService.addProfile(profile).subscribe(() => {
+      console.log("Successfully saved profile");
+    });
+  }
+
 }
