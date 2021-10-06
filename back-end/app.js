@@ -219,27 +219,3 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
             res.status(404).send('Could not find stats for specified Destiny player');
         });
 });
-
-// destiny.searchDestinyPlayer(-1, 'lxBeasterxl#6494')
-//     .then(res => {
-//         const data = res.Response[0];
-//         console.log(data);
-
-//         const membershipType = data.membershipType;
-//         const membershipId = data.membershipId;
-
-//         console.log(membershipType, membershipId);
-//         console.log('\n\n');
-//     })
-//     .catch(err => {
-//         console.error(`searchPlayer Error: ${err}`);
-//     });
-
-// destiny.getVendors(1, '4611686018452936098', '2305843009278477570', [402])
-//     .then(res => {
-//         console.log(res);
-//         console.log('\n\n');
-//     })
-//     .catch(err => {
-//          console.log(`getVendors Error: ${err}`);
-//     });
