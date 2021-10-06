@@ -15,11 +15,11 @@ export class StatsComponent implements OnInit {
   constructor(private profileService: ProfileService, public spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
-    this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
-    .subscribe((result) => {
-      this.profile.characterStats = result;
-      console.log(this.profile.characterStats);
-    })
+    // this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
+    // .subscribe((result) => {
+    //   this.profile.characterStats = result;
+    //   console.log(this.profile.characterStats);
+    // })
 
     // mock data for faster testing
     // this.profile = {
