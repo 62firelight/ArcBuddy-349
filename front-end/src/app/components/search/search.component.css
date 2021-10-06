@@ -128,3 +128,9 @@ img {
     padding: 20px;
     text-align: top;
 }
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 0;
+}
