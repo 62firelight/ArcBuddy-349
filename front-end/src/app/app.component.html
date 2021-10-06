@@ -1,4 +1,14 @@
-<div class="content mat-app-background darkMode">
-  <h1>{{ title }}</h1>
-  <router-outlet></router-outlet>
-</div>
+<mat-drawer-container class="content mat-app-background darkMode" autosize>
+
+    <h1>{{ title }}</h1>
+    <mat-drawer #drawer class="stat-sidenav" mode="side">
+      <p>Auto-resizing sidenav</p>
+    </mat-drawer>
+  
+    <button type="button" mat-button (click)="drawer.toggle()">
+      Toggle sidenav
+    </button>
+    <br>
+    <router-outlet></router-outlet>
+
+</mat-drawer-container>

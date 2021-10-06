@@ -43,3 +43,7 @@ img {
     height: 35px;
     margin-right: 8px;
 }
+
+.stat-sidenav {
+    padding: 80px;
+}
