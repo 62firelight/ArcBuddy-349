@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Profile } from 'src/app/Profile';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-saved-stats',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SavedStatsComponent implements OnInit {
 
-  constructor() { }
+  profiles!: Profile[];
+
+  constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
+    this.profileService.getProfiles().subscribe((profiles) => {
+      this.profiles = profiles;
+
+      // take ".json" out of the key
+      this.profiles.forEach(function (profile) {
+        profile.Key = profile.Key?.slice(0, -5);
+      });
+      
+      console.log(profiles);
+    });
   }
 
 }
