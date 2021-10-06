@@ -2,7 +2,7 @@
 
 <button mat-raised-button (click)="addProfile(profile)">Save</button>
 
-<mat-spinner [diameter]="50" *ngIf="spinnerService.visibility | async"></mat-spinner>
+<mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
 
 <div class="grid">
     <mat-card class="stat-card" *ngFor="let stat of profile.characterStats | keyvalue">

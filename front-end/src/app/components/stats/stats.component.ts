@@ -13,6 +13,8 @@ export class StatsComponent implements OnInit {
 
   @Input() profile!: Profile;
 
+  fetchingStats = false;
+
   constructor(private profileService: ProfileService, public spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
@@ -55,7 +57,10 @@ export class StatsComponent implements OnInit {
     .subscribe((result) => {
       this.profile.characterStats = result;
       console.log(this.profile.characterStats);
+      this.fetchingStats = false;
     })
+
+    this.fetchingStats = true;
   }
 
   addProfile(profile: Profile): void {
