@@ -147,7 +147,6 @@ app.get("/api/players/stats/:name", async (req, res) => {
 
         res.status(404).send("Can't find snapshot for specified Destiny player");
     }
-    
 });
 
 app.delete("/api/players/stats/:name", async (req, res) => {
@@ -163,7 +162,6 @@ app.delete("/api/players/stats/:name", async (req, res) => {
 
         res.status(404).send("Can't find snapshot for specified Destiny player");
     }
-    
 });
 
 app.post("/api/players/stats", async (req, res) => {
