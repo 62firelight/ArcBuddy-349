@@ -51,13 +51,6 @@ button:hover {
     width: 2px;
 }
 
-.profile-card {
-    min-width: 500px;
-    min-height: 75px;
-    display: inline-block;
-    text-align: left;
-}
-
 img {
     width: 35px;
     height: 35px;
@@ -70,6 +63,7 @@ mat-icon {
 
 mat-icon, .delete {
     color: red;
+    padding: 4px;
 }
 
 mat-icon, .refresh {
@@ -113,13 +107,6 @@ button:hover {
 
 .search-button {
     width: 2px;
-}
-
-.profile-card {
-    min-width: 500px;
-    min-height: 75px;
-    display: inline-block;
-    text-align: left;
 }
 
 img {
@@ -186,4 +173,9 @@ ul {
 mat-spinner {
     margin: auto;
     margin-top: 32px;
+}
+
+.profile-card {
+    cursor: pointer;
+    max-width: 150px;
 }

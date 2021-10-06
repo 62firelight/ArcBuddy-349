@@ -12,12 +12,17 @@
         <br>
 
         <ul>
-            <li *ngFor="let profile of profiles" id="buttons"><button mat-raised-button (click)="setProfile(profile)">
-                    {{ profile.Key }}
-                    <mat-icon matRipple (click)="deleteProfile(profile)">
-                        <div class="delete">close</div>
-                    </mat-icon>
-                </button>
+            <li *ngFor="let profile of profiles" id="buttons">
+                <mat-card>
+                    <div matRipple class="profile-card" (click)="setProfile(profile)">
+                        {{ profile.Key }}
+                    </div>
+                    <div class="profile-card-delete">
+                        <mat-icon matRipple (click)="deleteProfile(profile)">
+                            <div class="delete">close</div>
+                        </mat-icon>
+                    </div>
+                </mat-card>
             </li>
         </ul>
     </mat-drawer>
