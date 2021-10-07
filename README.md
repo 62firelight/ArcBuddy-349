@@ -22,8 +22,8 @@ These instructions assume some familiarity with command line interfaces (CLIs). 
 5. On the same AWS account, go to Secrets Manager, create a secret called `arc-buddy-349-api-key` and store a row with the key `apiKey` and value consisting of the API key you registered earlier. Note that the profile name should be `personal` instead of `default` as the page suggests
 6. Set up your AWS credentials using the instructions from [this AWS documentation page](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html)
 7. Clone the repository into a directory of your choice using `git clone https://github.com/62firelight/ArcBuddy-349.git`
-8. On a terminal, start the back-end server by navigating into the "back-end" folder and typing `node app.js`
-9. On another terminal, start the front-end server by navigating into the "front-end" folder and typing `ng serve` or `ng s`
+8. On a terminal, start the back-end server by navigating into the "back-end" folder, typing `npm install` to install dependencies and then typing `node app.js` once all dependencies are downloaded
+9. On another terminal, start the front-end server by navigating into the "front-end" folder, typing `npm install` to install dependencies and then typing `ng serve` (or `ng s` for short) once all dependencies are downloaded
 10. Navigate to localhost:4200 to use the application
 
 ### For users
