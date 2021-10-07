@@ -33,12 +33,20 @@ Users can simply navigate to http://ec2-34-239-110-136.compute-1.amazonaws.com/ 
 
 ## Usage
 
+When using the application, a sidenav menu containing all saved profiles from S3 will be visible on the left, along with a button to hide the sidenav and a search bar in the center. 
+
+You can search for a Bungie Name using the provided search bar. A Bungie Name takes after the format `name#code`. My Bungie Name (`62firelight#8173`) is provided as an example once you click on the search bar, but you can use any Bungie Names (which belong to various Destiny content creators) from the list below as well. Once finished typing a Bungie Name, you can push "Enter" or click the magnifying glass icon on the right to begin a search. 
+
 ### Bungie Name Examples
 * Datto#6446
 * Gladd#2640
 * Riot#1468
 * Teawrex#4125
 * Ascendant Nomad#8218
+
+An unsuccessful search should return an error message. Otherwise, if the search was successful, you should see a grid-based layout showing the stats of the Bungie Name you've searched for. Below, you can see the various PvE stats for the Bungie Name across all of their characters.
+
+You can save the profile you've searched for by clicking the "Save" button. Once finished, a green message should appear to show that the PUT to S3 was successful and the profile you've saved should appear on the left (if not there already). If the profile you've saved was already present, then the saved profile simply gets overridden with the latest version. There is no error handling for this operation, so you may have to open the developer console (F12 for Google Chrome) to see what went wrong. 
 
 ## Architecture
 
