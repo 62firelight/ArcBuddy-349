@@ -8,9 +8,14 @@ Currently, Arc Buddy is more of a "proof-of-concept" than anything else. I mainl
 
 There are two different options to interact with the application.
 
-The first option is mainly for other developers familiar with Angular and Node.js, so that they can develop for the repository and test any contributions at will.
+The first option is mainly for users who want to use the deployed version of Arc Buddy without needing to install Node.js and the Angular CLI. However, this is only possible if the EC2 instance running Arc Buddy is active.
 
-The second option is mainly for users who want to use the deployed version of Arc Buddy without needing to install Node.js and the Angular CLI. However, this is only possible if the EC2 instance running Arc Buddy is active (**still active** at the time of writing).
+The second option is mainly for other developers familiar with Angular and Node.js, so that they can develop for the repository and test any contributions at will.
+
+### For users
+The EC2 instance running Arc Buddy is still active at the time of writing.
+
+Users can simply navigate to http://ec2-34-239-110-136.compute-1.amazonaws.com/ on a web browser and use the application there.
 
 ### For developers
 These instructions assume some familiarity with command line interfaces (CLIs). You should also have created a [Bungie.net account](https://www.bungie.net/) and an [AWS account.](https://aws.amazon.com/) 
@@ -25,11 +30,6 @@ These instructions assume some familiarity with command line interfaces (CLIs). 
 8. On a terminal, start the back-end server by navigating into the "back-end" folder, typing `npm install` to install dependencies and then typing `node app.js` once all dependencies are downloaded
 9. On another terminal, start the front-end server by navigating into the "front-end" folder, typing `npm install` to install dependencies and then typing `ng serve` (or `ng s` for short) once all dependencies are downloaded
 10. Navigate to localhost:4200 to use the application
-
-### For users
-The EC2 instance running Arc Buddy is still active at the time of writing.
-
-Users can simply navigate to http://ec2-34-239-110-136.compute-1.amazonaws.com/ on a web browser and use the application there.
 
 ## Usage
 
