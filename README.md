@@ -4,7 +4,18 @@ Arc Buddy is a web application that uses the [Bungie.Net API](https://bungie-net
 
 Currently, Arc Buddy is more of a "proof-of-concept" than anything else. I mainly created it for personal use so that I could test the functions (of which there are many) of the Bungie.Net API using somewhat familiar frameworks.
 
+## Usage
+
+
+### Bungie Name Examples
+* Datto#6446
+* Gladd#2640
+* Riot#1468
+* Teawrex#4125
+* Ascendant Nomad#8218
+
 ## Architecture
+
 
 ## Special Thanks
 
