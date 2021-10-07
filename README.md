@@ -71,10 +71,12 @@ When not deployed, Arc Buddy only makes use of two non-EC2 services on Amazon We
 When deployed, Arc Buddy also uses two virtual machines (VMs) in the form of EC2 instances. These include:
 
 * **Web server**
-  * A [NGINX web server](https://www.nginx.com/) that hosts a dynamic website using a group of files built using the Angular web framework (`ng build`) 
+  * A [NGINX web server](https://www.nginx.com/)
+  * Hosts a dynamic website using a group of files built using the [Angular](https://angular.io/) web framework (`ng build`) 
   * The web server will make calls to the API server for its dynamic functionality (e.g., fetching player stats and saving them into S3).
 * **API server**
-  * Another [NGINX web server](https://www.nginx.com/) that hosts the REST API that the web server will regularly call
+  * Another [NGINX web server](https://www.nginx.com/) which runs a [Node.js server](https://nodejs.org/en/) using the [PM2 process manager](https://pm2.keymetrics.io/)
+  * Hosts the REST API that the web server will regularly call
   * Uses the [node-destiny-2](https://github.com/brandonmanke/node-destiny-2) as an API wrapper to call the [Bungie.Net API](https://bungie-net.github.io/)
   * Uses the [AWS SDK](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/index.html) to call AWS Secrets Manager and Amazon S3
   * Other notable modules that the API uses include [Express.js](https://expressjs.com/) and [CORS](http://expressjs.com/en/resources/middleware/cors.html)
