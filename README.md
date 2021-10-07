@@ -68,7 +68,7 @@ When not deployed, Arc Buddy makes use of two non-EC2 services on Amazon Web Ser
 * [**Amazon S3**](https://aws.amazon.com/s3/)
 * [**AWS Secrets Manager**](https://aws.amazon.com/secrets-manager/)
 
-When deployed, Arc Buddy uses two virtual machines (VMs) in the form of EC2 instances. These include:
+When deployed, Arc Buddy also uses two virtual machines (VMs) in the form of EC2 instances. These include:
 
 * **Web server**
 * **API server**
