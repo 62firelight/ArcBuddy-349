@@ -48,6 +48,19 @@ An unsuccessful search should return an error message. Otherwise, if the search 
 
 You can save the profile you've searched for by clicking the "Save" button. Once finished, a green message should appear to show that the PUT to S3 was successful and the profile you've saved should appear on the left (if not there already). If the profile you've saved was already present, then the saved profile simply gets overridden with the latest version. There is no error handling for this operation, so you may have to open the developer console (F12 for Google Chrome) to see what went wrong. 
 
+To see the stats for each saved profile, you can click the names of each profile on the left. Be careful not to click the red "X" button unintentionally, as that will immediately delete the profile without any confirmation dialog. 
+
+If you find that the saved profiles are not updating correctly (e.g., you've saved a profile but it doesn't show up on the sidenav), then you can click the "Refresh" button at the top of the sidenav to refresh the list of saved profiles. 
+
+You may click the "Hide Saved Profiles" button to hide the sidenav, and click it again (where it will be "Show Saved Profiles) to show the sidenav.
+
+### Future Features?
+
+The majority of Arc Buddy was developed in the span of a week, which is probably obvious given the lack of error handling when interacting with S3. This means that the list of features is rather short as a result. Below, I have included some ideas for features that could be added by me or other developers. 
+
+* Better layout to display the data (e.g., categories for playtime stats, weapon-related stats, completion stats, etc or having graphs)
+* Show what Destiny 2 vendors are selling at any given point (e.g., see what mods are being sold by Ada-1)
+
 ## Architecture
 
 
