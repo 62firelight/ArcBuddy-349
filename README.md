@@ -68,20 +68,22 @@ When not deployed, Arc Buddy only makes use of two non-EC2 services on Amazon We
 * [**Amazon S3**](https://aws.amazon.com/s3/)
 * [**AWS Secrets Manager**](https://aws.amazon.com/secrets-manager/)
 
-When deployed, Arc Buddy also uses two virtual machines (VMs) in the form of EC2 instances. These include:
+When deployed, Arc Buddy also uses two virtual machines (VMs) in the form of EC2 instances to host servers. These servers include:
 
 * **Web server**
   * A [NGINX web server](https://www.nginx.com/)
   * Hosts a dynamic website using a group of files built using the [Angular](https://angular.io/) web framework (`ng build`) 
   * The web server will make calls to the API server for its dynamic functionality (e.g., fetching player stats and saving them into S3).
 * **API server**
-  * Another [NGINX web server](https://www.nginx.com/) which runs a [Node.js server](https://nodejs.org/en/) using the [PM2 process manager](https://pm2.keymetrics.io/)
+  * Another [NGINX web server](https://www.nginx.com/) which runs a [Node.js server](https://nodejs.org/en/) internally using the [PM2 process manager](https://pm2.keymetrics.io/)
   * Hosts the REST API that the web server will regularly call
   * Uses the [node-destiny-2](https://github.com/brandonmanke/node-destiny-2) as an API wrapper to call the [Bungie.Net API](https://bungie-net.github.io/)
   * Uses the [AWS SDK](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/index.html) to call AWS Secrets Manager and Amazon S3
   * Other notable modules that the API uses include [Express.js](https://expressjs.com/) and [CORS](http://expressjs.com/en/resources/middleware/cors.html)
 
 Both VMs use the [Ubuntu Server 18.04 LTS (HVM)](https://aws.amazon.com/marketplace/pp/prodview-pkjqrkcfgcaog) for its Amazon Machine Image (AMI).
+
+The NGINX web server for both servers simply acts as a reverse proxy. For example, requests made to the API server's address (e.g., some EC2 DNS) will fetch data from the actual Node.js server running on `localhost:3000`, but this data will appear to be coming from the API server address.
 
 ## Special Thanks
 
