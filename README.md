@@ -83,7 +83,7 @@ When deployed, Arc Buddy also uses two virtual machines (VMs) in the form of EC2
 
 Both VMs use the [Ubuntu Server 18.04 LTS (HVM)](https://aws.amazon.com/marketplace/pp/prodview-pkjqrkcfgcaog) for its Amazon Machine Image (AMI).
 
-The NGINX web server for both servers simply acts as a reverse proxy. For example, requests made to the API server's address (e.g., some EC2 DNS) will fetch data from the actual Node.js server running on `localhost:3000`, but this data will appear to be coming from the API server address.
+The NGINX web server for both servers simply acts as a reverse proxy. For example, requests made to the API server's address (e.g., some EC2 DNS) will fetch data from the actual Node.js server running on `localhost:3000`, but the response to that request will appear to be coming from the API server address.
 
 ## Special Thanks
 
