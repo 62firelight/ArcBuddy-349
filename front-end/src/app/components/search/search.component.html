@@ -3,7 +3,7 @@
     <h1>{{ title }}</h1>
 
     <!-- Sidenav -->
-    <mat-drawer #drawer class="stat-sidenav" mode="side">
+    <mat-drawer #drawer class="stat-sidenav" mode="side" [opened]="true">
         <h2>Saved Profiles</h2>
         <mat-icon matRipple (click)="ngOnInit()">
             <div class="refresh"> refresh</div>
