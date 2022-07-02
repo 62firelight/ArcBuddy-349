@@ -21,74 +21,75 @@ app.get('/', (req, res) => {
   `)
 });
 
-const { S3Client, PutObjectCommand, ListObjectsCommand, GetObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
-const s3Client = new S3Client({
-    region: "us-east-1",
-    profile: "personal"
-});
+// const { S3Client, PutObjectCommand, ListObjectsCommand, GetObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+// const s3Client = new S3Client({
+//     region: "us-east-1",
+//     profile: "personal"
+// });
 
-const putObjectCommand = async (params) => {
-    const command = new PutObjectCommand(params);
-    try {
-        const data = await s3Client.send(command);
-        return data;
-    } catch (error) {
-        console.log(":(", error);
-    }
-}
+// const putObjectCommand = async (params) => {
+//     const command = new PutObjectCommand(params);
+//     try {
+//         const data = await s3Client.send(command);
+//         return data;
+//     } catch (error) {
+//         console.log(":(", error);
+//     }
+// }
 
-const listObjectsCommand = async (params) => {
-    const command = new ListObjectsCommand(params);
-    try {
-        const data = await s3Client.send(command);
-        return data;
-    } catch (error) {
-        console.log(":(", error);
-    }
-}
+// const listObjectsCommand = async (params) => {
+//     const command = new ListObjectsCommand(params);
+//     try {
+//         const data = await s3Client.send(command);
+//         return data;
+//     } catch (error) {
+//         console.log(":(", error);
+//     }
+// }
 
-const getObjectCommand = async (params) => {
-    const command = new GetObjectCommand(params);
-    try {
-        const data = await s3Client.send(command);
-        return data;
-    } catch (error) {
-        console.log(":(", error);
-    }
-}
+// const getObjectCommand = async (params) => {
+//     const command = new GetObjectCommand(params);
+//     try {
+//         const data = await s3Client.send(command);
+//         return data;
+//     } catch (error) {
+//         console.log(":(", error);
+//     }
+// }
 
-const deleteObjectCommand = async (params) => {
-    const command = new DeleteObjectCommand(params);
-    try {
-        const data = await s3Client.send(command);
-        return data;
-    } catch (error) {
-        console.log(":(", error);
-    }
-}
+// const deleteObjectCommand = async (params) => {
+//     const command = new DeleteObjectCommand(params);
+//     try {
+//         const data = await s3Client.send(command);
+//         return data;
+//     } catch (error) {
+//         console.log(":(", error);
+//     }
+// }
 
-const { SecretsManagerClient, GetSecretValueCommand } = require("@aws-sdk/client-secrets-manager");
-const secretsClient = new SecretsManagerClient({
-    region: "us-east-1",
-    profile: "personal"
-});
+// const { SecretsManagerClient, GetSecretValueCommand } = require("@aws-sdk/client-secrets-manager");
+// const secretsClient = new SecretsManagerClient({
+//     region: "us-east-1",
+//     profile: "personal"
+// });
 
-const getApiKey = async () => {
-    const command = new GetSecretValueCommand({
-        SecretId: "arc-buddy-349-api-key"
-    });
-    try {
-        const data = await secretsClient.send(command);
-        return data;
-    } catch (error) {
-        console.log(":(", error);
-    }
-}
+// const getApiKey = async () => {
+//     const command = new GetSecretValueCommand({
+//         SecretId: "arc-buddy-349-api-key"
+//     });
+//     try {
+//         const data = await secretsClient.send(command);
+//         return data;
+//     } catch (error) {
+//         console.log(":(", error);
+//     }
+// }
 
 const createClient = async () => {
     try {
-        const response = await getApiKey();
-        const apiKey = JSON.parse(response.SecretString).apiKey;
+        // const response = await getApiKey();
+        // const apiKey = JSON.parse(response.SecretString).apiKey;
+        const apiKey = process.env.ARC_KEY;
 
         console.log(`Successfully retrieved API key`);
 
@@ -106,13 +107,19 @@ createClient().then((destinyClient) => {
     destiny = destinyClient;
 });
 
+var snapshots = [];
+
 app.get("/api/players/stats", async (req, res) => {
     try {
-        const response = await listObjectsCommand({
-            Bucket: "arc-buddy"
-        });
+        // Retrieve snapshots of profiles from S3 bucket
+        // const response = await listObjectsCommand({
+        //     Bucket: "arc-buddy"
+        // });
 
-        res.status(200).send(response.Contents);
+        // Retrieve snapshots of profiles from local storage (WARNING: not persistent)
+        const response = snapshots;
+
+        res.status(200).send(response);
     } catch (error) {
         console.log(error);
 
@@ -122,26 +129,41 @@ app.get("/api/players/stats", async (req, res) => {
 
 app.get("/api/players/stats/:name", async (req, res) => {
     try {
-        const response = await getObjectCommand({
-            Bucket: "arc-buddy",
-            Key: req.params.name + ".json"
-        });
-
-        // Store all of data chunks returned from the response data stream 
-        // into an array then use Array#join() to use the returned contents as a String
-        let responseDataChunks = [];
-
-        // Attach a 'data' listener to add the chunks of data to our array
-        // Each chunk is a Buffer instance
-        response.Body.on('data', chunk => responseDataChunks.push(chunk));
+        // Retrieve specific snapshot of profile from S3 bucket
+        // const response = await getObjectCommand({
+        //     Bucket: "arc-buddy",
+        //     Key: req.params.name + ".json"
+        // });
 
         var profile = undefined;
 
+        // Store all of data chunks returned from the response data stream 
+        // into an array then use Array#join() to use the returned contents as a String
+        // let responseDataChunks = [];
+
+        // Attach a 'data' listener to add the chunks of data to our array
+        // Each chunk is a Buffer instance
+        // response.Body.on('data', chunk => responseDataChunks.push(chunk));
+
         // Once the stream has no more data, join the chunks into a string and return the string
-        response.Body.once('end', () => {
-            profile = JSON.parse(responseDataChunks.join(''));
-            res.status(200).send(profile);
-        });
+        // response.Body.once('end', () => {
+        //     profile = JSON.parse(responseDataChunks.join(''));
+        //     res.status(200).send(profile);
+        // });
+
+        // Search through snapshots array for the requested display name (WARNING: slow for large arrays)
+        profile = snapshots.find(element => 
+            element.Key.localeCompare(req.params.name)
+        );
+
+        if (profile != undefined) 
+        {
+            res.status(200).send(profile.Body);
+        }
+        else
+        {
+            throw("No profile with that display name was found!");
+        }
     } catch (error) {
         console.log(error);
 
@@ -151,9 +173,16 @@ app.get("/api/players/stats/:name", async (req, res) => {
 
 app.delete("/api/players/stats/:name", async (req, res) => {
     try {
-        const response = await deleteObjectCommand({
-            Bucket: "arc-buddy",
-            Key: req.params.name + ".json"
+        // Delete specific snapshot of profile from S3 bucket
+        // const response = await deleteObjectCommand({
+        //     Bucket: "arc-buddy",
+        //     Key: req.params.name + ".json"
+        // });
+
+        // Delete specific snapshot of profile from array
+        snapshots = snapshots.filter(element => {
+            console.log(element.Key + ` compared against ` + req.params.name);
+            element.Key.localeCompare(req.params.name) != 0
         });
 
         res.status(204).send();
@@ -166,11 +195,19 @@ app.delete("/api/players/stats/:name", async (req, res) => {
 
 app.post("/api/players/stats", async (req, res) => {
     try {
-        const response = await putObjectCommand({
-            Bucket: "arc-buddy",
-            Key: req.body.displayName + ".json",
-            Body: JSON.stringify(req.body)
+        // Store specific snapshot of profile in S3 bucket
+        // const response = await putObjectCommand({
+        //     Bucket: "arc-buddy",
+        //     Key: req.body.displayName + ".json",
+        //     Body: JSON.stringify(req.body)
+        // });
+
+        const response = snapshots.push({
+            Key: req.body.displayName,
+            Body: req.body
         });
+
+        console.log("Successfully added " + req.body.displayName);
 
         res.status(201).send("");
     } catch (error) {
