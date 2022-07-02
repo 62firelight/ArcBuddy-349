@@ -13,9 +13,9 @@ The first option is mainly for users who want to use the deployed version of Arc
 The second option is mainly for other developers familiar with Angular and Node.js, so that they can develop for the repository and test any contributions at will.
 
 ### For users
-The EC2 instance running Arc Buddy is still active at the time of writing.
+The EC2 instance running Arc Buddy is currently not active.
 
-Users can simply navigate to http://ec2-34-239-110-136.compute-1.amazonaws.com/ on a web browser and use the application there.
+Whenever the EC2 instance is active, users can simply navigate to http://ec2-34-239-110-136.compute-1.amazonaws.com/ on a web browser and use the application there.
 
 ### For developers
 These instructions assume some familiarity with command line interfaces (CLIs). You should also have created a [Bungie.net account](https://www.bungie.net/) and an [AWS account.](https://aws.amazon.com/) 
