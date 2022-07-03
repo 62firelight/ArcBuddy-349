@@ -152,8 +152,8 @@ app.get("/api/players/stats/:name", async (req, res) => {
         // });
 
         // Search through snapshots array for the requested display name (WARNING: slow for large arrays)
-        profile = snapshots.find(element => 
-            element.Key.localeCompare(req.params.name)
+        profile = snapshots.find(element =>
+            element.Key.localeCompare(req.params.name) == 0
         );
 
         if (profile != undefined) 
@@ -180,10 +180,9 @@ app.delete("/api/players/stats/:name", async (req, res) => {
         // });
 
         // Delete specific snapshot of profile from array
-        snapshots = snapshots.filter(element => {
-            console.log(element.Key + ` compared against ` + req.params.name);
+        snapshots = snapshots.filter(element => 
             element.Key.localeCompare(req.params.name) != 0
-        });
+        );
 
         res.status(204).send();
     } catch (error) {

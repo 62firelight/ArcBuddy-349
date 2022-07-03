@@ -28,12 +28,12 @@ export class SearchComponent implements OnInit {
     this.profileService.getProfiles().subscribe((profiles) => {
       this.profiles = profiles;
 
-      if (profiles != null) {
-        // take ".json" out of the key
-        this.profiles.forEach(function (profile) {
-          profile.Key = profile.Key?.slice(0, -5);
-        });
-      }
+      // if (profiles != null) {
+      //   // take ".json" out of the key
+      //   this.profiles.forEach(function (profile) {
+      //     profile.Key = profile.Key?.slice(0, -5);
+      //   });
+      // }
       
       // console.log(profiles);
       this.fetchingProfiles = false;
