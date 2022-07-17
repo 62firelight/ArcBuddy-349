@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Character } from '../Character';
 import { Profile } from '../Profile';
 
 const httpOptions = {
@@ -21,6 +22,11 @@ export class ProfileService {
   getName(name: string, id: string): Observable<Profile> {
     const url = `api/players/${name}/${id}`;
     return this.http.get<Profile>(url);
+  }
+
+  getCharacters(type: string, id: string): Observable<Character[]> {
+    const url = `api/players/character/${type}/${id}`;
+    return this.http.get<Character[]>(url);
   }
 
   getStats(type: string, id: string): Observable<Object> {

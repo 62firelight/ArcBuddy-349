@@ -47,12 +47,16 @@
 
     <mat-error>{{ error }}</mat-error>
 
+    
+
     <!-- Stats display -->
     <div *ngIf="profile != undefined">
         <h1> {{ profile.displayName }} stats </h1>
 
         <button mat-raised-button *ngIf="profile.characterStats != undefined" (click)="addProfile(profile)">Save</button>
         <p *ngIf="saved" class="saved">Profile successfully saved</p>
+
+        <app-characters [characters]="profile.characters"></app-characters>
 
         <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
 

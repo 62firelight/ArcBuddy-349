@@ -9,9 +9,22 @@ app.use(express.static('myapp/public'));
 app.use(express.json());
 app.use(cors());
 
+const CLASS_MAP = {
+    0: 'Titan',
+    1: 'Hunter',
+    2: 'Warlock'
+}
+
+const RACE_MAP = {
+    0: 'Human',
+    1: 'Awoken',
+    2: 'Exo'
+}
+
 const apiUrl = `http://localhost:${port}`
 
-app.listen(port, () => {;
+app.listen(port, () => {
+    ;
     console.log(`Server running at ${apiUrl}`);
 });
 
@@ -105,6 +118,41 @@ var destiny = undefined;
 
 createClient().then((destinyClient) => {
     destiny = destinyClient;
+
+    // destiny.getProfile(3, '4611686018468181342', [200])
+    //     .then(response => {
+    //         // console.log(JSON.stringify(response.Response, null, 2));
+
+    //         const characters = response.Response.characters.data;
+
+    //         var fetchedCharacters = [];
+
+    //         var i = 0;
+    //         for (let [key] of Object.entries(characters)) {
+    //             const fetchedCharacter = characters[key];
+
+    //             console.log(`${RACE_MAP[fetchedCharacter.raceType]} ${CLASS_MAP[fetchedCharacter.classType]}`);
+
+    //             var newCharacter = {};
+    //             newCharacter.race = RACE_MAP[fetchedCharacter.raceType];
+    //             newCharacter.class = CLASS_MAP[fetchedCharacter.classType];
+    //             newCharacter.light = fetchedCharacter.light;
+    //             newCharacter.emblem = fetchedCharacter.emblemBackgroundPath;
+
+    //             fetchedCharacters.push(newCharacter);
+
+    //             i++;
+    //         }
+
+    //         console.log(fetchedCharacters);
+
+    //         // res.status(200).send(fetchedCharacters);
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+
+    //         // res.status(404).send('Could not find characters for specified Destiny player');
+    //     });
 });
 
 var snapshots = [];
@@ -156,13 +204,11 @@ app.get("/api/players/stats/:name", async (req, res) => {
             element.Key.localeCompare(req.params.name) == 0
         );
 
-        if (profile != undefined) 
-        {
+        if (profile != undefined) {
             res.status(200).send(profile.Body);
         }
-        else
-        {
-            throw("No profile with that display name was found!");
+        else {
+            throw ("No profile with that display name was found!");
         }
     } catch (error) {
         console.log(error);
@@ -180,7 +226,7 @@ app.delete("/api/players/stats/:name", async (req, res) => {
         // });
 
         // Delete specific snapshot of profile from array
-        snapshots = snapshots.filter(element => 
+        snapshots = snapshots.filter(element =>
             element.Key.localeCompare(req.params.name) != 0
         );
 
@@ -248,7 +294,7 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
 
     destiny.getHistoricalStatsForAccount(membershipType, membershipId)
         .then(response => {
-            // console.log(response.Response);
+            console.log(JSON.stringify(response.Response, null, 2));
             // console.log(response.Response.mergedAllCharacters.results.allPvE.allTime);
 
             const pveStats = response.Response.mergedAllCharacters.results.allPvE.allTime;
@@ -277,5 +323,45 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
             console.log(err);
 
             res.status(404).send('Could not find stats for specified Destiny player');
+        });
+});
+
+app.get("/api/players/character/:type/:id", async (req, res) => {
+    const membershipType = req.params.type;
+    const membershipId = req.params.id;
+
+    destiny.getProfile(membershipType, membershipId, [200])
+        .then(response => {
+            // console.log(JSON.stringify(response.Response, null, 2));
+
+            const characters = response.Response.characters.data;
+
+            var fetchedCharacters = [];
+
+            var i = 0;
+            for (let [key] of Object.entries(characters)) {
+                const fetchedCharacter = characters[key];
+
+                console.log(`${RACE_MAP[fetchedCharacter.raceType]} ${CLASS_MAP[fetchedCharacter.classType]}`);
+
+                var newCharacter = {};
+                newCharacter.race = RACE_MAP[fetchedCharacter.raceType];
+                newCharacter.class = CLASS_MAP[fetchedCharacter.classType];
+                newCharacter.light = fetchedCharacter.light;
+                newCharacter.emblem = `https://www.bungie.net${fetchedCharacter.emblemBackgroundPath}`;
+
+                fetchedCharacters.push(newCharacter);
+
+                i++;
+            }
+
+            console.log(fetchedCharacters);
+
+            res.status(200).send(fetchedCharacters);
+        })
+        .catch(err => {
+            console.log(err);
+
+            res.status(404).send('Could not find characters for specified Destiny player');
         });
 });
