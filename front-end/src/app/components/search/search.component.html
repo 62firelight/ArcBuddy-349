@@ -3,7 +3,7 @@
     <h1>{{ title }}</h1>
 
     <!-- Sidenav -->
-    <mat-drawer #drawer class="stat-sidenav" mode="side" [opened]="true">
+    <mat-drawer #drawer class="stat-sidenav" mode="side" [opened]="false">
         <h2>Saved Profiles</h2>
         <mat-icon matRipple (click)="ngOnInit()">
             <div class="refresh"> refresh</div>
@@ -47,28 +47,34 @@
 
     <mat-error>{{ error }}</mat-error>
 
-    
-
     <!-- Stats display -->
     <div *ngIf="profile != undefined">
-        <h1> {{ profile.displayName }} stats </h1>
 
-        <button mat-raised-button *ngIf="profile.characterStats != undefined" (click)="addProfile(profile)">Save</button>
+        <button mat-raised-button *ngIf="profile.characterStats != undefined"
+            (click)="addProfile(profile)">Save</button>
         <p *ngIf="saved" class="saved">Profile successfully saved</p>
 
-        <app-characters [characters]="profile.characters"></app-characters>
+        <div class="row">
+            <div class="column">
+                <app-characters [characters]="profile.characters"></app-characters>
+            </div>
 
-        <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
+            <div class="column">
+                <h2> {{ profile.displayName }} stats </h2>
 
-        <div class="grid">
-            <mat-card class="stat-card" *ngFor="let stat of profile.characterStats | keyvalue">
-                <mat-card-title>
-                    <b>{{ stat.key }}</b>
-                </mat-card-title>
-                <mat-card-content>
-                    {{ stat.value }}
-                </mat-card-content>
-            </mat-card>
+                <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
+
+                <div class="grid">
+                    <mat-card class="stat-card" *ngFor="let stat of profile.characterStats | keyvalue">
+                        <mat-card-title>
+                            <b>{{ stat.key }}</b>
+                        </mat-card-title>
+                        <mat-card-content>
+                            {{ stat.value }}
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
         </div>
     </div>
 
