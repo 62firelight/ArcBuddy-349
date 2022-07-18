@@ -16,6 +16,7 @@ export class SearchComponent implements OnInit {
   error!: string;
   profile!: Profile;
   profiles!: Profile[];
+  displayedStats!: Object;
   statsVisibility = true;
   // @ViewChild(StatsComponent) stats!: StatsComponent;
 
@@ -101,6 +102,8 @@ export class SearchComponent implements OnInit {
 
             this.fetchingStats = false;
             this.saved = false;
+
+            this.displayedStats = this.profile.mergedStats;
           });
 
         this.fetchingStats = true;
@@ -122,6 +125,21 @@ export class SearchComponent implements OnInit {
       });
 
     this.fetchingStats = true;
+  }
+
+  updateStats(characterId: string): void {
+    console.log(`search received ${characterId}`);
+
+    if (characterId.length == 0) {
+      this.displayedStats = this.profile.mergedStats;
+    } else {
+      this.profile.characters.forEach((character) => {
+        if (character.characterId == characterId && character.mergedStats != undefined) {
+          this.displayedStats = character.mergedStats;
+          return;
+        }
+      });
+    }
   }
 
   setProfile(profile: Profile): void {

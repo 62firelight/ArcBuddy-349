@@ -4,10 +4,10 @@
         <h2>Characters</h2>
     </li>
     <li>
-        <a href="">All Characters</a>
+        <button (click)="displayCharacter('')">All Characters</button>
     </li>
     <li *ngFor="let character of characters">
-        <a href="">{{ character.race }} {{ character.class }}</a>
+        <button (click)="displayCharacter(character.characterId)">{{ character.race }} {{ character.class }}</button>
     </li>
 </ul>
 

@@ -56,7 +56,7 @@
 
         <div class="row">
             <div class="column">
-                <app-characters [characters]="profile.characters"></app-characters>
+                <app-characters [characters]="profile.characters" (newCharacterIdEvent)="updateStats($event)"></app-characters>
             </div>
 
             <div class="column">
@@ -65,7 +65,7 @@
                 <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
 
                 <div class="grid">
-                    <mat-card class="stat-card" *ngFor="let stat of profile.mergedStats | keyvalue">
+                    <mat-card class="stat-card" *ngFor="let stat of displayedStats | keyvalue">
                         <mat-card-title>
                             <b>{{ stat.key }}</b>
                         </mat-card-title>
