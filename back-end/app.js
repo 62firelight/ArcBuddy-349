@@ -162,45 +162,16 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
             var characterStats = {}
 
             // fetch merged stats for account
-            const mergedStats = response.Response.mergedAllCharacters.merged.allTime;
-            characterStats.mergedStats = {};
-            for (let [key, value] of Object.entries(mergedStats)) {
-                const statName = key
-                    // insert a space before all caps
-                    .replace(/([A-Z])/g, ' $1')
-                    // uppercase the first character
-                    .replace(/^./, function (str) { return str.toUpperCase(); });
-
-                const statValue = value.basic.displayValue;
-
-                characterStats.mergedStats[`${statName}`] = statValue;
-
-                // console.log(statName + ": " + statValue);
-            }
+            characterStats.mergedStats = response.Response.mergedAllCharacters.merged.allTime;
 
             // fetch stats for individual characters
             characterStats.characters = [];
             const characters = response.Response.characters;
             for (let [key, value] of Object.entries(characters)) {
                 if (value.deleted == false) {
-                    const charMergedStats = value.merged.allTime;
-
                     const character = {};
-                    // characterStats.characters[`${value.characterId}`] = {};
                     character.characterId = value.characterId;
-                    character.mergedStats = {}
-
-                    for (let [key2, value2] of Object.entries(charMergedStats)) {
-                        const statName = key2
-                            // insert a space before all caps
-                            .replace(/([A-Z])/g, ' $1')
-                            // uppercase the first character
-                            .replace(/^./, function (str) { return str.toUpperCase(); });
-
-                        const statValue = value2.basic.displayValue;
-
-                        character.mergedStats[`${statName}`] = statValue;
-                    }
+                    character.mergedStats = value.merged.allTimes;
 
                     characterStats.characters.push(character);
                 }
