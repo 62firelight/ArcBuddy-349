@@ -67,7 +67,7 @@ export class SearchComponent implements OnInit {
       this.error = ``;
       this.profile = result;
       this.profile.iconPath = `https://www.bungie.net${this.profile.iconPath}`;
-      this.getCharacters(this.profile);
+      this.fetchStats(this.profile);
       // this.getStats(this.profile); // force update
       this.saved = false;
     }, (error) => {
@@ -75,7 +75,7 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  getCharacters(profile: Profile): void {
+  fetchStats(profile: Profile): void {
     this.profile = profile;
     this.fetchingStats = true;
 
@@ -109,25 +109,8 @@ export class SearchComponent implements OnInit {
       });
   }
 
-  getStats(profile: Profile): void {
-    this.profile = profile;
-
-    this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
-      .subscribe((result: any) => {
-        this.profile.mergedStats = result.mergedStats;
-
-        // filter by key of object
-        // console.log(Object.keys(this.profile.mergedStats).filter(name => name.includes("Weapon")));
-
-        this.fetchingStats = false;
-        this.saved = false;
-      });
-
-    this.fetchingStats = true;
-  }
-
   updateStats(characterId: string): void {
-    console.log(`search received ${characterId}`);
+    // console.log(`search received ${characterId}`);
 
     if (characterId.length == 0) {
       this.displayedStats = this.profile.mergedStats;
