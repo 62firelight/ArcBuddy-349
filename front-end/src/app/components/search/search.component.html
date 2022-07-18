@@ -50,7 +50,7 @@
     <!-- Stats display -->
     <div *ngIf="profile != undefined">
 
-        <button mat-raised-button *ngIf="profile.characterStats != undefined"
+        <button mat-raised-button *ngIf="profile.mergedStats != undefined"
             (click)="addProfile(profile)">Save</button>
         <p *ngIf="saved" class="saved">Profile successfully saved</p>
 
@@ -65,7 +65,7 @@
                 <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
 
                 <div class="grid">
-                    <mat-card class="stat-card" *ngFor="let stat of profile.characterStats | keyvalue">
+                    <mat-card class="stat-card" *ngFor="let stat of profile.mergedStats | keyvalue">
                         <mat-card-title>
                             <b>{{ stat.key }}</b>
                         </mat-card-title>

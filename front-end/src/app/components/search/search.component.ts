@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Character } from 'src/app/Character';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -34,7 +35,7 @@ export class SearchComponent implements OnInit {
       //     profile.Key = profile.Key?.slice(0, -5);
       //   });
       // }
-      
+
       // console.log(profiles);
       this.fetchingProfiles = false;
     });
@@ -66,7 +67,7 @@ export class SearchComponent implements OnInit {
       this.profile = result;
       this.profile.iconPath = `https://www.bungie.net${this.profile.iconPath}`;
       this.getCharacters(this.profile);
-      this.getStats(this.profile); // force update
+      // this.getStats(this.profile); // force update
       this.saved = false;
     }, (error) => {
       this.error = `Couldn't find requested Bungie Name. Are you sure that ${this.name} is a registered Bungie.net user?`;
@@ -77,32 +78,48 @@ export class SearchComponent implements OnInit {
     this.profile = profile;
 
     this.profileService.getCharacters(this.profile.membershipType, this.profile.membershipId)
-    .subscribe((result) => {
-      this.profile.characters = result;
+      .subscribe((result) => {
+        this.profile.characters = result;
 
-      // filter by key of object
-      // console.log(Object.keys(this.profile.characterStats).filter(name => name.includes("Weapon")));
+        this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
+          .subscribe((result2: any) => {
+            this.profile.mergedStats = result2.mergedStats;
+            
+            // console.log(Object.values(out))
+            this.profile.characters.forEach((character1) => {
+              result2.characters.forEach((character2: Character) => {
+                if (character1.characterId == character2.characterId) {
+                  character1.mergedStats = character2.mergedStats;
+                }
+              })
+            });
 
-      // this.fetchingStats = false;
-      // this.saved = false;
-    });
+            console.log(this.profile);
 
-    // this.fetchingStats = true;
+            // filter by key of object
+            // console.log(Object.keys(this.profile.mergedStats).filter(name => name.includes("Weapon")));
+
+            this.fetchingStats = false;
+            this.saved = false;
+          });
+
+        this.fetchingStats = true;
+      });
   }
 
   getStats(profile: Profile): void {
     this.profile = profile;
 
     this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
-    .subscribe((result) => {
-      this.profile.characterStats = result;
+      .subscribe((result: any) => {
+        this.profile.mergedStats = result.mergedStats;
 
-      // filter by key of object
-      // console.log(Object.keys(this.profile.characterStats).filter(name => name.includes("Weapon")));
+        // filter by key of object
+        // console.log(Object.keys(this.profile.mergedStats).filter(name => name.includes("Weapon")));
 
-      this.fetchingStats = false;
-      this.saved = false;
-    });
+        this.fetchingStats = false;
+        this.saved = false;
+      });
 
     this.fetchingStats = true;
   }
