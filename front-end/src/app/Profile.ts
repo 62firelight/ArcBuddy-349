@@ -1,3 +1,5 @@
+import { Character } from "./Character";
+
 export interface Profile {
     Key?: string;
 
@@ -6,5 +8,6 @@ export interface Profile {
     membershipType: string;
     membershipId: string;
 
+    characters: Character[];
     characterStats: Object;
 }

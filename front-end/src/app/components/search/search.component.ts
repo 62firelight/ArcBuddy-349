@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Profile } from 'src/app/Profile';
-import { ProfileService } from 'src/app/services/profile.service'
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-search',
@@ -28,12 +28,12 @@ export class SearchComponent implements OnInit {
     this.profileService.getProfiles().subscribe((profiles) => {
       this.profiles = profiles;
 
-      if (profiles != null) {
-        // take ".json" out of the key
-        this.profiles.forEach(function (profile) {
-          profile.Key = profile.Key?.slice(0, -5);
-        });
-      }
+      // if (profiles != null) {
+      //   // take ".json" out of the key
+      //   this.profiles.forEach(function (profile) {
+      //     profile.Key = profile.Key?.slice(0, -5);
+      //   });
+      // }
       
       // console.log(profiles);
       this.fetchingProfiles = false;
@@ -65,11 +65,29 @@ export class SearchComponent implements OnInit {
       this.error = ``;
       this.profile = result;
       this.profile.iconPath = `https://www.bungie.net${this.profile.iconPath}`;
+      this.getCharacters(this.profile);
       this.getStats(this.profile); // force update
       this.saved = false;
     }, (error) => {
       this.error = `Couldn't find requested Bungie Name. Are you sure that ${this.name} is a registered Bungie.net user?`;
     });
+  }
+
+  getCharacters(profile: Profile): void {
+    this.profile = profile;
+
+    this.profileService.getCharacters(this.profile.membershipType, this.profile.membershipId)
+    .subscribe((result) => {
+      this.profile.characters = result;
+
+      // filter by key of object
+      // console.log(Object.keys(this.profile.characterStats).filter(name => name.includes("Weapon")));
+
+      // this.fetchingStats = false;
+      // this.saved = false;
+    });
+
+    // this.fetchingStats = true;
   }
 
   getStats(profile: Profile): void {
@@ -78,7 +96,10 @@ export class SearchComponent implements OnInit {
     this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
     .subscribe((result) => {
       this.profile.characterStats = result;
-      // console.log(this.profile.characterStats);
+
+      // filter by key of object
+      // console.log(Object.keys(this.profile.characterStats).filter(name => name.includes("Weapon")));
+
       this.fetchingStats = false;
       this.saved = false;
     });
