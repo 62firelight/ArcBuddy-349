@@ -124,6 +124,141 @@ createClient().then((destinyClient) => {
 
 var snapshots = [];
 
+app.get("/api/players/:name/:id", async (req, res) => {
+    const name = req.params.name;
+    const id = req.params.id;
+
+    const bungieName = name + "#" + id;
+
+    destiny.searchDestinyPlayer(-1, bungieName)
+        .then(response => {
+            const data = response.Response[0];
+            // console.log(data);
+
+            const membershipType = data.membershipType;
+            const membershipId = data.membershipId;
+
+            // console.log(membershipType, membershipId);
+            // console.log('\n\n');
+
+            res.status(200).send(data);
+        })
+        .catch(err => {
+            console.error(`searchPlayer Error: ${err}`);
+
+            res.status(404).send('Could not find specified Destiny player');
+        });
+});
+
+app.get("/api/players/account/:type/:id", async (req, res) => {
+    const membershipType = req.params.type;
+    const membershipId = req.params.id;
+
+    destiny.getHistoricalStatsForAccount(3, '4611686018468181342')
+        .then(response => {
+            // console.log(JSON.stringify(response.Response, null, 2));
+            // console.log(response.Response.mergedAllCharacters.results.allPvE.allTime);
+
+            var characterStats = {}
+
+            // fetch merged stats for account
+            const mergedStats = response.Response.mergedAllCharacters.merged.allTime;
+            characterStats.mergedStats = {};
+            for (let [key, value] of Object.entries(mergedStats)) {
+                const statName = key
+                    // insert a space before all caps
+                    .replace(/([A-Z])/g, ' $1')
+                    // uppercase the first character
+                    .replace(/^./, function (str) { return str.toUpperCase(); });
+
+                const statValue = value.basic.displayValue;
+
+                characterStats.mergedStats[`${statName}`] = statValue;
+
+                // console.log(statName + ": " + statValue);
+            }
+
+            // fetch stats for individual characters
+            characterStats.characters = [];
+            const characters = response.Response.characters;
+            for (let [key, value] of Object.entries(characters)) {
+                if (value.deleted == false) {
+                    const charMergedStats = value.merged.allTime;
+
+                    const character = {};
+                    // characterStats.characters[`${value.characterId}`] = {};
+                    character.characterId = value.characterId;
+                    character.mergedStats = {}
+
+                    for (let [key2, value2] of Object.entries(charMergedStats)) {
+                        const statName = key2
+                            // insert a space before all caps
+                            .replace(/([A-Z])/g, ' $1')
+                            // uppercase the first character
+                            .replace(/^./, function (str) { return str.toUpperCase(); });
+
+                        const statValue = value2.basic.displayValue;
+
+                        character.mergedStats[`${statName}`] = statValue;
+                    }
+
+                    characterStats.characters.push(character);
+                }
+            }
+
+            // console.log(characterStats);
+
+            res.status(200).send(characterStats);
+        })
+        .catch(err => {
+            console.log(err);
+
+            res.status(404).send('Could not find stats for specified Destiny player');
+        });
+});
+
+app.get("/api/players/character/:type/:id", async (req, res) => {
+    const membershipType = req.params.type;
+    const membershipId = req.params.id;
+
+    destiny.getProfile(membershipType, membershipId, [200])
+        .then(response => {
+            // console.log(JSON.stringify(response.Response, null, 2));
+
+            const characters = response.Response.characters.data;
+
+            var fetchedCharacters = [];
+
+            var i = 0;
+            for (let [key] of Object.entries(characters)) {
+                const fetchedCharacter = characters[key];
+
+                // console.log(`${RACE_MAP[fetchedCharacter.raceType]} ${CLASS_MAP[fetchedCharacter.classType]}`);
+
+                var newCharacter = {};
+                newCharacter = {};
+                newCharacter.characterId = fetchedCharacter.characterId;
+                newCharacter.race = RACE_MAP[fetchedCharacter.raceType];
+                newCharacter.class = CLASS_MAP[fetchedCharacter.classType];
+                newCharacter.light = fetchedCharacter.light;
+                newCharacter.emblem = `https://www.bungie.net${fetchedCharacter.emblemBackgroundPath}`;
+
+                fetchedCharacters.push(newCharacter);
+
+                i++;
+            }
+
+            // console.log(fetchedCharacters);
+
+            res.status(200).send(fetchedCharacters);
+        })
+        .catch(err => {
+            console.log(err);
+
+            res.status(404).send('Could not find characters for specified Destiny player');
+        });
+});
+
 app.get("/api/players/stats", async (req, res) => {
     try {
         // Retrieve snapshots of profiles from S3 bucket
@@ -227,139 +362,4 @@ app.post("/api/players/stats", async (req, res) => {
 
         res.status(404).send("Couldn't create snapshot for specified Destiny player");
     }
-});
-
-app.get("/api/players/:name/:id", async (req, res) => {
-    const name = req.params.name;
-    const id = req.params.id;
-
-    const bungieName = name + "#" + id;
-
-    destiny.searchDestinyPlayer(-1, bungieName)
-        .then(response => {
-            const data = response.Response[0];
-            // console.log(data);
-
-            const membershipType = data.membershipType;
-            const membershipId = data.membershipId;
-
-            // console.log(membershipType, membershipId);
-            // console.log('\n\n');
-
-            res.status(200).send(data);
-        })
-        .catch(err => {
-            console.error(`searchPlayer Error: ${err}`);
-
-            res.status(404).send('Could not find specified Destiny player');
-        });
-});
-
-app.get("/api/players/account/:type/:id", async (req, res) => {
-    const membershipType = req.params.type;
-    const membershipId = req.params.id;
-
-    destiny.getHistoricalStatsForAccount(3, '4611686018468181342')
-        .then(response => {
-            // console.log(JSON.stringify(response.Response, null, 2));
-            // console.log(response.Response.mergedAllCharacters.results.allPvE.allTime);
-
-            var characterStats = {}
-
-            // fetch merged stats for account
-            const mergedStats = response.Response.mergedAllCharacters.merged.allTime;
-            characterStats.mergedStats = {};
-            for (let [key, value] of Object.entries(mergedStats)) {
-                const statName = key
-                    // insert a space before all caps
-                    .replace(/([A-Z])/g, ' $1')
-                    // uppercase the first character
-                    .replace(/^./, function (str) { return str.toUpperCase(); });
-
-                const statValue = value.basic.displayValue;
-
-                characterStats.mergedStats[`${statName}`] = statValue;
-
-                // console.log(statName + ": " + statValue);
-            }
-
-            // fetch stats for individual characters
-            characterStats.characters = [];
-            const characters = response.Response.characters;
-            for (let [key, value] of Object.entries(characters)) {
-                if (value.deleted == false) {
-                    const charMergedStats = value.merged.allTime;
-
-                    const character = {};
-                    // characterStats.characters[`${value.characterId}`] = {};
-                    character.characterId = value.characterId;
-                    character.mergedStats = {}
-
-                    for (let [key2, value2] of Object.entries(charMergedStats)) {
-                        const statName = key2
-                            // insert a space before all caps
-                            .replace(/([A-Z])/g, ' $1')
-                            // uppercase the first character
-                            .replace(/^./, function (str) { return str.toUpperCase(); });
-
-                        const statValue = value2.basic.displayValue;
-
-                        character.mergedStats[`${statName}`] = statValue;
-                    }
-
-                    characterStats.characters.push(character);
-                }
-            }
-
-            console.log(characterStats);
-
-            res.status(200).send(characterStats);
-        })
-        .catch(err => {
-            console.log(err);
-
-            res.status(404).send('Could not find stats for specified Destiny player');
-        });
-});
-
-app.get("/api/players/character/:type/:id", async (req, res) => {
-    const membershipType = req.params.type;
-    const membershipId = req.params.id;
-
-    destiny.getProfile(membershipType, membershipId, [200])
-        .then(response => {
-            // console.log(JSON.stringify(response.Response, null, 2));
-
-            const characters = response.Response.characters.data;
-
-            var fetchedCharacters = [];
-
-            var i = 0;
-            for (let [key] of Object.entries(characters)) {
-                const fetchedCharacter = characters[key];
-
-                console.log(`${RACE_MAP[fetchedCharacter.raceType]} ${CLASS_MAP[fetchedCharacter.classType]}`);
-
-                var newCharacter = {};
-                newCharacter = {};
-                newCharacter.characterId = fetchedCharacter.characterId;
-                newCharacter.race = RACE_MAP[fetchedCharacter.raceType];
-                newCharacter.class = CLASS_MAP[fetchedCharacter.classType];
-                newCharacter.light = fetchedCharacter.light;
-                newCharacter.emblem = `https://www.bungie.net${fetchedCharacter.emblemBackgroundPath}`;
-
-                fetchedCharacters.push(newCharacter);
-
-                i++;
-            }
-
-            console.log(fetchedCharacters);
-
-            res.status(200).send(fetchedCharacters);
-        })
-        .catch(err => {
-            console.log(err);
-
-            res.status(404).send('Could not find characters for specified Destiny player');
-        });
 });
