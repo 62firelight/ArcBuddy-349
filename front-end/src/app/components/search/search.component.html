@@ -56,7 +56,7 @@
 
         <div class="row">
             <div class="column">
-                <app-characters [characters]="profile.characters" (newCharacterIdEvent)="updateStats($event)"></app-characters>
+                <app-characters *ngIf="fetchingStats == false" [characters]="profile.characters" (newCharacterIdEvent)="updateStats($event)"></app-characters>
             </div>
 
             <div class="column">

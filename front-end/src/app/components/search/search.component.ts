@@ -77,6 +77,7 @@ export class SearchComponent implements OnInit {
 
   getCharacters(profile: Profile): void {
     this.profile = profile;
+    this.fetchingStats = true;
 
     this.profileService.getCharacters(this.profile.membershipType, this.profile.membershipId)
       .subscribe((result) => {
@@ -105,8 +106,6 @@ export class SearchComponent implements OnInit {
 
             this.displayedStats = this.profile.mergedStats;
           });
-
-        this.fetchingStats = true;
       });
   }
 
