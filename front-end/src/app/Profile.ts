@@ -9,5 +9,5 @@ export interface Profile {
     membershipId: string;
 
     characters: Character[];
-    characterStats: Object;
+    mergedStats: Object;
 }

@@ -164,6 +164,11 @@ ul {
     justify-content: flex-end;
 }
 
+/* Create two equal columns that sits next to each other */
+.column {
+    flex: 50%;
+}
+
 .mat-card-content {
     font-size: 36px;
     font-weight: 1;

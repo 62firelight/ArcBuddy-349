@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Character } from 'src/app/Character';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -15,9 +16,11 @@ export class SearchComponent implements OnInit {
   error!: string;
   profile!: Profile;
   profiles!: Profile[];
+  displayedStats!: Object;
   statsVisibility = true;
   // @ViewChild(StatsComponent) stats!: StatsComponent;
 
+  fetchingCharacters = false;
   fetchingStats = false;
   fetchingProfiles = false;
   saved = false;
@@ -34,7 +37,7 @@ export class SearchComponent implements OnInit {
       //     profile.Key = profile.Key?.slice(0, -5);
       //   });
       // }
-      
+
       // console.log(profiles);
       this.fetchingProfiles = false;
     });
@@ -65,46 +68,64 @@ export class SearchComponent implements OnInit {
       this.error = ``;
       this.profile = result;
       this.profile.iconPath = `https://www.bungie.net${this.profile.iconPath}`;
-      this.getCharacters(this.profile);
-      this.getStats(this.profile); // force update
+      this.fetchStats(this.profile);
+      // this.getStats(this.profile); // force update
       this.saved = false;
     }, (error) => {
       this.error = `Couldn't find requested Bungie Name. Are you sure that ${this.name} is a registered Bungie.net user?`;
     });
   }
 
-  getCharacters(profile: Profile): void {
+  fetchStats(profile: Profile): void {
     this.profile = profile;
+    this.fetchingStats = true;
+    this.fetchingCharacters = true;
 
     this.profileService.getCharacters(this.profile.membershipType, this.profile.membershipId)
-    .subscribe((result) => {
-      this.profile.characters = result;
+      .subscribe((result) => {
+        this.profile.characters = result;
+        
+        this.fetchingCharacters = false;
 
-      // filter by key of object
-      // console.log(Object.keys(this.profile.characterStats).filter(name => name.includes("Weapon")));
+        this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
+          .subscribe((result2: any) => {
+            this.profile.mergedStats = result2.mergedStats;
+            
+            // console.log(Object.values(out))
+            this.profile.characters.forEach((character1) => {
+              result2.characters.forEach((character2: Character) => {
+                if (character1.characterId == character2.characterId) {
+                  character1.mergedStats = character2.mergedStats;
+                }
+              })
+            });
 
-      // this.fetchingStats = false;
-      // this.saved = false;
-    });
+            console.log(this.profile);
 
-    // this.fetchingStats = true;
+            // filter by key of object
+            // console.log(Object.keys(this.profile.mergedStats).filter(name => name.includes("Weapon")));
+
+            this.fetchingStats = false;
+            this.saved = false;
+
+            this.displayedStats = this.profile.mergedStats;
+          });
+      });
   }
 
-  getStats(profile: Profile): void {
-    this.profile = profile;
+  updateStats(characterId: string): void {
+    // console.log(`search received ${characterId}`);
 
-    this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
-    .subscribe((result) => {
-      this.profile.characterStats = result;
-
-      // filter by key of object
-      // console.log(Object.keys(this.profile.characterStats).filter(name => name.includes("Weapon")));
-
-      this.fetchingStats = false;
-      this.saved = false;
-    });
-
-    this.fetchingStats = true;
+    if (characterId.length == 0) {
+      this.displayedStats = this.profile.mergedStats;
+    } else {
+      this.profile.characters.forEach((character) => {
+        if (character.characterId == characterId && character.mergedStats != undefined) {
+          this.displayedStats = character.mergedStats;
+          return;
+        }
+      });
+    }
   }
 
   setProfile(profile: Profile): void {
