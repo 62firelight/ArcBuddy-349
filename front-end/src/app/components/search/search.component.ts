@@ -20,6 +20,7 @@ export class SearchComponent implements OnInit {
   statsVisibility = true;
   // @ViewChild(StatsComponent) stats!: StatsComponent;
 
+  fetchingCharacters = false;
   fetchingStats = false;
   fetchingProfiles = false;
   saved = false;
@@ -78,10 +79,13 @@ export class SearchComponent implements OnInit {
   fetchStats(profile: Profile): void {
     this.profile = profile;
     this.fetchingStats = true;
+    this.fetchingCharacters = true;
 
     this.profileService.getCharacters(this.profile.membershipType, this.profile.membershipId)
       .subscribe((result) => {
         this.profile.characters = result;
+        
+        this.fetchingCharacters = false;
 
         this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
           .subscribe((result2: any) => {

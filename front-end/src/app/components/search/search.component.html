@@ -50,17 +50,20 @@
     <!-- Stats display -->
     <div *ngIf="profile != undefined">
 
-        <button mat-raised-button *ngIf="profile.mergedStats != undefined"
-            (click)="addProfile(profile)">Save</button>
+        <h2> {{ profile.displayName }} </h2>
+        <button mat-raised-button *ngIf="profile.mergedStats != undefined" (click)="addProfile(profile)">Save</button>
         <p *ngIf="saved" class="saved">Profile successfully saved</p>
 
         <div class="row">
             <div class="column">
-                <app-characters *ngIf="fetchingStats == false" [characters]="profile.characters" (newCharacterIdEvent)="updateStats($event)"></app-characters>
+                <h3> Characters </h3>
+                <mat-spinner [diameter]="50" *ngIf="fetchingCharacters"></mat-spinner>
+                <app-characters *ngIf="fetchingCharacters == false" [characters]="profile.characters"
+                    (newCharacterIdEvent)="updateStats($event)"></app-characters>
             </div>
 
             <div class="column">
-                <h2> {{ profile.displayName }} stats </h2>
+                <h3> Stats </h3>
 
                 <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
 
