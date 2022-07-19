@@ -7,4 +7,6 @@ export interface Character {
     emblem: string;
 
     mergedStats?: Object;
+    pveStats?: Object;
+    pvpStats?: Object;
 }

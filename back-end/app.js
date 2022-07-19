@@ -154,7 +154,7 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
     const membershipType = req.params.type;
     const membershipId = req.params.id;
 
-    destiny.getHistoricalStatsForAccount(3, '4611686018468181342')
+    destiny.getHistoricalStatsForAccount(membershipType, membershipId)
         .then(response => {
             // console.log(JSON.stringify(response.Response, null, 2));
             // console.log(response.Response.mergedAllCharacters.results.allPvE.allTime);
@@ -162,45 +162,20 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
             var characterStats = {}
 
             // fetch merged stats for account
-            const mergedStats = response.Response.mergedAllCharacters.merged.allTime;
-            characterStats.mergedStats = {};
-            for (let [key, value] of Object.entries(mergedStats)) {
-                const statName = key
-                    // insert a space before all caps
-                    .replace(/([A-Z])/g, ' $1')
-                    // uppercase the first character
-                    .replace(/^./, function (str) { return str.toUpperCase(); });
-
-                const statValue = value.basic.displayValue;
-
-                characterStats.mergedStats[`${statName}`] = statValue;
-
-                // console.log(statName + ": " + statValue);
-            }
+            characterStats.mergedStats = response.Response.mergedAllCharacters.merged.allTime;
+            characterStats.pveStats = response.Response.mergedAllCharacters.results.allPvE.allTime;
+            characterStats.pvpStats = response.Response.mergedAllCharacters.results.allPvP.allTime;
 
             // fetch stats for individual characters
             characterStats.characters = [];
             const characters = response.Response.characters;
             for (let [key, value] of Object.entries(characters)) {
                 if (value.deleted == false) {
-                    const charMergedStats = value.merged.allTime;
-
                     const character = {};
-                    // characterStats.characters[`${value.characterId}`] = {};
                     character.characterId = value.characterId;
-                    character.mergedStats = {}
-
-                    for (let [key2, value2] of Object.entries(charMergedStats)) {
-                        const statName = key2
-                            // insert a space before all caps
-                            .replace(/([A-Z])/g, ' $1')
-                            // uppercase the first character
-                            .replace(/^./, function (str) { return str.toUpperCase(); });
-
-                        const statValue = value2.basic.displayValue;
-
-                        character.mergedStats[`${statName}`] = statValue;
-                    }
+                    character.mergedStats = value.merged.allTime;
+                    character.pveStats = value.results.allPvE.allTime;
+                    character.pvpStats = value.results.allPvP.allTime;
 
                     characterStats.characters.push(character);
                 }

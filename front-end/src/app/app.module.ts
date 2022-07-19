@@ -16,13 +16,18 @@ import { SearchComponent } from './components/search/search.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { CharactersComponent } from './components/characters/characters.component';
+import { CamelConverterPipe } from './components/pipes/camelConverter/camel-converter.pipe';
+import { DestinyStatPipe } from './components/pipes/destinyStat/destiny-stat.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
-    CharactersComponent
+    CharactersComponent,
+    CamelConverterPipe,
+    DestinyStatPipe
   ],
   imports: [
     BrowserModule,
@@ -38,7 +43,8 @@ import { CharactersComponent } from './components/characters/characters.componen
     MatButtonModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
-    MatRippleModule
+    MatRippleModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
