@@ -14,9 +14,12 @@ export class CharactersComponent implements OnInit {
   @Output()
   newCharacterIdEvent = new EventEmitter<string>(); 
 
+  currentId!: string;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.currentId = '';
   }
 
   displayCharacter(characterId: string) {
