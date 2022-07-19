@@ -16,10 +16,10 @@ export class SearchComponent implements OnInit {
   error!: string;
   profile!: Profile;
   profiles!: Profile[];
-  displayingCharacter!: boolean;
+
   displayedStats!: Object;
   currentId!: string;
-  currentMode!: number;
+  currentMode!: string;
   statsVisibility = true;
   // @ViewChild(StatsComponent) stats!: StatsComponent;
 
@@ -31,6 +31,8 @@ export class SearchComponent implements OnInit {
   constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
+    this.currentMode = 'Merged';
+
     this.profileService.getProfiles().subscribe((profiles) => {
       this.profiles = profiles;
 
@@ -112,84 +114,94 @@ export class SearchComponent implements OnInit {
             // console.log(Object.keys(this.profile.mergedStats).filter(name => name.includes("Weapon")));
 
             this.currentId = '';
-            this.displayingCharacter = false;
             this.fetchingStats = false;
             this.saved = false;
 
-            this.displayedStats = this.profile.mergedStats;
+            // this.displayedStats = this.profile.mergedStats;
+            this.displayedStats = this.getMode(this.currentMode, false);
           });
       });
   }
 
   updateStats(characterId: string): void {
-    // console.log(`search received ${characterId}`);
+    console.log(`search received ${characterId}`);
 
     if (characterId.length == 0) {
-      this.displayedStats = this.profile.mergedStats;
       this.currentId = '';
-      this.displayingCharacter = false;
+      this.displayedStats = this.getMode(this.currentMode, false);
     } else {
-      this.profile.characters.forEach((character) => {
-        if (character.characterId == characterId && character.mergedStats != undefined) {
-          this.displayedStats = character.mergedStats;
+      for (var character of this.profile.characters) {
+        if (characterId == character.characterId && character.mergedStats != undefined) {
           this.currentId = character.characterId;
-          return;
+          this.displayedStats = this.getMode(this.currentMode, false);
         }
-      });
-      this.displayingCharacter = true;
+      }
     }
   }
 
-  updateMode(mode: number): void {
+  getMode(mode: string, update: boolean): Object {
+    var fetchedStats = {};
+
     switch (mode) {
 
-      // Merged
-      case 0:
-        if (this.displayingCharacter == false) {
-          this.displayedStats = this.profile.mergedStats;
+      case 'Merged':
+        this.currentMode = mode;
+
+        if (this.currentId == '') {
+          fetchedStats = this.profile.mergedStats;
         } else {
-          this.profile.characters.forEach((character) => {
+          for (var character of this.profile.characters) {
             if (character.characterId == this.currentId && character.mergedStats != undefined) {
-              this.displayedStats = character.mergedStats;
+              fetchedStats = character.mergedStats;
               this.currentMode = mode;
-              return;
             }
-          });
+          }
         }
         break;
 
-      // PvE
-      case 1:
-        if (this.displayingCharacter == false) {
-          this.displayedStats = this.profile.pveStats;
+      case 'PvE':
+        this.currentMode = mode;
+
+        if (this.currentId == '') {
+          fetchedStats = this.profile.pveStats;
         } else {
-          this.profile.characters.forEach((character) => {
+          for (var character of this.profile.characters) {
             if (character.characterId == this.currentId && character.pveStats != undefined) {
-              this.displayedStats = character.pveStats;
+              fetchedStats = character.pveStats;
               this.currentMode = mode;
-              return;
             }
-          });
+          }
         }
         break;
 
-      // PvP
-      case 2:
-        if (this.displayingCharacter == false) {
-          this.displayedStats = this.profile.pvpStats;
+      case 'PvP':
+        this.currentMode = mode;
+
+        if (this.currentId == '') {
+          fetchedStats = this.profile.pvpStats;
         } else {
-          this.profile.characters.forEach((character) => {
+          for (var character of this.profile.characters) {
             if (character.characterId == this.currentId && character.pvpStats != undefined) {
-              this.displayedStats = character.pvpStats;
+              fetchedStats = character.pvpStats;
               this.currentMode = mode;
-              return;
             }
-          });
+          }
         }
         break;
       default:
+        fetchedStats = this.displayedStats;
+        console.log('Something went wrong. Displaying previously shown stats...');
+
         break;
     }
+
+    if (update) {
+      this.displayedStats = fetchedStats;
+    }
+
+    console.log(fetchedStats);
+
+    return fetchedStats;
   }
 
   setProfile(profile: Profile): void {
