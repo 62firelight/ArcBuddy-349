@@ -167,6 +167,17 @@ ul {
 /* Create two equal columns that sits next to each other */
 .column {
     flex: 50%;
+    /* float: left; */
+}
+
+.left {
+    flex: 15%;
+    /* width: 25%; */
+}
+
+.right {
+    flex: 85%;
+    /* width: 75%; */
 }
 
 .mat-card-content {
