@@ -65,7 +65,7 @@
             <div class="column">
                 <h3> Stats </h3>
 
-                <mat-button-toggle-group [(ngModel)]="currentMode" (change)="getMode(currentMode, true)"> 
+                <mat-button-toggle-group [(ngModel)]="currentMode" (change)="displayedStats=getMode(currentMode)"> 
                     <mat-button-toggle value="Merged">Merged</mat-button-toggle>
                     <mat-button-toggle value="PvE">PvE</mat-button-toggle>
                     <mat-button-toggle value="PvP">PvP</mat-button-toggle>
