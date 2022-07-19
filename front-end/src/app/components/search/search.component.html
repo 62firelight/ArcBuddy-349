@@ -51,7 +51,8 @@
     <div *ngIf="profile != undefined">
 
         <h2> {{ profile.displayName }} </h2>
-        <button mat-raised-button *ngIf="profile.mergedStats != undefined" (click)="addProfile(profile)">Save</button>
+        <button mat-raised-button 
+            [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">Save Stats</button>
         <p *ngIf="saved" class="saved">Profile successfully saved</p>
 
         <div class="row">
@@ -75,7 +76,7 @@
                 <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
 
                 <b *ngIf="fetchingStats == false 
-                    && checkEmptyObject(displayedStats)"><br>No {{ currentMode }} stats were found</b>
+                    && checkEmptyObject(displayedStats)"><br><br>No {{ currentMode }} stats were found</b>
 
                 <div class="grid">
                     <mat-card class="stat-card" *ngFor="let stat of displayedStats | keyvalue">
