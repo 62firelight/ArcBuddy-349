@@ -141,13 +141,13 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  getMode(mode: string): Object {
-    console.log(`Switching to ${mode}`);
+  getMode(newMode: string): Object {
+    console.log(`Showing ${newMode} stats`);
 
     var fetchedStats = {};
 
     if (this.currentId == '') {
-      switch (mode) {
+      switch (newMode) {
         case 'Merged':
           fetchedStats = this.profile.mergedStats;
           break;
@@ -164,7 +164,7 @@ export class SearchComponent implements OnInit {
     } else {
       for (var character of this.profile.characters) {
         if (character.characterId == this.currentId) {
-          switch (mode) {
+          switch (newMode) {
             case 'Merged':
               if (character.mergedStats != undefined) fetchedStats = character.mergedStats;
               break;
@@ -178,7 +178,7 @@ export class SearchComponent implements OnInit {
               break;
           }
 
-          this.currentMode = mode;
+          this.currentMode = newMode;
         }
       }
     }
@@ -187,7 +187,7 @@ export class SearchComponent implements OnInit {
       fetchedStats = this.displayedStats;
       console.log('Something went wrong. Displaying previously shown stats...');
     }
-    
+
     // console.log(fetchedStats);
 
     return fetchedStats;
