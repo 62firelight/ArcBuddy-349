@@ -10,4 +10,6 @@ export interface Profile {
 
     characters: Character[];
     mergedStats: Object;
+    pveStats: Object;
+    pvpStats: Object;
 }

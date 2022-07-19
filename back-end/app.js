@@ -163,6 +163,8 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
 
             // fetch merged stats for account
             characterStats.mergedStats = response.Response.mergedAllCharacters.merged.allTime;
+            characterStats.pveStats = response.Response.mergedAllCharacters.results.allPvE.allTime;
+            characterStats.pvpStats = response.Response.mergedAllCharacters.results.allPvP.allTime;
 
             // fetch stats for individual characters
             characterStats.characters = [];
@@ -172,6 +174,8 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
                     const character = {};
                     character.characterId = value.characterId;
                     character.mergedStats = value.merged.allTime;
+                    character.pveStats = value.results.allPvE.allTime;
+                    character.pvpStats = value.results.allPvP.allTime;
 
                     characterStats.characters.push(character);
                 }
