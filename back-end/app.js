@@ -171,7 +171,7 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
                 if (value.deleted == false) {
                     const character = {};
                     character.characterId = value.characterId;
-                    character.mergedStats = value.merged.allTimes;
+                    character.mergedStats = value.merged.allTime;
 
                     characterStats.characters.push(character);
                 }

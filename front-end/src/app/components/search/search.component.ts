@@ -91,7 +91,6 @@ export class SearchComponent implements OnInit {
           .subscribe((result2: any) => {
             this.profile.mergedStats = result2.mergedStats;
             
-            console.log(this.profile);
             this.profile.characters.forEach((character1) => {
               result2.characters.forEach((character2: Character) => {
                 if (character1.characterId == character2.characterId) {
