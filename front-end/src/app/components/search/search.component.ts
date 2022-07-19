@@ -90,11 +90,15 @@ export class SearchComponent implements OnInit {
         this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
           .subscribe((result2: any) => {
             this.profile.mergedStats = result2.mergedStats;
-            
+            this.profile.pveStats = result2.pveStats;
+            this.profile.pvpStats = result2.pvpStats;
+
             this.profile.characters.forEach((character1) => {
               result2.characters.forEach((character2: Character) => {
                 if (character1.characterId == character2.characterId) {
                   character1.mergedStats = character2.mergedStats;
+                  character1.pveStats = character2.pveStats;
+                  character1.pvpStats = character2.pvpStats;
                 }
               })
             });
