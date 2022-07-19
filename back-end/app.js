@@ -154,7 +154,7 @@ app.get("/api/players/account/:type/:id", async (req, res) => {
     const membershipType = req.params.type;
     const membershipId = req.params.id;
 
-    destiny.getHistoricalStatsForAccount(3, '4611686018468181342')
+    destiny.getHistoricalStatsForAccount(membershipType, membershipId)
         .then(response => {
             // console.log(JSON.stringify(response.Response, null, 2));
             // console.log(response.Response.mergedAllCharacters.results.allPvE.allTime);
