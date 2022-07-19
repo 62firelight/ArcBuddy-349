@@ -193,6 +193,10 @@ export class SearchComponent implements OnInit {
     return fetchedStats;
   }
 
+  checkEmptyObject(obj: Object) {
+    return Object.keys(obj).length == 0;
+  }
+
   setProfile(profile: Profile): void {
     // console.log(profile);
 
