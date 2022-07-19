@@ -16,7 +16,10 @@ export class SearchComponent implements OnInit {
   error!: string;
   profile!: Profile;
   profiles!: Profile[];
+  displayingCharacter!: boolean;
   displayedStats!: Object;
+  currentId!: string;
+  currentMode!: number;
   statsVisibility = true;
   // @ViewChild(StatsComponent) stats!: StatsComponent;
 
@@ -84,7 +87,7 @@ export class SearchComponent implements OnInit {
     this.profileService.getCharacters(this.profile.membershipType, this.profile.membershipId)
       .subscribe((result) => {
         this.profile.characters = result;
-        
+
         this.fetchingCharacters = false;
 
         this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
@@ -108,6 +111,8 @@ export class SearchComponent implements OnInit {
             // filter by key of object
             // console.log(Object.keys(this.profile.mergedStats).filter(name => name.includes("Weapon")));
 
+            this.currentId = '';
+            this.displayingCharacter = false;
             this.fetchingStats = false;
             this.saved = false;
 
@@ -121,13 +126,69 @@ export class SearchComponent implements OnInit {
 
     if (characterId.length == 0) {
       this.displayedStats = this.profile.mergedStats;
+      this.currentId = '';
+      this.displayingCharacter = false;
     } else {
       this.profile.characters.forEach((character) => {
         if (character.characterId == characterId && character.mergedStats != undefined) {
           this.displayedStats = character.mergedStats;
+          this.currentId = character.characterId;
           return;
         }
       });
+      this.displayingCharacter = true;
+    }
+  }
+
+  updateMode(mode: number): void {
+    switch (mode) {
+
+      // Merged
+      case 0:
+        if (this.displayingCharacter == false) {
+          this.displayedStats = this.profile.mergedStats;
+        } else {
+          this.profile.characters.forEach((character) => {
+            if (character.characterId == this.currentId && character.mergedStats != undefined) {
+              this.displayedStats = character.mergedStats;
+              this.currentMode = mode;
+              return;
+            }
+          });
+        }
+        break;
+
+      // PvE
+      case 1:
+        if (this.displayingCharacter == false) {
+          this.displayedStats = this.profile.pveStats;
+        } else {
+          this.profile.characters.forEach((character) => {
+            if (character.characterId == this.currentId && character.pveStats != undefined) {
+              this.displayedStats = character.pveStats;
+              this.currentMode = mode;
+              return;
+            }
+          });
+        }
+        break;
+
+      // PvP
+      case 2:
+        if (this.displayingCharacter == false) {
+          this.displayedStats = this.profile.pvpStats;
+        } else {
+          this.profile.characters.forEach((character) => {
+            if (character.characterId == this.currentId && character.pvpStats != undefined) {
+              this.displayedStats = character.pvpStats;
+              this.currentMode = mode;
+              return;
+            }
+          });
+        }
+        break;
+      default:
+        break;
     }
   }
 
