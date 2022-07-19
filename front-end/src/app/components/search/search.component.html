@@ -75,8 +75,8 @@
 
                 <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
 
-                <b *ngIf="fetchingStats == false 
-                    && checkEmptyObject(displayedStats)"><br><br>No {{ currentMode }} stats were found</b>
+                <div *ngIf="fetchingStats == false 
+                    && checkEmptyObject(displayedStats)"><br><br>No {{ currentMode }} stats were found</div>
 
                 <div class="grid">
                     <mat-card class="stat-card" *ngFor="let stat of displayedStats | keyvalue">
