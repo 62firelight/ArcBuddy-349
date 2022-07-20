@@ -79,7 +79,7 @@
                     <div *ngIf="fetchingStats == false 
                     && checkEmptyObject(displayedStats)"><br><br>No {{ currentMode }} stats were found</div>
 
-                    <mat-grid-list cols="8">
+                    <mat-grid-list cols="6">
                         <mat-grid-tile *ngFor="let stat of displayedStats | keyvalue">
                             <mat-grid-tile-header>
                                 {{ stat.key | camelConverter }}
