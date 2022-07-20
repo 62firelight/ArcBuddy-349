@@ -17,6 +17,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatGridListModule } from '@angular/material/grid-list';
+
 import { CharactersComponent } from './components/characters/characters.component';
 import { CamelConverterPipe } from './components/pipes/camelConverter/camel-converter.pipe';
 import { DestinyStatPipe } from './components/pipes/destinyStat/destiny-stat.pipe';
@@ -44,7 +46,8 @@ import { DestinyStatPipe } from './components/pipes/destinyStat/destiny-stat.pip
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatRippleModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

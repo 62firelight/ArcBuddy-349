@@ -1,13 +1,12 @@
-<mat-drawer-container class="content mat-app-background darkMode" autosize>
-
-    <h1>{{ title }}</h1>
+<mat-sidenav-container class="content mat-app-background darkMode" autosize>
 
     <!-- Sidenav -->
-    <mat-drawer #drawer class="stat-sidenav" mode="side" [opened]="false">
+    <mat-sidenav #drawer class="stat-sidenav" mode="side" [opened]="false" [fixedInViewport]=false>
         <h2>Saved Profiles</h2>
         <mat-icon matRipple (click)="ngOnInit()">
             <div class="refresh"> refresh</div>
         </mat-icon>
+
         <mat-spinner [diameter]="50" *ngIf="fetchingProfiles"></mat-spinner>
         <br>
 
@@ -25,71 +24,72 @@
                 </mat-card>
             </li>
         </ul>
-    </mat-drawer>
+    </mat-sidenav>
 
-    <!-- View Saved Profiles button that toggles sidenav -->
-    <button mat-raised-button type="button" mat-button (click)="drawer.toggle()">
-        {{ drawer.opened == true ? "Hide" : "Show" }} Saved Profiles
-    </button>
-    <br>
+    <mat-sidenav-content>
+        <h1>{{ title }}</h1>
+        <!-- View Saved Profiles button that toggles sidenav -->
+        <button mat-raised-button type="button" mat-button (click)="drawer.toggle()">
+            {{ drawer.opened == true ? "Hide" : "Show" }} Saved Profiles
+        </button>
+        <br>
 
-    <!-- Search bar -->
-    <form (ngSubmit)="onSubmit()" class="search-form">
-        <mat-form-field class="search-full-width" appearance="fill">
-            <mat-label for="text">Search Bungie Name...</mat-label>
-            <input matInput name="text" [(ngModel)]="name" placeholder="e.g. 62firelight#8173" autocomplete="off">
-            <button matSuffix mat-button class="search-button">
-                <mat-icon [ngStyle]="{'color':'white'}">search</mat-icon>
-            </button>
-        </mat-form-field>
-    </form>
-    <br>
+        <!-- Search bar -->
+        <form (ngSubmit)="onSubmit()" class="search-form">
+            <mat-form-field class="search-full-width" appearance="fill">
+                <mat-label for="text">Search Bungie Name...</mat-label>
+                <input matInput name="text" [(ngModel)]="name" placeholder="e.g. 62firelight#8173" autocomplete="off">
+                <button matSuffix mat-button class="search-button">
+                    <mat-icon [ngStyle]="{'color':'white'}">search</mat-icon>
+                </button>
+            </mat-form-field>
+        </form>
+        <br>
 
-    <mat-error>{{ error }}</mat-error>
+        <mat-error>{{ error }}</mat-error>
 
-    <!-- Stats display -->
-    <div *ngIf="profile != undefined">
+        <!-- Stats display -->
+        <div *ngIf="profile != undefined">
 
-        <h2> {{ profile.displayName }} </h2>
-        <button mat-raised-button 
-            [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">Save Stats</button>
-        <p *ngIf="saved" class="saved">Profile successfully saved</p>
+            <h2> {{ profile.displayName }} </h2>
+            <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">Save
+                Stats</button>
+            <p *ngIf="saved" class="saved">Profile successfully saved</p>
 
-        <div class="row">
-            <div class="column left">
-                <h3> Characters </h3>
-                <mat-spinner [diameter]="50" *ngIf="fetchingCharacters"></mat-spinner>
-                <app-characters *ngIf="fetchingCharacters == false" [characters]="profile.characters"
-                    (newCharacterIdEvent)="updateStats($event)"></app-characters>
-            </div>
+            <div class="row">
+                <div class="column left">
+                    <h3> Characters </h3>
+                    <mat-spinner [diameter]="50" *ngIf="fetchingCharacters"></mat-spinner>
+                    <app-characters *ngIf="fetchingCharacters == false" [characters]="profile.characters"
+                        (newCharacterIdEvent)="updateStats($event)"></app-characters>
+                </div>
 
-            <div class="column right">
-                <h3> Stats </h3>
+                <div class="column right">
+                    <h3> Stats </h3>
 
-                <mat-button-toggle-group *ngIf="fetchingStats == false"
-                    [(ngModel)]="currentMode" (change)="displayedStats=getMode(currentMode)">
-                    <mat-button-toggle value="Merged">Merged</mat-button-toggle>
-                    <mat-button-toggle value="PvE">PvE</mat-button-toggle>
-                    <mat-button-toggle value="PvP">PvP</mat-button-toggle>
-                </mat-button-toggle-group>
+                    <mat-button-toggle-group *ngIf="fetchingStats == false" [(ngModel)]="currentMode"
+                        (change)="displayedStats=getMode(currentMode)">
+                        <mat-button-toggle value="Merged">Merged</mat-button-toggle>
+                        <mat-button-toggle value="PvE">PvE</mat-button-toggle>
+                        <mat-button-toggle value="PvP">PvP</mat-button-toggle>
+                    </mat-button-toggle-group>
 
-                <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
+                    <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
 
-                <div *ngIf="fetchingStats == false 
+                    <div *ngIf="fetchingStats == false 
                     && checkEmptyObject(displayedStats)"><br><br>No {{ currentMode }} stats were found</div>
 
-                <div class="grid">
-                    <mat-card class="stat-card" *ngFor="let stat of displayedStats | keyvalue">
-                        <mat-card-title>
-                            <b>{{ stat.key | camelConverter }}</b>
-                        </mat-card-title>
-                        <mat-card-content>
+                    <mat-grid-list cols="8">
+                        <mat-grid-tile *ngFor="let stat of displayedStats | keyvalue">
+                            <mat-grid-tile-header>
+                                {{ stat.key | camelConverter }}
+                            </mat-grid-tile-header>
                             {{ stat.value | destinyStat }}
-                        </mat-card-content>
-                    </mat-card>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+
                 </div>
             </div>
         </div>
-    </div>
-
-</mat-drawer-container>
+    </mat-sidenav-content>
+</mat-sidenav-container>

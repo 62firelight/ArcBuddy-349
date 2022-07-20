@@ -180,6 +180,10 @@ ul {
     /* width: 75%; */
 }
 
+.mat-grid-list {
+    margin: 16px;
+}
+
 .mat-card-content {
     font-size: 36px;
     font-weight: 1;
