@@ -17,7 +17,10 @@
     <div class="row">
         <div class="column left">
             <h3> Characters </h3>
-            <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
+            <mat-spinner 
+                [diameter]="50" 
+                *ngIf="fetchingStats">
+            </mat-spinner>
             <app-characters 
                 *ngIf="fetchingStats == false" 
                 [characters]="profile.characters"
@@ -38,9 +41,14 @@
                 <mat-button-toggle value="PvP">PvP</mat-button-toggle>
             </mat-button-toggle-group>
 
-            <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
+            <mat-spinner 
+                [diameter]="50" 
+                *ngIf="fetchingStats">
+            </mat-spinner>
 
-            <div *ngIf="fetchingStats == false && checkEmptyObject(displayedStats)">
+            <div 
+                *ngIf="fetchingStats == false && 
+                checkEmptyObject(displayedStats)">
                 <br>
                 <br>
                 No {{ currentMode }} stats were found
