@@ -35,7 +35,7 @@ export class ProfileService {
   }
 
   getProfile(name: string | undefined): Observable<Profile> {
-    const url = `api/players/stats/${name}`;
+    const url = `api/players/${name}`;
     return this.http.get<Profile>(url);
   }
 
@@ -50,7 +50,7 @@ export class ProfileService {
   }
 
   deleteProfile(name: string | undefined): Observable<Profile> {
-    const url = `api/players/stats/${name}`;
+    const url = `api/players/${name}`;
     return this.http.delete<Profile>(url);
   }
 }

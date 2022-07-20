@@ -252,7 +252,7 @@ app.get("/api/players/stats", async (req, res) => {
     }
 });
 
-app.get("/api/players/stats/:name", async (req, res) => {
+app.get("/api/players/:name", async (req, res) => {
     try {
         // Retrieve specific snapshot of profile from S3 bucket
         // const response = await getObjectCommand({
@@ -277,12 +277,12 @@ app.get("/api/players/stats/:name", async (req, res) => {
         // });
 
         // Search through snapshots array for the requested display name (WARNING: slow for large arrays)
-        profile = snapshots.find(element =>
-            element.Key.localeCompare(req.params.name) == 0
+        profile = snapshots.find(element => 
+            element.displayName.localeCompare(req.params.name) == 0
         );
 
         if (profile != undefined) {
-            res.status(200).send(profile.Body);
+            res.status(200).send(profile);
         }
         else {
             throw ("No profile with that display name was found!");
@@ -294,7 +294,7 @@ app.get("/api/players/stats/:name", async (req, res) => {
     }
 });
 
-app.delete("/api/players/stats/:name", async (req, res) => {
+app.delete("/api/players/:name", async (req, res) => {
     try {
         // Delete specific snapshot of profile from S3 bucket
         // const response = await deleteObjectCommand({
@@ -302,10 +302,14 @@ app.delete("/api/players/stats/:name", async (req, res) => {
         //     Key: req.params.name + ".json"
         // });
 
+        var origSnapshotLength = snapshots.length;
+
         // Delete specific snapshot of profile from array
         snapshots = snapshots.filter(element =>
-            element.Key.localeCompare(req.params.name) != 0
+            element.displayName.localeCompare(req.params.name) != 0
         );
+
+        if (snapshots.length < origSnapshotLength) console.log("Successfully deleted " + req.params.name);
 
         res.status(204).send();
     } catch (error) {
@@ -324,10 +328,7 @@ app.post("/api/players/stats", async (req, res) => {
         //     Body: JSON.stringify(req.body)
         // });
 
-        const response = snapshots.push({
-            Key: req.body.displayName,
-            Body: req.body
-        });
+        snapshots.push(req.body);
 
         console.log("Successfully added " + req.body.displayName);
 

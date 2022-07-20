@@ -15,7 +15,7 @@
             <li *ngFor="let profile of profiles" id="buttons">
                 <mat-card class="profile-card">
                     <div matRipple (click)="setProfile(profile)">
-                        {{ profile.Key }}
+                        {{ profile.displayName }}
                     </div>
                     <div class="profile-card-delete">
                         <mat-icon matRipple (click)="deleteProfile(profile)">

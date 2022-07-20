@@ -32,6 +32,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentMode = 'Merged';
+    this.currentId = '';
 
     this.profileService.getProfiles().subscribe((profiles) => {
       this.profiles = profiles;
@@ -200,14 +201,19 @@ export class SearchComponent implements OnInit {
   setProfile(profile: Profile): void {
     // console.log(profile);
 
-    this.profileService.getProfile(profile.Key).subscribe((result) => {
+    this.profileService.getProfile(profile.displayName).subscribe((result) => {
       this.profile = result;
+      console.log(this.profile);
+      this.displayedStats = this.getMode(this.currentMode);
+      // this.displayedStats = this.profile.mergedStats;
+      // this.currentId = '';
+      // this.currentMode = 'Merged';
       this.saved = false;
     });
   }
 
   deleteProfile(profile: Profile): void {
-    this.profileService.deleteProfile(profile.Key).subscribe((result) => {
+    this.profileService.deleteProfile(profile.displayName).subscribe((result) => {
       this.ngOnInit();
       this.fetchingProfiles = false;
       this.saved = false;
