@@ -203,11 +203,8 @@ export class SearchComponent implements OnInit {
 
     this.profileService.getProfile(profile.displayName).subscribe((result) => {
       this.profile = result;
-      console.log(this.profile);
-      this.displayedStats = this.getMode(this.currentMode);
-      // this.displayedStats = this.profile.mergedStats;
-      // this.currentId = '';
-      // this.currentMode = 'Merged';
+      this.currentId = '';
+      this.updateStats(this.currentId);
       this.saved = false;
     });
   }

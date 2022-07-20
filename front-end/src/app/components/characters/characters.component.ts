@@ -11,15 +11,15 @@ export class CharactersComponent implements OnInit {
   @Input()
   characters!: Character[];
 
+  @Input()
+  currentId!: string;
+
   @Output()
   newCharacterIdEvent = new EventEmitter<string>(); 
-
-  currentId!: string;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.currentId = '';
   }
 
   displayCharacter(characterId: string) {

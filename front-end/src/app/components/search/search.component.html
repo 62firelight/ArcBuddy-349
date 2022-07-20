@@ -69,9 +69,9 @@
                 <div class="row">
                     <div class="column left">
                         <h3> Characters </h3>
-                        <mat-spinner [diameter]="50" *ngIf="fetchingCharacters"></mat-spinner>
-                        <app-characters *ngIf="fetchingCharacters == false" [characters]="profile.characters"
-                            (newCharacterIdEvent)="updateStats($event)"></app-characters>
+                        <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
+                        <app-characters *ngIf="fetchingStats == false" [characters]="profile.characters"
+                            [currentId]="currentId" (newCharacterIdEvent)="updateStats($event)"></app-characters>
                     </div>
 
                     <div class="column right">
