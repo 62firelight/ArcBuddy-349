@@ -31,3 +31,7 @@ mat-spinner {
 .right {
     flex: 85%;
 }
+
+.saved {
+    color: green;
+}
