@@ -21,7 +21,6 @@ export class SearchComponent implements OnInit {
   currentId!: string;
   currentMode!: string;
   statsVisibility = true;
-  // @ViewChild(StatsComponent) stats!: StatsComponent;
 
   fetchingCharacters = false;
   fetchingStats = false;
