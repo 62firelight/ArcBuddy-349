@@ -23,6 +23,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { CharactersComponent } from './components/characters/characters.component';
 import { CamelConverterPipe } from './components/pipes/camelConverter/camel-converter.pipe';
 import { DestinyStatPipe } from './components/pipes/destinyStat/destiny-stat.pipe';
+import { StatsComponent } from './components/stats/stats.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { DestinyStatPipe } from './components/pipes/destinyStat/destiny-stat.pip
     SearchComponent,
     CharactersComponent,
     CamelConverterPipe,
-    DestinyStatPipe
+    DestinyStatPipe,
+    StatsComponent
   ],
   imports: [
     BrowserModule,

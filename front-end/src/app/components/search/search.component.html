@@ -57,8 +57,9 @@
 
             <mat-error>{{ error }}</mat-error>
 
-            <!-- Stats display -->
-            <div *ngIf="profile != undefined">
+            <!-- Stats display -->  
+            <app-stats></app-stats>
+            <!-- <div *ngIf="profile != undefined">
 
                 <h2> {{ profile.displayName }} </h2>
                 <button mat-raised-button [disabled]="profile.mergedStats == undefined"
@@ -100,7 +101,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div> -->
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
