@@ -18,6 +18,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { CharactersComponent } from './components/characters/characters.component';
 import { CamelConverterPipe } from './components/pipes/camelConverter/camel-converter.pipe';
@@ -47,7 +48,8 @@ import { DestinyStatPipe } from './components/pipes/destinyStat/destiny-stat.pip
     MatSidenavModule,
     MatRippleModule,
     MatButtonToggleModule,
-    MatGridListModule
+    MatGridListModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
