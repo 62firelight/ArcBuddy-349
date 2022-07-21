@@ -1,0 +1,33 @@
+.mat-grid-tile-header {
+    font-size: 18px;
+    font-weight: 1;
+    text-align: center;
+}
+
+mat-spinner {
+    margin: auto;
+    margin-top: 32px;
+}
+
+.mat-grid-list {
+    margin: 16px;
+}
+
+.row {
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.column {
+    flex: 50%;
+}
+
+.left {
+    flex: 15%;
+}
+
+.right {
+    flex: 85%;
+}

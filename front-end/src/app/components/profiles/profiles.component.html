@@ -1,0 +1,27 @@
+<h2>Saved Profiles</h2>
+<mat-icon matRipple (click)="ngOnInit()">
+    <div class="refresh"> refresh</div>
+</mat-icon>
+
+<p class="saved">
+    {{ error }}
+</p>
+
+<mat-spinner [diameter]="50" *ngIf="fetchingProfiles">
+</mat-spinner>
+<br>
+
+<ul>
+    <li *ngFor="let profile of profiles" id="buttons">
+        <mat-card class="profile-card">
+            <div matRipple (click)="setProfile(profile)">
+                {{ profile.displayName }}
+            </div>
+            <div class="profile-card-delete">
+                <mat-icon matRipple (click)="deleteProfile(profile)">
+                    <div class="delete">close</div>
+                </mat-icon>
+            </div>
+        </mat-card>
+    </li>
+</ul>

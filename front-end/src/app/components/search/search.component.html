@@ -1,106 +1,15 @@
-<div class="content mat-app-background darkMode" autosize>
-
-    <mat-toolbar>
-        <button (click)="sidenav.toggle()" mat-icon-button>
-            <mat-icon>menu</mat-icon>
-        </button>
-        <h1>{{ title }}</h1>
-    </mat-toolbar>
-
-    <mat-sidenav-container class="content mat-app-background darkMode" autosize>
-
-        <!-- Sidenav -->
-        <mat-sidenav #sidenav class="stat-sidenav" mode="side" [opened]="false">
-            <h2>Saved Profiles</h2>
-            <mat-icon matRipple (click)="ngOnInit()">
-                <div class="refresh"> refresh</div>
+<form (ngSubmit)="onSubmit()" class="search-form">
+    <mat-form-field class="search-full-width" appearance="fill">
+        <mat-label for="text">
+            Search Bungie Name...
+        </mat-label>
+        <input matInput name="text" [(ngModel)]="name" placeholder="e.g. 62firelight#8173" autocomplete="off">
+        <button matSuffix mat-button class="search-button">
+            <mat-icon [ngStyle]="{'color':'white'}">
+                search
             </mat-icon>
-
-            <mat-spinner [diameter]="50" *ngIf="fetchingProfiles"></mat-spinner>
-            <br>
-
-            <ul>
-                <li *ngFor="let profile of profiles" id="buttons">
-                    <mat-card class="profile-card">
-                        <div matRipple (click)="setProfile(profile)">
-                            {{ profile.displayName }}
-                        </div>
-                        <div class="profile-card-delete">
-                            <mat-icon matRipple (click)="deleteProfile(profile)">
-                                <div class="delete">close</div>
-                            </mat-icon>
-                        </div>
-                    </mat-card>
-                </li>
-            </ul>
-        </mat-sidenav>
-
-        <mat-sidenav-content>
-            <!-- View Saved Profiles button that toggles sidenav
-            <button mat-raised-button type="button" mat-button (click)="drawer.toggle()">
-                {{ drawer.opened == true ? "Hide" : "Show" }} Saved Profiles
-            </button>
-            <br> -->
-
-            <!-- Search bar -->
-            <form (ngSubmit)="onSubmit()" class="search-form">
-                <mat-form-field class="search-full-width" appearance="fill">
-                    <mat-label for="text">Search Bungie Name...</mat-label>
-                    <input matInput name="text" [(ngModel)]="name" placeholder="e.g. 62firelight#8173"
-                        autocomplete="off">
-                    <button matSuffix mat-button class="search-button">
-                        <mat-icon [ngStyle]="{'color':'white'}">search</mat-icon>
-                    </button>
-                </mat-form-field>
-            </form>
-            <br>
-
-            <mat-error>{{ error }}</mat-error>
-
-            <!-- Stats display -->
-            <div *ngIf="profile != undefined">
-
-                <h2> {{ profile.displayName }} </h2>
-                <button mat-raised-button [disabled]="profile.mergedStats == undefined"
-                    (click)="addProfile(profile)">Save
-                    Stats</button>
-                <p *ngIf="saved" class="saved">Profile successfully saved</p>
-
-                <div class="row">
-                    <div class="column left">
-                        <h3> Characters </h3>
-                        <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
-                        <app-characters *ngIf="fetchingStats == false" [characters]="profile.characters"
-                            [currentId]="currentId" (newCharacterIdEvent)="updateStats($event)"></app-characters>
-                    </div>
-
-                    <div class="column right">
-                        <h3> Stats </h3>
-
-                        <mat-button-toggle-group *ngIf="fetchingStats == false" [(ngModel)]="currentMode"
-                            (change)="displayedStats=getMode(currentMode)">
-                            <mat-button-toggle value="Merged">Merged</mat-button-toggle>
-                            <mat-button-toggle value="PvE">PvE</mat-button-toggle>
-                            <mat-button-toggle value="PvP">PvP</mat-button-toggle>
-                        </mat-button-toggle-group>
-
-                        <mat-spinner [diameter]="50" *ngIf="fetchingStats"></mat-spinner>
-
-                        <div *ngIf="fetchingStats == false 
-                    && checkEmptyObject(displayedStats)"><br><br>No {{ currentMode }} stats were found</div>
-
-                        <mat-grid-list cols="6">
-                            <mat-grid-tile *ngFor="let stat of displayedStats | keyvalue">
-                                <mat-grid-tile-header>
-                                    {{ stat.key | camelConverter }}
-                                </mat-grid-tile-header>
-                                {{ stat.value | destinyStat }}
-                            </mat-grid-tile>
-                        </mat-grid-list>
-
-                    </div>
-                </div>
-            </div>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
-</div>
+        </button>
+    </mat-form-field>
+</form>
+<br>
+<mat-error>{{ error }}</mat-error>
