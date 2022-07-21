@@ -12,9 +12,9 @@ export class ProfilesComponent implements OnInit {
 
   profiles!: Profile[]
 
+  error = '';
+
   fetchingProfiles = false;
-  
-  saved = false;
 
   @Input()
   addingProfiles = new Subject<Profile>();
@@ -40,6 +40,8 @@ export class ProfilesComponent implements OnInit {
   }
 
   refresh(): void {
+    this.error = '';
+
     this.profileService.getProfiles().subscribe((profiles) => {
       this.profiles = profiles;
       this.fetchingProfiles = false;
@@ -49,25 +51,31 @@ export class ProfilesComponent implements OnInit {
   }
 
   addProfile(profile: Profile): void {
+    this.error = '';
+
     this.profileService.addProfile(profile).subscribe(() => {
       // console.log(`Successfully saved ${profile.displayName}`);
       this.refresh();
-      this.saved = true;
+
+      this.error = 'Profile successfully saved';
     });
   }
 
   setProfile(profile: Profile): void {
+    this.error = '';
+
     this.profileService.getProfile(profile.displayName).subscribe((result) => {
       this.setProfileEvent.emit(profile);
     });
   }
 
   deleteProfile(profile: Profile): void {
+    this.error = '';
+
     this.profileService.deleteProfile(profile.displayName).subscribe((result) => {
       // console.log(`Successfully deleted ${profile.displayName}`);
       this.refresh();
       this.fetchingProfiles = false;
-      this.saved = false;
     })
   }
 

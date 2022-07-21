@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
 import { Subject } from 'rxjs';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -12,13 +13,14 @@ export class HomeComponent implements OnInit {
 
   title = "Arc Buddy";
 
-  saved = false;
-
   changingStats = new Subject<Profile>();
 
   addingProfiles  = new Subject<Profile>();
 
   changingProfiles = new Subject<Profile>();
+
+  @ViewChild('sidenav')
+  sidenav!: MatSidenav;
 
   constructor(private profileService: ProfileService) { }
 
@@ -31,7 +33,7 @@ export class HomeComponent implements OnInit {
 
   addProfile(profile: Profile): void {
     this.addingProfiles.next(profile);
-    this.saved = true;
+    this.sidenav.open();
   }
 
 }

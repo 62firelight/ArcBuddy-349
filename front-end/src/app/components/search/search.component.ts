@@ -20,10 +20,6 @@ export class SearchComponent implements OnInit {
 
   profiles!: Profile[];
 
-  fetchingProfiles = false;
-
-  saved = false;
-
   changingStats: Subject<Profile> = new Subject<Profile>();
   
   changingProfiles: Subject<Profile> = new Subject<Profile>();
@@ -34,12 +30,6 @@ export class SearchComponent implements OnInit {
   constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
-    this.profileService.getProfiles().subscribe((profiles) => {
-      this.profiles = profiles;
-      this.fetchingProfiles = false;
-    });
-
-    this.fetchingProfiles = true;
   }
 
   onSubmit(): void {
@@ -57,35 +47,14 @@ export class SearchComponent implements OnInit {
 
     var name = nameId[0];
     var id = nameId[1];
-
     // console.log("Bungie name: " + name + "#" + id);
 
     this.profileService.getName(name, id).subscribe((result) => {
       // console.log(result);
       this.error = ``;
-
       this.newProfileEvent.emit(result);
-      // this.changingStats.next(result);
-
-      this.saved = false;
     }, (error) => {
       this.error = `Couldn't find requested Bungie Name. Are you sure that ${this.name} is a registered Bungie.net user?`;
     });
   }
-
-  setProfile(profile: Profile): void {
-    this.profileService.getProfile(profile.displayName).subscribe((result) => {
-      // this.newProfileEvent.emit(result);
-      this.changingProfiles.next(result);
-    });
-  }
-
-  addProfile(profile: Profile): void {
-    this.profileService.addProfile(profile).subscribe(() => {
-      // console.log("Successfully saved profile");
-      this.ngOnInit();
-      this.saved = true;
-    });
-  }
-
 }

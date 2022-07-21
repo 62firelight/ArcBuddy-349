@@ -28,9 +28,6 @@ export class StatsComponent implements OnInit {
   fetchingProfiles = false;
 
   @Input()
-  saved = false;
-
-  @Input()
   changingStats: Subject<Profile> = new Subject<Profile>();
 
   @Input()
@@ -55,8 +52,6 @@ export class StatsComponent implements OnInit {
     this.changingProfiles.subscribe((profile) => {
       this.profile = profile;
       this.currentId = '';
-
-      this.saved = false;
 
       this.updateStats(this.currentId);
     });
@@ -97,7 +92,6 @@ export class StatsComponent implements OnInit {
 
             this.currentId = '';
             this.fetchingStats = false;
-            this.saved = false;
 
             this.displayedStats = this.getMode(this.currentMode);
           });

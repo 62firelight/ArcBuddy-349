@@ -5,6 +5,10 @@
     <div class="refresh"> refresh</div>
 </mat-icon>
 
+<p class="saved">
+    {{ error }}
+</p>
+
 <mat-spinner 
     [diameter]="50" 
     *ngIf="fetchingProfiles">
