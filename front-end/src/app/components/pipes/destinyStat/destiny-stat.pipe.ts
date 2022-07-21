@@ -21,8 +21,6 @@ import { TimePlayedPipe } from '../timePlayed/time-played.pipe';
 export class DestinyStatPipe implements PipeTransform {
 
   transform(value: any): string {
-    console.log(value);
-
     if (value.statId == 'secondsPlayed') {
       value = value.basic.value;
 
