@@ -190,4 +190,10 @@ export class StatsComponent implements OnInit {
     this.addProfileEvent.emit(profile);
   }
 
+  ngOnDestroy(): void {
+    this.changingStats.unsubscribe();
+
+    this.changingProfiles.unsubscribe();
+  }
+
 }
