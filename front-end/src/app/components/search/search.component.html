@@ -89,15 +89,9 @@
 
             <!-- Stats display -->  
             <app-stats 
-                [profile]="profile" 
-                [displayedStats]="displayedStats"
-                [currentId]="currentId"
-                [currentMode]="currentMode"
-                [statsVisibility]="statsVisibility"
-                [fetchingCharacters]="fetchingCharacters"
-                [fetchingStats]="fetchingStats"
-                [fetchingProfiles]="fetchingProfiles"
                 [saved]="saved"
+                [changingStats]="changingStats"
+                [changingProfiles]="changingProfiles"
                 (addProfileEvent)="addProfile($event)"
                 >
             </app-stats>
