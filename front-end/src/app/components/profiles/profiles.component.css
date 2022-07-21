@@ -1,0 +1,31 @@
+.profile-card {
+    cursor: pointer;
+    max-width: 150px;
+    padding: 0px;
+    margin: 16px;
+}
+
+mat-icon {
+    cursor: pointer;
+}
+
+mat-icon, .delete {
+    color: red;
+    padding: 4px;
+}
+
+mat-icon, .refresh {
+    color: white;
+    align-items: center;
+}
+
+mat-spinner {
+    margin: auto;
+    margin-top: 32px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}

@@ -15,13 +15,17 @@ export class SearchComponent implements OnInit {
   title = "Arc Buddy";
 
   name!: string;
+
   error!: string;
+
   profiles!: Profile[];
 
   fetchingProfiles = false;
+
   saved = false;
 
   changingStats: Subject<Profile> = new Subject<Profile>();
+  
   changingProfiles: Subject<Profile> = new Subject<Profile>();
 
   constructor(private profileService: ProfileService) { }
@@ -66,19 +70,9 @@ export class SearchComponent implements OnInit {
   }
 
   setProfile(profile: Profile): void {
-    // console.log(profile);
-
     this.profileService.getProfile(profile.displayName).subscribe((result) => {
       this.changingProfiles.next(result);
     });
-  }
-
-  deleteProfile(profile: Profile): void {
-    this.profileService.deleteProfile(profile.displayName).subscribe((result) => {
-      this.ngOnInit();
-      this.fetchingProfiles = false;
-      this.saved = false;
-    })
   }
 
   addProfile(profile: Profile): void {
