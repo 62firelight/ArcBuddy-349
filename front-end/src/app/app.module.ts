@@ -24,6 +24,7 @@ import { CharactersComponent } from './components/characters/characters.componen
 import { CamelConverterPipe } from './components/pipes/camelConverter/camel-converter.pipe';
 import { DestinyStatPipe } from './components/pipes/destinyStat/destiny-stat.pipe';
 import { StatsComponent } from './components/stats/stats.component';
+import { ProfilesComponent } from './components/profiles/profiles.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { StatsComponent } from './components/stats/stats.component';
     CharactersComponent,
     CamelConverterPipe,
     DestinyStatPipe,
-    StatsComponent
+    StatsComponent,
+    ProfilesComponent
   ],
   imports: [
     BrowserModule,
