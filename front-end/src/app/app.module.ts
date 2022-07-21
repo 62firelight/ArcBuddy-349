@@ -27,6 +27,7 @@ import { StatsComponent } from './components/stats/stats.component';
 import { ProfilesComponent } from './components/profiles/profiles.component';
 import { HomeComponent } from './components/home/home.component';
 import { TimePlayedPipe } from './components/pipes/timePlayed/time-played.pipe';
+import { StatComponent } from './components/stat/stat.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { TimePlayedPipe } from './components/pipes/timePlayed/time-played.pipe';
     StatsComponent,
     ProfilesComponent,
     HomeComponent,
-    TimePlayedPipe
+    TimePlayedPipe,
+    StatComponent
   ],
   imports: [
     BrowserModule,
