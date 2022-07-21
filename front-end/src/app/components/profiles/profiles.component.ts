@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -15,6 +16,12 @@ export class ProfilesComponent implements OnInit {
   
   saved = false;
 
+  @Input()
+  addingProfiles = new Subject<Profile>();
+
+  @Input()
+  changingProfiles = new Subject<Profile>();
+
   @Output()
   setProfileEvent = new EventEmitter<Profile>();
 
@@ -22,6 +29,14 @@ export class ProfilesComponent implements OnInit {
 
   ngOnInit(): void {
     this.refresh();
+
+    this.addingProfiles.subscribe((profile) => {
+      this.addProfile(profile);
+    });
+
+    this.changingProfiles.subscribe((profile) => {
+      this.setProfile(profile);
+    });
   }
 
   refresh(): void {
@@ -33,6 +48,14 @@ export class ProfilesComponent implements OnInit {
     this.fetchingProfiles = true;
   }
 
+  addProfile(profile: Profile): void {
+    this.profileService.addProfile(profile).subscribe(() => {
+      // console.log(`Successfully saved ${profile.displayName}`);
+      this.refresh();
+      this.saved = true;
+    });
+  }
+
   setProfile(profile: Profile): void {
     this.profileService.getProfile(profile.displayName).subscribe((result) => {
       this.setProfileEvent.emit(profile);
@@ -41,7 +64,8 @@ export class ProfilesComponent implements OnInit {
 
   deleteProfile(profile: Profile): void {
     this.profileService.deleteProfile(profile.displayName).subscribe((result) => {
-      this.ngOnInit();
+      // console.log(`Successfully deleted ${profile.displayName}`);
+      this.refresh();
       this.fetchingProfiles = false;
       this.saved = false;
     })

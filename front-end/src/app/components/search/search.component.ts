@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { Character } from 'src/app/Character';
@@ -27,6 +27,9 @@ export class SearchComponent implements OnInit {
   changingStats: Subject<Profile> = new Subject<Profile>();
   
   changingProfiles: Subject<Profile> = new Subject<Profile>();
+
+  @Output()
+  newProfileEvent = new EventEmitter<Profile>();
 
   constructor(private profileService: ProfileService) { }
 
@@ -61,7 +64,8 @@ export class SearchComponent implements OnInit {
       // console.log(result);
       this.error = ``;
 
-      this.changingStats.next(result);
+      this.newProfileEvent.emit(result);
+      // this.changingStats.next(result);
 
       this.saved = false;
     }, (error) => {
@@ -71,6 +75,7 @@ export class SearchComponent implements OnInit {
 
   setProfile(profile: Profile): void {
     this.profileService.getProfile(profile.displayName).subscribe((result) => {
+      // this.newProfileEvent.emit(result);
       this.changingProfiles.next(result);
     });
   }

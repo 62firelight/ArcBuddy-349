@@ -1,67 +1,28 @@
-<div class="content mat-app-background darkMode" autosize>
-
-    <mat-toolbar>
+<form 
+    (ngSubmit)="onSubmit()" 
+    class="search-form">
+    <mat-form-field 
+        class="search-full-width" 
+        appearance="fill">
+        <mat-label 
+            for="text">
+            Search Bungie Name...
+        </mat-label>
+        <input 
+            matInput 
+            name="text" 
+            [(ngModel)]="name" 
+            placeholder="e.g. 62firelight#8173" 
+            autocomplete="off">
         <button 
-            (click)="sidenav.toggle()" 
-            mat-icon-button>
-            <mat-icon>menu</mat-icon>
+            matSuffix 
+            mat-button class="search-button">
+            <mat-icon 
+                [ngStyle]="{'color':'white'}">
+                search
+            </mat-icon>
         </button>
-        <h1>{{ title }}</h1>
-    </mat-toolbar>
-
-    <mat-sidenav-container 
-        class="content mat-app-background darkMode" 
-        autosize>
-
-        <!-- Sidenav -->
-        <mat-sidenav 
-            #sidenav 
-            class="stat-sidenav" 
-            mode="side" 
-            [opened]="false">
-            <app-profiles (setProfileEvent)="setProfile($event)"></app-profiles>
-        </mat-sidenav>
-
-        <mat-sidenav-content>
-            <!-- View Saved Profiles button that toggles sidenav
-            <button mat-raised-button type="button" mat-button (click)="drawer.toggle()">
-                {{ drawer.opened == true ? "Hide" : "Show" }} Saved Profiles
-            </button>
-            <br> -->
-
-            <!-- Search bar -->
-            <form 
-                (ngSubmit)="onSubmit()" 
-                class="search-form">
-                <mat-form-field 
-                    class="search-full-width" 
-                    appearance="fill">
-                    <mat-label for="text">Search Bungie Name...</mat-label>
-                    <input 
-                        matInput 
-                        name="text" 
-                        [(ngModel)]="name" 
-                        placeholder="e.g. 62firelight#8173"
-                        autocomplete="off">
-                    <button 
-                        matSuffix 
-                        mat-button 
-                        class="search-button">
-                        <mat-icon [ngStyle]="{'color':'white'}">search</mat-icon>
-                    </button>
-                </mat-form-field>
-            </form>
-            <br>
-
-            <mat-error>{{ error }}</mat-error>
-
-            <!-- Stats display -->  
-            <app-stats 
-                [saved]="saved"
-                [changingStats]="changingStats"
-                [changingProfiles]="changingProfiles"
-                (addProfileEvent)="addProfile($event)">
-            </app-stats>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
-</div>
+    </mat-form-field>
+</form>
+<br>
+<mat-error>{{ error }}</mat-error>
