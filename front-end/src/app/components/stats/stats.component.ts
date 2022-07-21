@@ -111,6 +111,7 @@ export class StatsComponent implements OnInit {
         if (characterId == character.characterId && character.mergedStats != undefined) {
           this.currentId = character.characterId;
           this.displayedStats = this.getMode(this.currentMode);
+          console.log(this.displayedStats);
         }
       }
     }

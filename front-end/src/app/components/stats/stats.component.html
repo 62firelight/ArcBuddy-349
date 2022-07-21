@@ -36,20 +36,53 @@
                 No {{ currentMode }} stats were found
             </div>
 
-            <mat-grid-list cols="6">
+            <!-- <mat-grid-list cols="6">
                 <mat-grid-tile *ngFor="let stat of displayedStats | keyvalue">
                     <mat-grid-tile-header>
                         {{ stat.key | camelConverter }}
                     </mat-grid-tile-header>
                     {{ stat.value | destinyStat }}
                 </mat-grid-tile>
-            </mat-grid-list>
+            </mat-grid-list> -->
+
+            <!-- <mat-grid-list *ngIf="fetchingStats == false && 
+            checkEmptyObject(displayedStats) == false"  cols="6">
+                <mat-grid-tile>
+                    <mat-grid-tile-header>
+                        KD Ratio
+                    </mat-grid-tile-header>
+                    {{ displayedStats.killsDeathsRatio.basic.displayValue | number }}
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-grid-tile-header>
+                        Kills
+                    </mat-grid-tile-header>
+                    {{ displayedStats.kills.basic.displayValue | number }}
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-grid-tile-header>
+                        Deaths
+                    </mat-grid-tile-header>
+                    {{ displayedStats.deaths.basic.displayValue | number }}
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-grid-tile-header>
+                        Time Played
+                    </mat-grid-tile-header>
+                    {{ displayedStats.secondsPlayed.basic.value | timePlayed | number }} hours
+                </mat-grid-tile>
+            </mat-grid-list> -->
+            
+            <app-stat [displayedStats]="displayedStats"></app-stat>
 
             <!-- TODO: Show stats in sections
 
             For example, section 1 could include:
             secondsPlayed
-            killDeathsRatio
+            killsDeathsRatio
             kills
             deaths
             suicides
