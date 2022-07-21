@@ -11,28 +11,20 @@ import { ProfileService } from 'src/app/services/profile.service';
 })
 export class StatsComponent implements OnInit {
 
-  @Input()
   profile!: Profile;
 
-  @Input()
   displayedStats!: Object;
 
-  @Input()
   currentId!: string;
 
-  @Input()
   currentMode!: string;
 
-  @Input()
   statsVisibility = true;
 
-  @Input()
   fetchingCharacters = false;
 
-  @Input()
   fetchingStats = false;
 
-  @Input()
   fetchingProfiles = false;
 
   @Input()
@@ -87,15 +79,16 @@ export class StatsComponent implements OnInit {
             this.profile.pveStats = result2.pveStats;
             this.profile.pvpStats = result2.pvpStats;
 
-            this.profile.characters.forEach((character1) => {
-              result2.characters.forEach((character2: Character) => {
+            for (var character1 of this.profile.characters) {
+              for (var character2 of result2.characters) {
                 if (character1.characterId == character2.characterId) {
                   character1.mergedStats = character2.mergedStats;
                   character1.pveStats = character2.pveStats;
                   character1.pvpStats = character2.pvpStats;
+                  break;
                 }
-              })
-            });
+              }
+            }
 
             console.log(this.profile);
 
@@ -106,7 +99,6 @@ export class StatsComponent implements OnInit {
             this.fetchingStats = false;
             this.saved = false;
 
-            // this.displayedStats = this.profile.mergedStats;
             this.displayedStats = this.getMode(this.currentMode);
           });
       });
