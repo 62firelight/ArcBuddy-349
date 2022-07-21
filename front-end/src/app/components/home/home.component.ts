@@ -27,13 +27,4 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setProfile(profile: Profile): void {
-    this.changingProfiles.next(profile);
-  }
-
-  addProfile(profile: Profile): void {
-    this.addingProfiles.next(profile);
-    this.sidenav.open();
-  }
-
 }

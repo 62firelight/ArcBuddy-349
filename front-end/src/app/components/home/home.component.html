@@ -23,7 +23,7 @@
             <!-- Profiles display -->
             <app-profiles 
             [addingProfiles]="addingProfiles"
-            (setProfileEvent)="setProfile($event)">
+            (setProfileEvent)="changingProfiles.next($event)">
             </app-profiles>
         </mat-sidenav>
 
@@ -36,7 +36,7 @@
             <app-stats 
                 [changingStats]="changingStats"
                 [changingProfiles]="changingProfiles"
-                (addProfileEvent)="addProfile($event)">
+                (addProfileEvent)="addingProfiles.next($event); sidenav.open();">
             </app-stats>
         </mat-sidenav-content>
 
