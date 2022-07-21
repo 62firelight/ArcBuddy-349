@@ -1,25 +1,17 @@
 <div *ngIf="profile != undefined">
 
     <h2> {{ profile.displayName }} </h2>
-        
-    <button 
-        mat-raised-button 
-        [disabled]="profile.mergedStats == undefined"
-        (click)="addProfile(profile)">
+
+    <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
         Save Stats
     </button>
 
     <div class="row">
         <div class="column left">
             <h3> Characters </h3>
-            <mat-spinner 
-                [diameter]="50" 
-                *ngIf="fetchingStats">
+            <mat-spinner [diameter]="50" *ngIf="fetchingStats">
             </mat-spinner>
-            <app-characters 
-                *ngIf="fetchingStats == false" 
-                [characters]="profile.characters"
-                [currentId]="currentId" 
+            <app-characters *ngIf="fetchingStats == false" [characters]="profile.characters" [currentId]="currentId"
                 (newCharacterIdEvent)="updateStats($event)">
             </app-characters>
         </div>
@@ -27,22 +19,17 @@
         <div class="column right">
             <h3> Stats </h3>
 
-            <mat-button-toggle-group 
-                *ngIf="fetchingStats == false" 
-                [(ngModel)]="currentMode"
+            <mat-button-toggle-group *ngIf="fetchingStats == false" [(ngModel)]="currentMode"
                 (change)="displayedStats=getMode(currentMode)">
                 <mat-button-toggle value="Merged">Merged</mat-button-toggle>
                 <mat-button-toggle value="PvE">PvE</mat-button-toggle>
                 <mat-button-toggle value="PvP">PvP</mat-button-toggle>
             </mat-button-toggle-group>
 
-            <mat-spinner 
-                [diameter]="50" 
-                *ngIf="fetchingStats">
+            <mat-spinner [diameter]="50" *ngIf="fetchingStats">
             </mat-spinner>
 
-            <div 
-                *ngIf="fetchingStats == false && 
+            <div *ngIf="fetchingStats == false && 
                     checkEmptyObject(displayedStats)">
                 <br>
                 <br>
