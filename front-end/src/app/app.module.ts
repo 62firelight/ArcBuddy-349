@@ -26,6 +26,7 @@ import { DestinyStatPipe } from './components/pipes/destinyStat/destiny-stat.pip
 import { StatsComponent } from './components/stats/stats.component';
 import { ProfilesComponent } from './components/profiles/profiles.component';
 import { HomeComponent } from './components/home/home.component';
+import { TimePlayedPipe } from './components/pipes/timePlayed/time-played.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { HomeComponent } from './components/home/home.component';
     DestinyStatPipe,
     StatsComponent,
     ProfilesComponent,
-    HomeComponent
+    HomeComponent,
+    TimePlayedPipe
   ],
   imports: [
     BrowserModule,
