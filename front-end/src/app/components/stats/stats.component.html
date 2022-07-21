@@ -21,7 +21,7 @@
 
             <mat-button-toggle-group *ngIf="fetchingStats == false" [(ngModel)]="currentMode"
                 (change)="displayedStats=getMode(currentMode)">
-                <mat-button-toggle value="Merged">Merged</mat-button-toggle>
+                <mat-button-toggle value="Merged">All</mat-button-toggle>
                 <mat-button-toggle value="PvE">PvE</mat-button-toggle>
                 <mat-button-toggle value="PvP">PvP</mat-button-toggle>
             </mat-button-toggle-group>

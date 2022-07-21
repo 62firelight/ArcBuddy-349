@@ -39,7 +39,7 @@ export class StatsComponent implements OnInit {
   constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
-    this.currentMode = 'Merged';
+    this.currentMode = 'PvE';
     this.currentId = '';
 
     this.changingStats.subscribe((profile) => {
