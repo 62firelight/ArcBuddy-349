@@ -90,6 +90,8 @@ export class StatsComponent implements OnInit {
             // filter by key of object
             // console.log(Object.keys(this.profile.mergedStats).filter(name => name.includes("Weapon")));
 
+            // save current date in profile
+            this.profile.dateCreated = new Date();
             this.currentId = '';
             this.fetchingStats = false;
 
@@ -174,9 +176,6 @@ export class StatsComponent implements OnInit {
   }
 
   addProfile(profile: Profile) {
-    // save current date in profile
-    profile.dateCreated = new Date();
-
     this.addProfileEvent.emit(profile);
   }
 
