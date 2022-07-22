@@ -77,7 +77,7 @@ export class ProfilesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Result was ${result}`);
+      console.log(`Delete ${profile.displayName}? ${result}`);
 
       if (result == true) {
         this.deleteProfile(profile);
