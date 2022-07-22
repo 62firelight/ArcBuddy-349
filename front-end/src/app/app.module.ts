@@ -31,6 +31,7 @@ import { HomeComponent } from './components/home/home.component';
 import { TimePlayedPipe } from './components/pipes/timePlayed/time-played.pipe';
 import { StatComponent } from './components/stat/stat.component';
 import { ProfileDeleteDialog } from './components/profiles/profile-delete.component';
+import { StatSectionComponent } from './components/stat-section/stat-section.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ProfileDeleteDialog } from './components/profiles/profile-delete.compon
     HomeComponent,
     TimePlayedPipe,
     StatComponent,
-    ProfileDeleteDialog
+    ProfileDeleteDialog,
+    StatSectionComponent
   ],
   imports: [
     BrowserModule,
