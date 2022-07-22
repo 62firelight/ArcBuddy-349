@@ -1,6 +1,6 @@
 <div *ngIf="profile != undefined">
 
-    <h2> {{ profile.displayName }} </h2>
+    <h2> {{ profile.displayName }} <img class="profile-icon" [src]="profile.iconPath"></h2> 
 
     <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
         Save Stats

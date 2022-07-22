@@ -33,3 +33,7 @@ mat-spinner {
 .mat-card-title {
     margin: 1em 1em 1em 1em;
 }
+
+.profile-icon {
+    max-width: 1.25%;
+}
