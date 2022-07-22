@@ -69,3 +69,7 @@ mat-spinner {
     margin: auto;
     margin-top: 32px;
 }
+
+mat-sidenav {
+    max-width: 345px;
+}
