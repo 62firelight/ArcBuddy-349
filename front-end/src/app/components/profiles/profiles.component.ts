@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
+import { ProfileDeleteDialog } from './profile-delete.component';
 
 @Component({
   selector: 'app-profiles',
@@ -25,7 +27,7 @@ export class ProfilesComponent implements OnInit {
   @Output()
   setProfileEvent = new EventEmitter<Profile>();
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService, public deleteDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.refresh();
@@ -66,6 +68,20 @@ export class ProfilesComponent implements OnInit {
 
     this.profileService.getProfile(profile.displayName).subscribe((result) => {
       this.setProfileEvent.emit(profile);
+    });
+  }
+
+  openDeleteDialog(profile: Profile): void {
+    const dialogRef = this.deleteDialog.open(ProfileDeleteDialog, {
+      data: profile
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Result was ${result}`);
+
+      if (result == true) {
+        this.deleteProfile(profile);
+      }
     });
   }
 

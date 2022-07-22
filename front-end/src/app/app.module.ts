@@ -19,6 +19,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { CharactersComponent } from './components/characters/characters.component';
 import { CamelConverterPipe } from './components/pipes/camelConverter/camel-converter.pipe';
@@ -28,6 +29,7 @@ import { ProfilesComponent } from './components/profiles/profiles.component';
 import { HomeComponent } from './components/home/home.component';
 import { TimePlayedPipe } from './components/pipes/timePlayed/time-played.pipe';
 import { StatComponent } from './components/stat/stat.component';
+import { ProfileDeleteDialog } from './components/profiles/profile-delete.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { StatComponent } from './components/stat/stat.component';
     ProfilesComponent,
     HomeComponent,
     TimePlayedPipe,
-    StatComponent
+    StatComponent,
+    ProfileDeleteDialog
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,8 @@ import { StatComponent } from './components/stat/stat.component';
     MatRippleModule,
     MatButtonToggleModule,
     MatGridListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
