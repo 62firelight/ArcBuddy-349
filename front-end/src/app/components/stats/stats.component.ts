@@ -174,6 +174,9 @@ export class StatsComponent implements OnInit {
   }
 
   addProfile(profile: Profile) {
+    // save current date in profile
+    profile.dateCreated = new Date();
+
     this.addProfileEvent.emit(profile);
   }
 
