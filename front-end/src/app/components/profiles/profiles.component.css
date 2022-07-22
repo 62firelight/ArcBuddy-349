@@ -5,7 +5,11 @@
 } */
 
 .profile-name {
-    margin: 0 2em 0 0em;
+    margin: 0 2em 0 0;
+}
+
+.profile-name mat-card-subtitle {
+    margin: 0 0 0 0;
 }
 
 .profile-icon {
