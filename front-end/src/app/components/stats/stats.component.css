@@ -21,3 +21,10 @@ mat-spinner {
 .right {
     flex: 85%;
 }
+
+.stat-card {
+    /* max-width: 275px; */
+    min-height: 200px;
+    align-self: start;
+    margin: 10px 10px 10px 10px;
+}

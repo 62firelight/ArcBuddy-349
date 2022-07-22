@@ -9,7 +9,7 @@
 
     <mat-sidenav-container class="content mat-app-background darkMode" autosize>
 
-        <mat-sidenav #sidenav class="stat-sidenav" mode="side" [opened]="false">
+        <mat-sidenav #sidenav class="stat-sidenav" mode="side" [opened]="true">
             <!-- Profiles display -->
             <app-profiles [addingProfiles]="addingProfiles" (setProfileEvent)="changingProfiles.next($event)">
             </app-profiles>

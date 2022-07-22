@@ -1,7 +1,7 @@
 <mat-grid-list cols="6">
     <div *ngFor="let stat of displayedStats | keyvalue">
         <mat-grid-tile *ngIf="STAT_MAP.has(stat.key) == true" >
-            <mat-grid-tile-header>
+            <mat-grid-tile-header align="center">
                 {{ getStatName(stat.key) }}
             </mat-grid-tile-header>
             {{ isNumber(deriveStat(stat.value)) ? (deriveStat(stat.value) | number) : deriveStat(stat.value) }}

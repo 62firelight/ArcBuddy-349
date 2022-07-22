@@ -45,38 +45,48 @@
                 </mat-grid-tile>
             </mat-grid-list> -->
 
-            <!-- <mat-grid-list *ngIf="fetchingStats == false && 
-            checkEmptyObject(displayedStats) == false"  cols="6">
-                <mat-grid-tile>
-                    <mat-grid-tile-header>
-                        KD Ratio
-                    </mat-grid-tile-header>
-                    {{ displayedStats.killsDeathsRatio.basic.displayValue | number }}
-                </mat-grid-tile>
+            <!-- <mat-card class="stat-card">
+                <mat-card-title align="left">
+                    <b>General</b>
+                </mat-card-title>
+                <mat-grid-list *ngIf="fetchingStats == false && 
+            checkEmptyObject(displayedStats) == false" cols="6">
+                    <mat-grid-tile>
+                        <mat-grid-tile-header>
+                            KD Ratio
+                        </mat-grid-tile-header>
+                        {{ displayedStats.killsDeathsRatio.basic.displayValue | number }}
+                    </mat-grid-tile>
 
-                <mat-grid-tile>
-                    <mat-grid-tile-header>
-                        Kills
-                    </mat-grid-tile-header>
-                    {{ displayedStats.kills.basic.displayValue | number }}
-                </mat-grid-tile>
+                    <mat-grid-tile>
+                        <mat-grid-tile-header>
+                            Kills
+                        </mat-grid-tile-header>
+                        {{ displayedStats.kills.basic.displayValue | number }}
+                    </mat-grid-tile>
 
-                <mat-grid-tile>
-                    <mat-grid-tile-header>
-                        Deaths
-                    </mat-grid-tile-header>
-                    {{ displayedStats.deaths.basic.displayValue | number }}
-                </mat-grid-tile>
+                    <mat-grid-tile>
+                        <mat-grid-tile-header>
+                            Deaths
+                        </mat-grid-tile-header>
+                        {{ displayedStats.deaths.basic.displayValue | number }}
+                    </mat-grid-tile>
 
-                <mat-grid-tile>
-                    <mat-grid-tile-header>
-                        Time Played
-                    </mat-grid-tile-header>
-                    {{ displayedStats.secondsPlayed.basic.value | timePlayed | number }} hours
-                </mat-grid-tile>
-            </mat-grid-list> -->
-            
-            <app-stat [displayedStats]="displayedStats"></app-stat>
+                    <mat-grid-tile>
+                        <mat-grid-tile-header>
+                            Time Played
+                        </mat-grid-tile-header>
+                        {{ displayedStats.secondsPlayed.basic.value | timePlayed | number }} hours
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </mat-card> -->
+
+            <mat-card class="stat-card">
+                <mat-card-title align="left">
+                    <b>General</b>
+                </mat-card-title>
+                <app-stat [displayedStats]="displayedStats"></app-stat>
+            </mat-card>
 
             <!-- TODO: Show stats in sections
 

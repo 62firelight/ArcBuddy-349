@@ -13,7 +13,7 @@ export class StatsComponent implements OnInit {
 
   profile!: Profile;
 
-  displayedStats!: Object;
+  displayedStats!: any;
 
   currentId!: string;
 
