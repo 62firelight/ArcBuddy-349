@@ -1,1 +1,7 @@
-<p>stat-section works!</p>
+<mat-card class="stat-card">
+    <mat-card-title align="left">
+        <b>{{ sectionName }}</b>
+    </mat-card-title>
+    <app-stat *ngFor="let stat of stats | keyvalue" [statName]="stat.key" [statValue]="stat.value | destinyStat">
+    </app-stat>
+</mat-card>

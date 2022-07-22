@@ -1,4 +1,4 @@
-<mat-grid-list cols="6">
+<!-- <mat-grid-list cols="6">
     <div *ngFor="let stat of displayedStats | keyvalue">
         <mat-grid-tile *ngIf="STAT_MAP.has(stat.key) == true" >
             <mat-grid-tile-header align="center">
@@ -7,4 +7,8 @@
             {{ isNumber(deriveStat(stat.value)) ? (deriveStat(stat.value) | number) : deriveStat(stat.value) }}
         </mat-grid-tile>
     </div>
-</mat-grid-list>
+</mat-grid-list> -->
+
+<div>
+    {{ statName }}: {{ statValue }}
+</div>

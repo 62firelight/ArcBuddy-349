@@ -22,14 +22,6 @@ mat-spinner {
     flex: 85%;
 }
 
-.stat-card {
-    /* max-width: 275px; */
-    /* min-height: 12.5em; */
-    align-self: start;
-    /* margin: 32px 32px 32px 32px; */
-    margin: 2em 2em 2em 2em;
-}
-
 .mat-card-title {
     margin: 1em 1em 1em 1em;
 }

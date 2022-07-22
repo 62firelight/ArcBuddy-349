@@ -1,3 +1,4 @@
+import { DecimalPipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import { TimePlayedPipe } from '../timePlayed/time-played.pipe';
 /*
@@ -30,7 +31,10 @@ export class DestinyStatPipe implements PipeTransform {
       return `${value} hours`;
     }
 
-    return value.basic.displayValue;
+    const decimalPipe = new DecimalPipe("en-US");
+    const displayValue = decimalPipe.transform(value.basic.displayValue);
+
+    return displayValue != null ? displayValue : value.basic.displayValue;
   }
 
 }

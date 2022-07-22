@@ -11,6 +11,28 @@ import { ProfileService } from 'src/app/services/profile.service';
 })
 export class StatsComponent implements OnInit {
 
+  sections = new Map([
+    ['General',
+      new Map([
+        ['secondsPlayed', 'Time Played'],
+        ['killsDeathsRatio', "KD Ratio"],
+        ['kills', 'Kills'],
+        ['deaths', 'Deaths'],
+        ['activitiesCleared', 'Activites Cleared (PvE)'],
+        ['activitiesEntered', 'Activites Entered'],
+        ['weaponKillsSuper', 'Super Kills'],
+        ['weaponKillsGrenade', 'Grenade Kills'],
+        ['weaponKillsMelee', 'Melee Kills'],
+        ['publicEventsCompleted', 'Public Events Completed']
+      ])
+    ],
+    ['Weapon Kills',
+      new Map([
+        ['weaponKillsHandCannon', 'Hand Cannon']
+      ])
+    ]
+  ]);
+
   profile!: Profile;
 
   displayedStats!: any;
@@ -26,6 +48,8 @@ export class StatsComponent implements OnInit {
   fetchingStats = false;
 
   fetchingProfiles = false;
+
+  newDisplayedStatsEvent = new Subject<Object>();
 
   @Input()
   changingStats: Subject<Profile> = new Subject<Profile>();
@@ -167,6 +191,8 @@ export class StatsComponent implements OnInit {
     }
 
     // console.log(fetchedStats);
+
+    this.newDisplayedStatsEvent.next(fetchedStats);
 
     return fetchedStats;
   }
