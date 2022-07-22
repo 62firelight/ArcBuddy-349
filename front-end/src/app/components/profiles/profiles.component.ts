@@ -59,7 +59,7 @@ export class ProfilesComponent implements OnInit {
       // console.log(`Successfully saved ${profile.displayName}`);
       this.refresh();
 
-      this.error = 'Profile successfully saved';
+      this.error = `${profile.displayName} successfully saved at ${profile.dateCreated.toLocaleString()}`;
     });
   }
 
