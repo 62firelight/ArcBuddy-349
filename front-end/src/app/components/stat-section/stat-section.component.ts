@@ -11,6 +11,12 @@ import { Helper } from 'src/app/Helper';
 })
 export class StatSectionComponent implements OnInit {
 
+  helper = Helper;
+
+  stats = new Map<string, string>();
+
+  isVisible = true;
+
   @Input()
   section?: Map<string, string>;
 
@@ -22,12 +28,6 @@ export class StatSectionComponent implements OnInit {
 
   @Input()
   newDisplayedStatsEvent = new Subject<Object>();
-
-  stats = new Map<string, string>();
-
-  helper = Helper;
-
-  isVisible = true;
 
   constructor() { }
 
