@@ -5,3 +5,7 @@
     /* margin: 32px 32px 32px 32px; */
     margin: 2em 2em 2em 2em;
 }
+
+.mat-card-title {
+    margin: 2em 0 2em 0.25em;
+}
