@@ -1,16 +1,6 @@
-.mat-grid-tile-header {
-    font-size: 18px;
-    font-weight: 1;
-    text-align: center;
-}
-
 mat-spinner {
     margin: auto;
     margin-top: 32px;
-}
-
-.mat-grid-list {
-    margin: 16px;
 }
 
 .row {
@@ -30,4 +20,16 @@ mat-spinner {
 
 .right {
     flex: 85%;
+}
+
+.mat-card-title {
+    margin: 1em 1em 1em 1em;
+}
+
+.profile-icon {
+    max-width: 1.25%;
+}
+
+.stat-section {
+    padding: 0 0 4em 0;
 }

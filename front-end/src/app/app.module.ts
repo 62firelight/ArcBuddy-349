@@ -19,6 +19,8 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
 
 import { CharactersComponent } from './components/characters/characters.component';
 import { CamelConverterPipe } from './components/pipes/camelConverter/camel-converter.pipe';
@@ -26,6 +28,10 @@ import { DestinyStatPipe } from './components/pipes/destinyStat/destiny-stat.pip
 import { StatsComponent } from './components/stats/stats.component';
 import { ProfilesComponent } from './components/profiles/profiles.component';
 import { HomeComponent } from './components/home/home.component';
+import { TimePlayedPipe } from './components/pipes/timePlayed/time-played.pipe';
+import { StatComponent } from './components/stat/stat.component';
+import { ProfileDeleteDialog } from './components/profiles/profile-delete.component';
+import { StatSectionComponent } from './components/stat-section/stat-section.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +42,11 @@ import { HomeComponent } from './components/home/home.component';
     DestinyStatPipe,
     StatsComponent,
     ProfilesComponent,
-    HomeComponent
+    HomeComponent,
+    TimePlayedPipe,
+    StatComponent,
+    ProfileDeleteDialog,
+    StatSectionComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +65,9 @@ import { HomeComponent } from './components/home/home.component';
     MatRippleModule,
     MatButtonToggleModule,
     MatGridListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatDialogModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

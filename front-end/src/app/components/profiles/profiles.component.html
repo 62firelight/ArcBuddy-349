@@ -1,7 +1,11 @@
 <h2>Saved Profiles</h2>
-<mat-icon matRipple (click)="ngOnInit()">
-    <div class="refresh"> refresh</div>
-</mat-icon>
+
+<button mat-icon-button (click)="refresh()">
+    <mat-icon>
+        <div class="refresh"> refresh</div>
+    </mat-icon>
+</button>
+
 
 <p class="saved">
     {{ error }}
@@ -11,17 +15,36 @@
 </mat-spinner>
 <br>
 
-<ul>
+<mat-list>
+    <mat-list-item *ngFor="let profile of profiles" id="buttons">
+        <div class="profile-name">
+            {{ profile.displayName }} 
+            <mat-card-subtitle>{{ profile.dateCreated | date : 'short'}}</mat-card-subtitle>
+        </div>
+
+        <button mat-button class="delete" (click)="openDeleteDialog(profile)" align="end">
+            Delete
+        </button>
+
+        <button mat-button (click)="setProfile(profile)" align="end">
+            View
+        </button>
+
+        <mat-divider></mat-divider>
+    </mat-list-item>
+</mat-list>
+
+<!-- <ul>
     <li *ngFor="let profile of profiles" id="buttons">
         <mat-card class="profile-card">
-            <div matRipple (click)="setProfile(profile)">
-                {{ profile.displayName }}
-            </div>
-            <div class="profile-card-delete">
-                <mat-icon matRipple (click)="deleteProfile(profile)">
-                    <div class="delete">close</div>
-                </mat-icon>
-            </div>
+            <mat-card-title>{{ profile.displayName }}</mat-card-title> 
+            <mat-card-subtitle>{{ profile.dateCreated | date : 'short'}}</mat-card-subtitle>
+            <mat-card-actions>
+                <button mat-button class="delete" (click)="openDeleteDialog(profile)">Delete</button>
+                <button mat-button (click)="setProfile(profile)">View</button>
+            </mat-card-actions>
         </mat-card>
     </li>
-</ul>
+</ul> -->
+
+<!-- <img mat-card-avatar [src]="profile.iconPath"> -->

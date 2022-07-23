@@ -7,6 +7,8 @@ export interface Profile {
     displayName: string;
     membershipType: string;
     membershipId: string;
+    
+    dateCreated: Date;
 
     characters: Character[];
     mergedStats: Object;

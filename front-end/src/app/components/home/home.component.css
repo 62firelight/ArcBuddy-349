@@ -33,13 +33,6 @@ ul {
     margin: 0;
 }
 
-.stat-card {
-    max-width: 275px;
-    min-height: 200px;
-    align-self: start;
-    margin: 10px 10px 10px 10px;
-}
-
 html, body, .darkMode {
     position: fixed;
     height: 100%;
@@ -75,4 +68,9 @@ mat-icon {
 mat-spinner {
     margin: auto;
     margin-top: 32px;
+}
+
+mat-sidenav {
+    min-width: 345px;
+    max-width: 345px;
 }

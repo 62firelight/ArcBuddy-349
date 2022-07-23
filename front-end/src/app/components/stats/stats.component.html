@@ -1,10 +1,9 @@
 <div *ngIf="profile != undefined">
 
-    <h2> {{ profile.displayName }} </h2>
+    <h2> {{ profile.displayName }} <img class="profile-icon" [src]="profile.iconPath"></h2>
 
-    <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
-        Save Stats
-    </button>
+    <mat-card-subtitle *ngIf="fetchingStats == false"> Last Updated: {{ profile.dateCreated | date : 'short'}}
+    </mat-card-subtitle>
 
     <div class="row">
         <div class="column left">
@@ -25,6 +24,12 @@
                 <mat-button-toggle value="PvE">PvE</mat-button-toggle>
                 <mat-button-toggle value="PvP">PvP</mat-button-toggle>
             </mat-button-toggle-group>
+            <br>
+            <br>
+
+            <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
+                Save Stats
+            </button>
 
             <mat-spinner [diameter]="50" *ngIf="fetchingStats">
             </mat-spinner>
@@ -36,30 +41,12 @@
                 No {{ currentMode }} stats were found
             </div>
 
-            <mat-grid-list cols="6">
-                <mat-grid-tile *ngFor="let stat of displayedStats | keyvalue">
-                    <mat-grid-tile-header>
-                        {{ stat.key | camelConverter }}
-                    </mat-grid-tile-header>
-                    {{ stat.value | destinyStat }}
-                </mat-grid-tile>
-            </mat-grid-list>
-
-            <!-- TODO: Show stats in sections
-
-            For example, section 1 could include:
-            killDeathsRatio
-            kills
-            deaths
-            suicides
-            activitiesCleared (PvE only, AKA activities)
-            activitesEntered (AKA matches) 
-            weaponKillsSuper
-            weaponKillsGrenade
-            weaponKillsMelee
-            publicEventsCompleted
-            
-            -->
+            <div class="stat-section" *ngIf="fetchingStats == false && checkEmptyObject(displayedStats) == false">
+                <app-stat-section *ngFor="let section of sections | keyvalue: helper.numberedKeyOrder" [section]="section.value"
+                    [sectionName]="section.key" [displayedStats]="displayedStats"
+                    [newDisplayedStatsEvent]="newDisplayedStatsEvent">
+                </app-stat-section>
+            </div>
         </div>
     </div>
 </div>

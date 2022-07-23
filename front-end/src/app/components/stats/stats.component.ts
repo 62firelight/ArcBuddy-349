@@ -1,6 +1,8 @@
+import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Character } from 'src/app/Character';
+import { Helper } from 'src/app/Helper';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -11,9 +13,13 @@ import { ProfileService } from 'src/app/services/profile.service';
 })
 export class StatsComponent implements OnInit {
 
+  helper = Helper;
+
+  sections = Helper.sections;
+
   profile!: Profile;
 
-  displayedStats!: Object;
+  displayedStats!: any;
 
   currentId!: string;
 
@@ -26,6 +32,8 @@ export class StatsComponent implements OnInit {
   fetchingStats = false;
 
   fetchingProfiles = false;
+
+  newDisplayedStatsEvent = new Subject<Object>();
 
   @Input()
   changingStats: Subject<Profile> = new Subject<Profile>();
@@ -90,6 +98,8 @@ export class StatsComponent implements OnInit {
             // filter by key of object
             // console.log(Object.keys(this.profile.mergedStats).filter(name => name.includes("Weapon")));
 
+            // save current date in profile
+            this.profile.dateCreated = new Date();
             this.currentId = '';
             this.fetchingStats = false;
 
@@ -111,6 +121,7 @@ export class StatsComponent implements OnInit {
         if (characterId == character.characterId && character.mergedStats != undefined) {
           this.currentId = character.characterId;
           this.displayedStats = this.getMode(this.currentMode);
+          console.log(this.displayedStats);
         }
       }
     }
@@ -164,6 +175,8 @@ export class StatsComponent implements OnInit {
     }
 
     // console.log(fetchedStats);
+
+    this.newDisplayedStatsEvent.next(fetchedStats);
 
     return fetchedStats;
   }

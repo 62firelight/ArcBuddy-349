@@ -1,0 +1,19 @@
+<mat-card class="stat-card" *ngIf="isVisible">
+    <mat-card-title-group>
+        <mat-card-title align="center">
+            <b>{{ sectionName }}</b>
+        </mat-card-title>
+        <button mat-icon-button>
+            <mat-icon>
+                more_vert
+            </mat-icon>
+        </button>
+    </mat-card-title-group>
+    
+    <mat-grid-list cols="6" rowHeight="9em">
+        <mat-grid-tile *ngFor="let stat of stats | keyvalue: helper.numberedKeyOrder">
+            <app-stat [statName]="stat.key" [statValue]="stat.value | destinyStat">
+            </app-stat>
+        </mat-grid-tile>
+    </mat-grid-list>
+</mat-card>
