@@ -2,12 +2,8 @@
 
     <h2> {{ profile.displayName }} <img class="profile-icon" [src]="profile.iconPath"></h2>
 
-    <mat-card-subtitle *ngIf="fetchingStats == false"> as of {{ profile.dateCreated | date : 'short'}}
+    <mat-card-subtitle *ngIf="fetchingStats == false"> Last Updated: {{ profile.dateCreated | date : 'short'}}
     </mat-card-subtitle>
-
-    <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
-        Save Stats
-    </button>
 
     <div class="row">
         <div class="column left">
@@ -28,6 +24,12 @@
                 <mat-button-toggle value="PvE">PvE</mat-button-toggle>
                 <mat-button-toggle value="PvP">PvP</mat-button-toggle>
             </mat-button-toggle-group>
+            <br>
+            <br>
+
+            <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
+                Save Stats
+            </button>
 
             <mat-spinner [diameter]="50" *ngIf="fetchingStats">
             </mat-spinner>
