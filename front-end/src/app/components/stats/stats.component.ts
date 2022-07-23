@@ -51,7 +51,7 @@ export class StatsComponent implements OnInit {
     [
       'stuff',
       new Map([
-        ['kills', 'something']
+        ['activitiesCleared', 'something']
       ])
     ]
   ]);

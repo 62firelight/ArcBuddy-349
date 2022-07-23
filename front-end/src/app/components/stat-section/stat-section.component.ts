@@ -23,6 +23,8 @@ export class StatSectionComponent implements OnInit {
 
   stats = new Map<string, string>();
 
+  isVisible = true;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -60,6 +62,10 @@ export class StatSectionComponent implements OnInit {
       }
 
       this.stats.set(statName, statValue);
+    }
+
+    if (this.stats.size <= 0) {
+      this.isVisible = false;
     }
   }
 }
