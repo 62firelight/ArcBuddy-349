@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DestinyStatPipe } from '../pipes/destinyStat/destiny-stat.pipe';
@@ -44,8 +45,8 @@ export class StatSectionComponent implements OnInit {
 
     this.stats.clear();
 
-    var array1 = Object.keys(this.displayedStats);
-    var array2 = Array.from(this.section.keys());
+    var array1 = Array.from(this.section.keys());
+    var array2 = Object.keys(this.displayedStats);
 
     var includedStats = array1.filter(value => array2.includes(value));
     var displayedStatsMap = new Map(Object.entries(this.displayedStats));
@@ -67,5 +68,15 @@ export class StatSectionComponent implements OnInit {
     if (this.stats.size <= 0) {
       this.isVisible = false;
     }
+  }
+
+  asIsOrder() {
+    return 1;
+  }
+
+  numberedKeyOrder(a: KeyValue<string, any>, b: KeyValue<string, any>): number {
+    const aStepId = parseInt(a.key, 10);
+    const bStepId = parseInt(b.key, 10);
+    return aStepId > bStepId ? 1 : (bStepId > aStepId ? -1 : 0);
   }
 }

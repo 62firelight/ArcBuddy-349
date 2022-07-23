@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Character } from 'src/app/Character';
@@ -17,41 +18,45 @@ export class StatsComponent implements OnInit {
         ['secondsPlayed', 'Time Played'],
         ['killsDeathsRatio', "KD Ratio"],
         ['kills', 'Kills'],
+        ['assists', 'Assists'],
         ['deaths', 'Deaths'],
+        ['efficiency', 'Efficiency'],
         ['activitiesCleared', 'Activites Cleared (PvE)'],
         ['activitiesEntered', 'Activites Entered'],
         ['weaponKillsSuper', 'Super Kills'],
         ['weaponKillsGrenade', 'Grenade Kills'],
-        ['weaponKillsMelee', 'Melee Kills'],
-        ['publicEventsCompleted', 'Public Events Completed']
+        ['weaponKillsMelee', 'Melee Kills']
+        // ['publicEventsCompleted', 'Public Events Completed']
       ])
     ],
     ['Weapon Kills',
       new Map([
-        ['weaponKillsHandCannon', 'Hand Cannon'],
         ['weaponKillsAutoRifle', 'Auto Rifle'],
-        ['weaponKillsBeamRifle', 'Beam Rifle'],
+        // ['weaponKillsBeamRifle', 'Beam Rifle'],
+        ['weaponKillsPulseRifle', 'Pulse Rifle'],
+        ['weaponKillsScoutRifle', 'Scout Rifle'],
+        ['weaponKillsHandCannon', 'Hand Cannon'],
+        ['weaponKillsSubmachinegun', 'Submachine Gun'],
+        ['weaponKillsSideArm', 'Sidearm'],
         ['weaponKillsBow', 'Bow'],
         ['weaponKillsGlaive', 'Glaive'],
-        ['weaponKillsFusion Rifle', 'Fusion Rifle'],
+        ['weaponKillsFusionRifle', 'Fusion Rifle'],
         ['weaponKillsTraceRifle', 'Trace Rifle'],
-        ['weaponKillsMachineGun', 'Machine Gun'],
-        ['weaponKillsPulseRifle', 'Pulse Rifle'],
-        ['weaponKillsRocketLauncher', 'Rocket Launcher'],
-        ['weaponKillsScoutRifle', 'Scout Rifle'],
         ['weaponKillsShotgun', 'Shotgun'],
         ['weaponKillsSniper', 'Sniper Rifle'],
-        ['weaponKillsSubmachinegun', 'Submachine Gun'],
-        ['weaponKillsRelic', 'Relic'],
-        ['weaponKillsSideArm', 'Sidearm'],
+        ['weaponKillsMachineGun', 'Machine Gun'],
+        ['weaponKillsRocketLauncher', 'Rocket Launcher'],
+        // ['weaponKillsRelic', 'Relic'],
         ['weaponKillsSword', 'Sword'],
         ['weaponKillsGrenadeLauncher', 'Grenade Launcher']
       ])
     ],
     [
-      'stuff',
+      'Destination',
       new Map([
-        ['activitiesCleared', 'something']
+        ['publicEventsCompleted', 'Public Events Completed'],
+        ['heroicPublicEventsCompleted', 'Heroic Public Events Completed'],
+        ['adventuresCompleted', 'Adventures Completed']
       ])
     ]
   ]);
@@ -230,6 +235,12 @@ export class StatsComponent implements OnInit {
 
   asIsOrder() {
     return 1;
+  }
+
+  numberedKeyOrder(a: KeyValue<string, any>, b: KeyValue<string, any>): number {
+    const aStepId = parseInt(a.key, 10);
+    const bStepId = parseInt(b.key, 10);
+    return aStepId > bStepId ? 1 : (bStepId > aStepId ? -1 : 0);
   }
 
   ngOnDestroy(): void {
