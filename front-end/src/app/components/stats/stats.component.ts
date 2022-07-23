@@ -47,6 +47,12 @@ export class StatsComponent implements OnInit {
         ['weaponKillsSword', 'Sword'],
         ['weaponKillsGrenadeLauncher', 'Grenade Launcher']
       ])
+    ],
+    [
+      'stuff',
+      new Map([
+        ['kills', 'something']
+      ])
     ]
   ]);
 
@@ -220,6 +226,10 @@ export class StatsComponent implements OnInit {
 
   addProfile(profile: Profile) {
     this.addProfileEvent.emit(profile);
+  }
+
+  asIsOrder() {
+    return 1;
   }
 
   ngOnDestroy(): void {
