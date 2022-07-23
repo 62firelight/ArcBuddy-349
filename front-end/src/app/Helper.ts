@@ -48,6 +48,15 @@ export class Helper {
                 ['heroicPublicEventsCompleted', 'Heroic Public Events Completed'],
                 ['adventuresCompleted', 'Adventures Completed']
             ])
+        ],
+        [
+            'Other',
+            new Map([
+                ['resurrectionsPerformed', 'Revives'],
+                ['resurrectionsReceived', 'Revives Received'],
+                ['orbsDropped', 'Orbs of Power Generated'],
+                ['orbsGathered', 'Orbs of Power Gathered']
+            ])
         ]
     ]);
 
