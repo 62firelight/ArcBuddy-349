@@ -2,6 +2,7 @@ import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Character } from 'src/app/Character';
+import { Helper } from 'src/app/Helper';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -79,6 +80,8 @@ export class StatsComponent implements OnInit {
   fetchingProfiles = false;
 
   newDisplayedStatsEvent = new Subject<Object>();
+
+  helper = Helper;
 
   @Input()
   changingStats: Subject<Profile> = new Subject<Profile>();
@@ -232,16 +235,6 @@ export class StatsComponent implements OnInit {
 
   addProfile(profile: Profile) {
     this.addProfileEvent.emit(profile);
-  }
-
-  asIsOrder() {
-    return 1;
-  }
-
-  numberedKeyOrder(a: KeyValue<string, any>, b: KeyValue<string, any>): number {
-    const aStepId = parseInt(a.key, 10);
-    const bStepId = parseInt(b.key, 10);
-    return aStepId > bStepId ? 1 : (bStepId > aStepId ? -1 : 0);
   }
 
   ngOnDestroy(): void {

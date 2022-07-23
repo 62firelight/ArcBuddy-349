@@ -2,6 +2,7 @@ import { KeyValue } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DestinyStatPipe } from '../pipes/destinyStat/destiny-stat.pipe';
+import { Helper } from 'src/app/Helper';
 
 @Component({
   selector: 'app-stat-section',
@@ -23,6 +24,8 @@ export class StatSectionComponent implements OnInit {
   newDisplayedStatsEvent = new Subject<Object>();
 
   stats = new Map<string, string>();
+
+  helper = Helper;
 
   isVisible = true;
 
@@ -68,15 +71,5 @@ export class StatSectionComponent implements OnInit {
     if (this.stats.size <= 0) {
       this.isVisible = false;
     }
-  }
-
-  asIsOrder() {
-    return 1;
-  }
-
-  numberedKeyOrder(a: KeyValue<string, any>, b: KeyValue<string, any>): number {
-    const aStepId = parseInt(a.key, 10);
-    const bStepId = parseInt(b.key, 10);
-    return aStepId > bStepId ? 1 : (bStepId > aStepId ? -1 : 0);
   }
 }

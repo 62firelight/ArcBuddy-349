@@ -3,7 +3,7 @@
         <b>{{ sectionName }}</b>
     </mat-card-title>
     <mat-grid-list cols="6" rowHeight="9em">
-        <mat-grid-tile *ngFor="let stat of stats | keyvalue: numberedKeyOrder">
+        <mat-grid-tile *ngFor="let stat of stats | keyvalue: helper.numberedKeyOrder">
             <app-stat [statName]="stat.key" [statValue]="stat.value | destinyStat">
             </app-stat>
         </mat-grid-tile>

@@ -42,7 +42,7 @@
             </div>
 
             <div class="stat-section" *ngIf="fetchingStats == false && checkEmptyObject(displayedStats) == false">
-                <app-stat-section *ngFor="let section of sections | keyvalue: numberedKeyOrder" [section]="section.value"
+                <app-stat-section *ngFor="let section of sections | keyvalue: helper.numberedKeyOrder" [section]="section.value"
                     [sectionName]="section.key" [displayedStats]="displayedStats"
                     [newDisplayedStatsEvent]="newDisplayedStatsEvent">
                 </app-stat-section>
