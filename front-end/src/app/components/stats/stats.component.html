@@ -18,21 +18,51 @@
         <div class="column right">
             <h3> Stats </h3>
 
-            <mat-button-toggle-group *ngIf="fetchingStats == false" [(ngModel)]="currentMode"
+            <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
+                Save Stats
+            </button>
+            <br>
+            <br>
+
+            <!-- <mat-button-toggle-group *ngIf="fetchingStats == false" [(ngModel)]="currentMode"
                 (change)="displayedStats=getMode(currentMode)">
                 <mat-button-toggle value="Merged">All</mat-button-toggle>
                 <mat-button-toggle value="PvE">PvE</mat-button-toggle>
                 <mat-button-toggle value="PvP">PvP</mat-button-toggle>
-            </mat-button-toggle-group>
-            <br>
-            <br>
-
-            <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
-                Save Stats
-            </button>
+            </mat-button-toggle-group> -->
 
             <mat-spinner [diameter]="50" *ngIf="fetchingStats">
             </mat-spinner>
+
+            <mat-tab-group mat-align-tabs="center">
+                <mat-tab label="Merged">
+                    <div class="stat-section"
+                        *ngIf="fetchingStats == false && checkEmptyObject(displayedStats) == false">
+                        <app-stat-section *ngFor="let section of sections | keyvalue: helper.numberedKeyOrder"
+                            [section]="section.value" [sectionName]="section.key"
+                            [displayedStats]="getMode('Merged')" [newDisplayedStatsEvent]="newDisplayedStatsEvent">
+                        </app-stat-section>
+                    </div>
+                </mat-tab>
+                <mat-tab label="PvE">
+                    <div class="stat-section"
+                        *ngIf="fetchingStats == false && checkEmptyObject(displayedStats) == false">
+                        <app-stat-section *ngFor="let section of sections | keyvalue: helper.numberedKeyOrder"
+                            [section]="section.value" [sectionName]="section.key"
+                            [displayedStats]="getMode('PvE')" [newDisplayedStatsEvent]="newDisplayedStatsEvent">
+                        </app-stat-section>
+                    </div>
+                </mat-tab>
+                <mat-tab label="PvP">
+                    <div class="stat-section"
+                        *ngIf="fetchingStats == false && checkEmptyObject(displayedStats) == false">
+                        <app-stat-section *ngFor="let section of sections | keyvalue: helper.numberedKeyOrder"
+                            [section]="section.value" [sectionName]="section.key"
+                            [displayedStats]="getMode('PvP')" [newDisplayedStatsEvent]="newDisplayedStatsEvent">
+                        </app-stat-section>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
 
             <div *ngIf="fetchingStats == false && 
                     checkEmptyObject(displayedStats)">
@@ -41,12 +71,14 @@
                 No {{ currentMode }} stats were found
             </div>
 
-            <div class="stat-section" *ngIf="fetchingStats == false && checkEmptyObject(displayedStats) == false">
+            <!-- <div class="stat-section" *ngIf="fetchingStats == false && checkEmptyObject(displayedStats) == false">
                 <app-stat-section *ngFor="let section of sections | keyvalue: helper.numberedKeyOrder" [section]="section.value"
                     [sectionName]="section.key" [displayedStats]="displayedStats"
                     [newDisplayedStatsEvent]="newDisplayedStatsEvent">
                 </app-stat-section>
-            </div>
+            </div> -->
+
+
         </div>
     </div>
 </div>
