@@ -1,7 +1,11 @@
 <h2>Saved Profiles</h2>
-<mat-icon matRipple (click)="ngOnInit()">
-    <div class="refresh"> refresh</div>
-</mat-icon>
+
+<button mat-icon-button (click)="refresh()">
+    <mat-icon>
+        <div class="refresh"> refresh</div>
+    </mat-icon>
+</button>
+
 
 <p class="saved">
     {{ error }}
