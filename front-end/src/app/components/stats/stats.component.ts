@@ -23,6 +23,7 @@ export class StatsComponent implements OnInit {
         ['efficiency', 'Efficiency'],
         ['activitiesCleared', 'Activites Cleared (PvE)'],
         ['activitiesEntered', 'Activites Entered'],
+        ['precisionKills', 'Precision Kills'],
         ['weaponKillsSuper', 'Super Kills'],
         ['weaponKillsGrenade', 'Grenade Kills'],
         ['weaponKillsMelee', 'Melee Kills']
