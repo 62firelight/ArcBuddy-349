@@ -21,6 +21,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { CharactersComponent } from './components/characters/characters.component';
 import { CamelConverterPipe } from './components/pipes/camelConverter/camel-converter.pipe';
@@ -67,7 +68,8 @@ import { StatSectionComponent } from './components/stat-section/stat-section.com
     MatGridListModule,
     MatToolbarModule,
     MatDialogModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
