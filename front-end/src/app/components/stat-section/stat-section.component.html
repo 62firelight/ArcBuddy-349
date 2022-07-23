@@ -2,6 +2,10 @@
     <mat-card-title align="left">
         <b>{{ sectionName }}</b>
     </mat-card-title>
-    <app-stat *ngFor="let stat of stats | keyvalue" [statName]="stat.key" [statValue]="stat.value | destinyStat">
-    </app-stat>
+    <mat-grid-list cols="6">
+        <mat-grid-tile *ngFor="let stat of stats | keyvalue">
+            <app-stat [statName]="stat.key" [statValue]="stat.value | destinyStat">
+            </app-stat>
+        </mat-grid-tile>
+    </mat-grid-list>
 </mat-card>
