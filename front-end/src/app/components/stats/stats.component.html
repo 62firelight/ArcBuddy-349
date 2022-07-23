@@ -2,7 +2,8 @@
 
     <h2> {{ profile.displayName }} <img class="profile-icon" [src]="profile.iconPath"></h2>
 
-    <mat-card-subtitle> as of {{ profile.dateCreated | date : 'short'}} </mat-card-subtitle>
+    <mat-card-subtitle *ngIf="fetchingStats == false"> as of {{ profile.dateCreated | date : 'short'}}
+    </mat-card-subtitle>
 
     <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
         Save Stats
@@ -38,10 +39,12 @@
                 No {{ currentMode }} stats were found
             </div>
 
-            <app-stat-section *ngFor="let section of sections | keyvalue" [section]="section.value"
-                [sectionName]="section.key" [displayedStats]="displayedStats"
-                [newDisplayedStatsEvent]="newDisplayedStatsEvent">
-            </app-stat-section>
+            <div *ngIf="fetchingStats == false && checkEmptyObject(displayedStats) == false">
+                <app-stat-section *ngFor="let section of sections | keyvalue" [section]="section.value"
+                    [sectionName]="section.key" [displayedStats]="displayedStats"
+                    [newDisplayedStatsEvent]="newDisplayedStatsEvent">
+                </app-stat-section>
+            </div>
 
             <!-- <mat-grid-list cols="6">
                 <mat-grid-tile *ngFor="let stat of displayedStats | keyvalue">
