@@ -41,7 +41,7 @@
                 No {{ currentMode }} stats were found
             </div>
 
-            <div *ngIf="fetchingStats == false && checkEmptyObject(displayedStats) == false">
+            <div class="stat-section" *ngIf="fetchingStats == false && checkEmptyObject(displayedStats) == false">
                 <app-stat-section *ngFor="let section of sections | keyvalue" [section]="section.value"
                     [sectionName]="section.key" [displayedStats]="displayedStats"
                     [newDisplayedStatsEvent]="newDisplayedStatsEvent">

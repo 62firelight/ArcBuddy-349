@@ -29,3 +29,7 @@ mat-spinner {
 .profile-icon {
     max-width: 1.25%;
 }
+
+.stat-section {
+    padding: 0 0 4em 0;
+}
