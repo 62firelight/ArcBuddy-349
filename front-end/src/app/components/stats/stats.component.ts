@@ -28,7 +28,24 @@ export class StatsComponent implements OnInit {
     ],
     ['Weapon Kills',
       new Map([
-        ['weaponKillsHandCannon', 'Hand Cannon']
+        ['weaponKillsHandCannon', 'Hand Cannon'],
+        ['weaponKillsAutoRifle', 'Auto Rifle'],
+        ['weaponKillsBeamRifle', 'Beam Rifle'],
+        ['weaponKillsBow', 'Bow'],
+        ['weaponKillsGlaive', 'Glaive'],
+        ['weaponKillsFusion Rifle', 'Fusion Rifle'],
+        ['weaponKillsTraceRifle', 'Trace Rifle'],
+        ['weaponKillsMachineGun', 'Machine Gun'],
+        ['weaponKillsPulseRifle', 'Pulse Rifle'],
+        ['weaponKillsRocketLauncher', 'Rocket Launcher'],
+        ['weaponKillsScoutRifle', 'Scout Rifle'],
+        ['weaponKillsShotgun', 'Shotgun'],
+        ['weaponKillsSniper', 'Sniper Rifle'],
+        ['weaponKillsSubmachinegun', 'Submachine Gun'],
+        ['weaponKillsRelic', 'Relic'],
+        ['weaponKillsSideArm', 'Sidearm'],
+        ['weaponKillsSword', 'Sword'],
+        ['weaponKillsGrenadeLauncher', 'Grenade Launcher']
       ])
     ]
   ]);
