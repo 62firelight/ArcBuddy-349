@@ -5,10 +5,10 @@ export class Helper {
         ['General',
             new Map([
                 ['secondsPlayed', 'Time Played'],
-                ['killsDeathsRatio', "KD Ratio"],
                 ['kills', 'Kills'],
                 ['assists', 'Assists'],
                 ['deaths', 'Deaths'],
+                ['killsDeathsRatio', "KD Ratio"],
                 ['efficiency', 'Efficiency'],
                 ['activitiesCleared', 'Activites Cleared (PvE)'],
                 ['activitiesEntered', 'Activites Entered'],
