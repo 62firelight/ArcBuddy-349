@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+import { ClipboardModule } from '@angular/cdk/clipboard';
+
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,6 +25,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
+
+import { NgChartsModule } from 'ng2-charts';
 
 import { CharactersComponent } from './components/characters/characters.component';
 import { CamelConverterPipe } from './components/pipes/camelConverter/camel-converter.pipe';
@@ -69,7 +75,10 @@ import { StatSectionComponent } from './components/stat-section/stat-section.com
     MatToolbarModule,
     MatDialogModule,
     MatListModule,
-    MatTabsModule
+    MatTabsModule,
+    MatMenuModule,
+    NgChartsModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

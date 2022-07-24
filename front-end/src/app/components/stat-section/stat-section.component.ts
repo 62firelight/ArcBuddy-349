@@ -1,8 +1,9 @@
-import { KeyValue } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 import { Subject } from 'rxjs';
-import { DestinyStatPipe } from '../pipes/destinyStat/destiny-stat.pipe';
 import { Helper } from 'src/app/Helper';
+import { DestinyStatPipe } from '../pipes/destinyStat/destiny-stat.pipe';
 
 @Component({
   selector: 'app-stat-section',
@@ -13,9 +14,52 @@ export class StatSectionComponent implements OnInit {
 
   helper = Helper;
 
+  chartableSections = Helper.chartableSections;
+
   stats = new Map<string, string>();
 
   isVisible = true;
+
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
+  barChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: 'white'
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: 'white'
+        },
+      },
+      y: {
+        ticks: {
+          color: 'white'
+        },
+      }
+    }
+  };
+
+  barChartType: ChartType = 'bar';
+
+  barChartData: ChartData<'bar'> = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        label: 'Kills',
+        backgroundColor: "#008080"
+      }
+    ],
+  };
+
+  showAsChart = false;
 
   @Input()
   section?: Map<string, string>;
@@ -37,8 +81,12 @@ export class StatSectionComponent implements OnInit {
     this.newDisplayedStatsEvent.subscribe((fetchedStats) => {
       this.displayedStats = fetchedStats;
       this.updateStats();
+
+      if (this.showAsChart == true) {
+        this.convertToChart();
+      }
     });
-    
+
   }
 
   updateStats(): void {
@@ -71,5 +119,25 @@ export class StatSectionComponent implements OnInit {
     if (this.stats.size <= 0) {
       this.isVisible = false;
     }
+  }
+
+  convertToChart(): void {
+    this.showAsChart = true;
+
+    this.barChartData.labels = Array.from(this.stats.keys());
+    this.barChartData.datasets[0].data = Array.from(this.stats.values()).map((item) => {
+      const destinyStatPipe = new DestinyStatPipe();
+      return parseFloat(destinyStatPipe.transform(item, true));
+    });
+
+    this.chart?.update();
+  }
+
+  convertToDefault(): void {
+    this.showAsChart = false;
+  }
+
+  getSection(): string {
+    return JSON.stringify(Array.from(this.stats));
   }
 }
