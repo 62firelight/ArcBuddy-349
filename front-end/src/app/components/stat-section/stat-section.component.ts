@@ -38,8 +38,8 @@ export class StatSectionComponent implements OnInit {
     datasets: [
       { 
         data: [], 
-        label: 'Kills'
-        // backgroundColor: "#0000ff" 
+        label: 'Kills',
+        backgroundColor: "#008080" 
       }
     ]
   };
