@@ -1,3 +1,4 @@
+const compression = require('compression')
 const express = require('express')
 const cors = require('cors');
 const destinyApi = require('node-destiny-2');
@@ -6,7 +7,8 @@ const app = express();
 const port = 3000;
 
 app.use(express.static('myapp/public'));
-app.use(express.json());
+app.use(express.json({limit: '1mb'}));
+app.use(express.urlencoded({limit: '1mb', extended: true}));
 app.use(cors());
 
 const CLASS_MAP = {

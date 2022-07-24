@@ -5,17 +5,17 @@ export class Helper {
         ['General',
             new Map([
                 ['secondsPlayed', 'Time Played'],
-                ['killsDeathsRatio', "KD Ratio"],
                 ['kills', 'Kills'],
                 ['assists', 'Assists'],
                 ['deaths', 'Deaths'],
+                ['killsDeathsRatio', "KD Ratio"],
                 ['efficiency', 'Efficiency'],
-                ['activitiesCleared', 'Activites Cleared (PvE)'],
-                ['activitiesEntered', 'Activites Entered'],
                 ['precisionKills', 'Precision Kills'],
                 ['weaponKillsSuper', 'Super Kills'],
                 ['weaponKillsGrenade', 'Grenade Kills'],
-                ['weaponKillsMelee', 'Melee Kills']
+                ['weaponKillsMelee', 'Melee Kills'],
+                ['activitiesCleared', 'Activites Cleared (PvE)'],
+                ['activitiesEntered', 'Activites Entered']
                 // ['publicEventsCompleted', 'Public Events Completed']
             ])
         ],

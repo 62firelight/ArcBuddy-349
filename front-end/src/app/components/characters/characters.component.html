@@ -1,3 +1,5 @@
+<h3>Characters</h3>
+
 <mat-button-toggle-group [(ngModel)]="currentId" (change)="displayCharacter(currentId)" [vertical]="true">
     <mat-button-toggle value="">All Characters</mat-button-toggle>
     <!-- <button (click)="displayCharacter('')">All Characters</button> -->
@@ -6,7 +8,26 @@
     <!-- <button (click)="displayCharacter(character.characterId)">{{ character.race }} {{ character.class }}</button> -->
 </mat-button-toggle-group>
 
-
 <!-- <div *ngFor="let character of characters">
     <img [src]="character.emblem">
 </div> -->
+
+<!-- <mat-list>
+    <mat-list-item>
+        All Characters
+        <mat-divider></mat-divider>
+    </mat-list-item>
+    <mat-list-item *ngFor="let character of characters" id="buttons">
+        <div class="profile-name">
+            {{ character.race }} {{ character.class }}
+        </div>
+
+        <button mat-icon-button (click)="displayCharacter(character.characterId)" align="end">
+            <mat-icon>
+                visibility
+            </mat-icon>
+        </button>
+        
+        <mat-divider></mat-divider>
+    </mat-list-item>
+</mat-list> -->

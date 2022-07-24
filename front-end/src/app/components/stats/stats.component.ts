@@ -47,16 +47,17 @@ export class StatsComponent implements OnInit {
   constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
+    // by default, show PvE stats for all characters
     this.currentMode = 'PvE';
     this.currentId = '';
 
+    // update stats and profiles when needed
     this.changingStats.subscribe((profile) => {
       this.profile = profile;
       this.profile.iconPath = `https://www.bungie.net${profile.iconPath}`;
 
       this.fetchStats(profile);
     });
-
     this.changingProfiles.subscribe((profile) => {
       this.profile = profile;
       this.currentId = '';
@@ -65,25 +66,32 @@ export class StatsComponent implements OnInit {
     });
   }
 
+  /* 
+    Fetches all historical stats that are associated with a given
+    profile.  
+  */
   fetchStats(profile: Profile): void {
     this.profile = profile;
     this.fetchingStats = true;
     this.fetchingCharacters = true;
 
+    // get IDs for all characters associated with given profile
     this.profileService.getCharacters(this.profile.membershipType, this.profile.membershipId)
-      .subscribe((result) => {
-        this.profile.characters = result;
-
+      .subscribe((characters) => {
+        this.profile.characters = characters;
         this.fetchingCharacters = false;
 
+        // get all stats for the given profile
         this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
-          .subscribe((result2: any) => {
-            this.profile.mergedStats = result2.mergedStats;
-            this.profile.pveStats = result2.pveStats;
-            this.profile.pvpStats = result2.pvpStats;
+          .subscribe((profile: any) => {
+            this.profile.mergedStats = profile.mergedStats;
+            this.profile.pveStats = profile.pveStats;
+            this.profile.pvpStats = profile.pvpStats;
 
+            // match IDs from getCharacters() to IDs in getStats() 
+            // to find associated stats
             for (var character1 of this.profile.characters) {
-              for (var character2 of result2.characters) {
+              for (var character2 of profile.characters) {
                 if (character1.characterId == character2.characterId) {
                   character1.mergedStats = character2.mergedStats;
                   character1.pveStats = character2.pveStats;
@@ -92,31 +100,37 @@ export class StatsComponent implements OnInit {
                 }
               }
             }
-
             console.log(this.profile);
-
-            // filter by key of object
-            // console.log(Object.keys(this.profile.mergedStats).filter(name => name.includes("Weapon")));
 
             // save current date in profile
             this.profile.dateCreated = new Date();
             this.currentId = '';
-            this.fetchingStats = false;
 
+            // update displayed stats
             this.displayedStats = this.getMode(this.currentMode);
+
+            this.fetchingStats = false;
           });
       });
   }
 
+  /* 
+    Updates displayedStats according to the given character ID.
+
+    If an empty character ID string is provided, then the merged stats for the
+    profile will be shown.
+  */
   updateStats(characterId: string): void {
     console.log(characterId.length == 0 ?
       `Showing all stats for ${this.profile.displayName}` :
       `Showing stats for character ID ${characterId}`);
 
     if (characterId.length == 0) {
+      // show profile-wide stats
       this.currentId = '';
       this.displayedStats = this.getMode(this.currentMode);
     } else {
+      // show all stats with associated character
       for (var character of this.profile.characters) {
         if (characterId == character.characterId && character.mergedStats != undefined) {
           this.currentId = character.characterId;
@@ -127,12 +141,18 @@ export class StatsComponent implements OnInit {
     }
   }
 
+  /*
+    Returns the stats associated with a given mode.
+
+    A mode can be Merged (i.e. PvE + PvP), PvE, or PvP.
+  */
   getMode(newMode: string): Object {
     console.log(`Showing ${newMode} stats`);
 
     var fetchedStats = {};
 
     if (this.currentId == '') {
+      // show profile-wide stats for given mode
       switch (newMode) {
         case 'Merged':
           fetchedStats = this.profile.mergedStats;
@@ -146,8 +166,8 @@ export class StatsComponent implements OnInit {
           fetchedStats = this.profile.pvpStats;
           break;
       }
-
     } else {
+      // show character-specific stats for given mode
       for (var character of this.profile.characters) {
         if (character.characterId == this.currentId) {
           switch (newMode) {
@@ -169,13 +189,15 @@ export class StatsComponent implements OnInit {
       }
     }
 
+    // fetchedStats should not be empty;
+    // but if it is, keep displayedStats the same
     if (fetchedStats == {}) {
       fetchedStats = this.displayedStats;
       console.log('Something went wrong. Displaying previously shown stats...');
     }
-
     // console.log(fetchedStats);
 
+    // update displayed events for stat sections
     this.newDisplayedStatsEvent.next(fetchedStats);
 
     return fetchedStats;
