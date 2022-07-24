@@ -66,6 +66,10 @@ export class StatSectionComponent implements OnInit {
     this.newDisplayedStatsEvent.subscribe((fetchedStats) => {
       this.displayedStats = fetchedStats;
       this.updateStats();
+
+      if (this.showAsChart == true) {
+        this.convertToChart();
+      }
     });
 
   }
