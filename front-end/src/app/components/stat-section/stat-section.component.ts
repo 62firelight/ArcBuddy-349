@@ -121,4 +121,8 @@ export class StatSectionComponent implements OnInit {
   convertToDefault(): void {
     this.showAsChart = false;
   }
+
+  getSection(): string {
+    return JSON.stringify(Array.from(this.stats));
+  }
 }

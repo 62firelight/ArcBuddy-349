@@ -28,8 +28,8 @@
 </mat-card>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item>
-        Copy <!-- TODO: Implement functionality -->
+    <button mat-menu-item [cdkCopyToClipboard]="getSection()">
+        Copy
     </button>
     <button mat-menu-item *ngIf="chartableSections.has(sectionName) == true"
         (click)="showAsChart == false ? convertToChart() : convertToDefault()">

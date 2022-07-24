@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { ClipboardModule } from '@angular/cdk/clipboard';
+
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -75,7 +77,8 @@ import { StatSectionComponent } from './components/stat-section/stat-section.com
     MatListModule,
     MatTabsModule,
     MatMenuModule,
-    NgChartsModule
+    NgChartsModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
