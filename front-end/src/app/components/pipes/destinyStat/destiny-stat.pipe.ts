@@ -21,7 +21,7 @@ import { TimePlayedPipe } from '../timePlayed/time-played.pipe';
 })
 export class DestinyStatPipe implements PipeTransform {
 
-  transform(value: any): string {
+  transform(value: any, decimal?: boolean): string {
     if (value.statId == 'secondsPlayed') {
       value = value.basic.value;
 
@@ -29,6 +29,10 @@ export class DestinyStatPipe implements PipeTransform {
       value = timePlayedPipe.transform(value);
 
       return `${value} hours`;
+    }
+
+    if (decimal == true) {
+      return value.basic.value;
     }
 
     const decimalPipe = new DecimalPipe("en-US");

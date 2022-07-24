@@ -24,7 +24,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 
-// import { NgChartsModule } from 'ng2-charts';
+import { NgChartsModule } from 'ng2-charts';
 
 import { CharactersComponent } from './components/characters/characters.component';
 import { CamelConverterPipe } from './components/pipes/camelConverter/camel-converter.pipe';
@@ -72,7 +72,8 @@ import { StatSectionComponent } from './components/stat-section/stat-section.com
     MatToolbarModule,
     MatDialogModule,
     MatListModule,
-    MatTabsModule
+    MatTabsModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
