@@ -14,6 +14,8 @@ export class StatSectionComponent implements OnInit {
 
   helper = Helper;
 
+  chartableSections = Helper.chartableSections;
+
   stats = new Map<string, string>();
 
   isVisible = true;
@@ -106,7 +108,6 @@ export class StatSectionComponent implements OnInit {
     this.barChartData.labels = Array.from(this.stats.keys());
     this.barChartData.datasets[0].data = Array.from(this.stats.values()).map((item) => {
       const destinyStatPipe = new DestinyStatPipe();
-      console.log(destinyStatPipe.transform(item, true));
       return parseFloat(destinyStatPipe.transform(item, true));
     });
 

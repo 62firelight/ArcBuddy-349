@@ -23,6 +23,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { NgChartsModule } from 'ng2-charts';
 
@@ -73,6 +74,7 @@ import { StatSectionComponent } from './components/stat-section/stat-section.com
     MatDialogModule,
     MatListModule,
     MatTabsModule,
+    MatMenuModule,
     NgChartsModule
   ],
   providers: [],

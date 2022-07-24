@@ -3,7 +3,7 @@
         <mat-card-title align="center">
             <b>{{ sectionName }}</b>
         </mat-card-title>
-        <button mat-icon-button (click)="showAsChart == false ? convertToChart() : convertToDefault()">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>
                 more_vert
             </mat-icon>
@@ -26,3 +26,14 @@
         </div>
     </div>
 </mat-card>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        Copy <!-- TODO: Implement functionality -->
+    </button>
+    <button mat-menu-item *ngIf="chartableSections.has(sectionName) == true"
+        (click)="showAsChart == false ? convertToChart() : convertToDefault()">
+        <!-- <mat-icon>{{ showAsChart == false ? "bar_graph" : "article" }}</mat-icon> -->
+        Show as {{ showAsChart == false ? "chart" : "text" }}
+    </button>
+</mat-menu>

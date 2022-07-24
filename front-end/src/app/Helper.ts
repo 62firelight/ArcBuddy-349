@@ -60,6 +60,10 @@ export class Helper {
         ]
     ]);
 
+    static chartableSections = new Set([
+        'Weapon Kills'
+    ]);
+
     static asIsOrder() {
         return 1;
     }
