@@ -27,21 +27,36 @@ export class StatSectionComponent implements OnInit {
     plugins: {
       legend: {
         display: true,
+        labels: {
+          color: 'white'
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: 'white'
+        },
+      },
+      y: {
+        ticks: {
+          color: 'white'
+        },
       }
     }
   };
-  
+
   barChartType: ChartType = 'bar';
 
   barChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [
-      { 
-        data: [], 
+      {
+        data: [],
         label: 'Kills',
-        backgroundColor: "#008080" 
+        backgroundColor: "#008080"
       }
-    ]
+    ],
   };
 
   showAsChart = false;
