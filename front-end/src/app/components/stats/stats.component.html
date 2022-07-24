@@ -1,16 +1,20 @@
-<div *ngIf="profile != undefined">
+<div *ngIf="fetchingStats">
+    <mat-spinner [diameter]="50">
+    </mat-spinner>
+    Fetching stats...
+</div>
+
+<div *ngIf="profile != undefined && fetchingStats == false">
 
     <h2> {{ profile.displayName }} <img class="profile-icon" [src]="profile.iconPath"></h2>
 
-    <mat-card-subtitle *ngIf="fetchingStats == false"> Last Updated: {{ profile.dateCreated | date : 'short'}}
+    <mat-card-subtitle> Last Updated: {{ profile.dateCreated | date : 'short'}}
     </mat-card-subtitle>
 
     <div class="row">
         <div class="column left">
             <h3> Characters </h3>
-            <mat-spinner [diameter]="50" *ngIf="fetchingStats">
-            </mat-spinner>
-            <app-characters *ngIf="fetchingStats == false" [characters]="profile.characters" [currentId]="currentId"
+            <app-characters [characters]="profile.characters" [currentId]="currentId"
                 (newCharacterIdEvent)="updateStats($event)">
             </app-characters>
         </div>
@@ -24,15 +28,11 @@
             <br>
             <br>
 
-            <mat-button-toggle-group *ngIf="fetchingStats == false" [(ngModel)]="currentMode"
-                (change)="displayedStats=getMode(currentMode)">
+            <mat-button-toggle-group [(ngModel)]="currentMode" (change)="displayedStats=getMode(currentMode)">
                 <mat-button-toggle value="Merged">All</mat-button-toggle>
                 <mat-button-toggle value="PvE">PvE</mat-button-toggle>
                 <mat-button-toggle value="PvP">PvP</mat-button-toggle>
             </mat-button-toggle-group>
-
-            <mat-spinner [diameter]="50" *ngIf="fetchingStats">
-            </mat-spinner>
 
             <!-- <mat-tab-group mat-align-tabs="center">
                 <mat-tab label="Merged">
@@ -64,20 +64,18 @@
                 </mat-tab>
             </mat-tab-group> -->
 
-            <div *ngIf="fetchingStats == false && 
-                    checkEmptyObject(displayedStats)">
+            <div *ngIf="checkEmptyObject(displayedStats) == true">
                 <br>
                 <br>
                 No {{ currentMode }} stats were found
             </div>
 
-            <div class="stat-section" *ngIf="fetchingStats == false && checkEmptyObject(displayedStats) == false">
-                <app-stat-section *ngFor="let section of sections | keyvalue: helper.numberedKeyOrder" [section]="section.value"
-                    [sectionName]="section.key" [displayedStats]="displayedStats"
+            <div class="stat-section" *ngIf="checkEmptyObject(displayedStats) == false">
+                <app-stat-section *ngFor="let section of sections | keyvalue: helper.numberedKeyOrder"
+                    [section]="section.value" [sectionName]="section.key" [displayedStats]="displayedStats"
                     [newDisplayedStatsEvent]="newDisplayedStatsEvent">
                 </app-stat-section>
             </div>
-
 
         </div>
     </div>
