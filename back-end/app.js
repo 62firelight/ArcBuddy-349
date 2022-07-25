@@ -7,7 +7,9 @@ const { MongoClient }= require('mongodb');
 const app = express();
 const port = 3000;
 
-const db = new MongoClient('mongodb://127.0.0.1:27017');
+const mongoClient = new MongoClient('mongodb://127.0.0.1:27017');
+const db = mongoClient.db('test');
+const profiles = db.collection('profiles');
 
 app.use(express.static('myapp/public'));
 app.use(express.json({limit: '1mb'}));
@@ -38,70 +40,6 @@ app.get('/', (req, res) => {
   Welcome to the API homepage for Arc Buddy! There's nothing special to see here right now.
   `)
 });
-
-// const { S3Client, PutObjectCommand, ListObjectsCommand, GetObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
-// const s3Client = new S3Client({
-//     region: "us-east-1",
-//     profile: "personal"
-// });
-
-// const putObjectCommand = async (params) => {
-//     const command = new PutObjectCommand(params);
-//     try {
-//         const data = await s3Client.send(command);
-//         return data;
-//     } catch (error) {
-//         console.log(":(", error);
-//     }
-// }
-
-// const listObjectsCommand = async (params) => {
-//     const command = new ListObjectsCommand(params);
-//     try {
-//         const data = await s3Client.send(command);
-//         return data;
-//     } catch (error) {
-//         console.log(":(", error);
-//     }
-// }
-
-// const getObjectCommand = async (params) => {
-//     const command = new GetObjectCommand(params);
-//     try {
-//         const data = await s3Client.send(command);
-//         return data;
-//     } catch (error) {
-//         console.log(":(", error);
-//     }
-// }
-
-// const deleteObjectCommand = async (params) => {
-//     const command = new DeleteObjectCommand(params);
-//     try {
-//         const data = await s3Client.send(command);
-//         return data;
-//     } catch (error) {
-//         console.log(":(", error);
-//     }
-// }
-
-// const { SecretsManagerClient, GetSecretValueCommand } = require("@aws-sdk/client-secrets-manager");
-// const secretsClient = new SecretsManagerClient({
-//     region: "us-east-1",
-//     profile: "personal"
-// });
-
-// const getApiKey = async () => {
-//     const command = new GetSecretValueCommand({
-//         SecretId: "arc-buddy-349-api-key"
-//     });
-//     try {
-//         const data = await secretsClient.send(command);
-//         return data;
-//     } catch (error) {
-//         console.log(":(", error);
-//     }
-// }
 
 const createClient = async () => {
     try {
@@ -247,9 +185,23 @@ app.get("/api/players/stats", async (req, res) => {
         // });
 
         // Retrieve snapshots of profiles from local storage (WARNING: not persistent)
-        const response = snapshots;
+        // const response = snapshots;
+        // const response = profiles.find();
 
-        res.status(200).send(response);
+        profiles.findOne().then((response) => {
+            if (response == null) {
+                response = [];
+            } else {
+                response = [response];
+            }
+
+            res.status(200).send(response);
+        })
+        .catch((error) => {
+            throw(error);
+        });
+
+        // res.status(200).send(response);
     } catch (error) {
         console.log(error);
 
@@ -282,16 +234,24 @@ app.get("/api/players/:name", async (req, res) => {
         // });
 
         // Search through snapshots array for the requested display name (WARNING: slow for large arrays)
-        profile = snapshots.find(element => 
-            element.displayName.localeCompare(req.params.name) == 0
-        );
-
-        if (profile != undefined) {
+        // profile = snapshots.find(element => 
+        //     element.displayName.localeCompare(req.params.name) == 0
+        // );
+       
+        profiles.findOne({
+            displayName: req.params.name
+        }).then((profile) => {
             res.status(200).send(profile);
-        }
-        else {
-            throw ("No profile with that display name was found!");
-        }
+        }).catch((error) => {
+            throw(error);
+        });
+
+        // if (profile != undefined) {
+        //     res.status(200).send(profile);
+        // }
+        // else {
+        //     throw ("No profile with that display name was found!");
+        // }
     } catch (error) {
         console.log(error);
 
@@ -310,13 +270,21 @@ app.delete("/api/players/:name", async (req, res) => {
         var origSnapshotLength = snapshots.length;
 
         // Delete specific snapshot of profile from array
-        snapshots = snapshots.filter(element =>
-            element.displayName.localeCompare(req.params.name) != 0
-        );
+        // snapshots = snapshots.filter(element =>
+        //     element.displayName.localeCompare(req.params.name) != 0
+        // );
 
-        if (snapshots.length < origSnapshotLength) console.log("Successfully deleted " + req.params.name);
+        // if (snapshots.length < origSnapshotLength) console.log("Successfully deleted " + req.params.name);
 
-        res.status(204).send();
+        profiles.deleteMany({
+            displayName: req.params.name
+        }).then((profile) => {
+            res.status(204).send();
+        }).catch((error) => {
+            throw(error);
+        });
+
+        // res.status(204).send();
     } catch (error) {
         console.log(error);
 
@@ -335,9 +303,13 @@ app.post("/api/players/stats", async (req, res) => {
 
         snapshots.push(req.body);
 
-        console.log("Successfully added " + req.body.displayName);
-
-        res.status(201).send("");
+        profiles.insertOne(req.body).then(() => {
+            console.log("Successfully added " + req.body.displayName);
+            res.status(201).send("");
+        }).catch((error) => {
+            throw(error);
+        });
+        
     } catch (error) {
         console.log(error);
 
