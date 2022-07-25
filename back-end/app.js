@@ -2,18 +2,43 @@ const compression = require('compression')
 const express = require('express')
 const cors = require('cors');
 const destinyApi = require('node-destiny-2');
-const { MongoClient }= require('mongodb');
+const { MongoClient } = require('mongodb');
 
 const app = express();
 const port = 3000;
 
+var noDb = false;
+
+// read command line arguments if they were passed in
+if (process.argv.length > 2) {
+    const myArgs = process.argv.slice(2);
+    switch (myArgs[0].toLowerCase()) {
+        case '-nodb':
+            console.log('noDb argument detected. Using in-memory database...');
+            noDb = true;
+            break;
+        default:
+            console.log('No command line arguments were given.');
+            break;
+    }
+}
+
 const mongoClient = new MongoClient('mongodb://127.0.0.1:27017');
+
+// test connection
+mongoClient.connect()
+    .then((result) => console.log('Successfully connected to MongoDB.'))
+    .catch((error) => {
+        console.log(`Couldn't connect to MongoDB. Using in-memory database...`);
+        noDb = true;
+    });
+    
 const db = mongoClient.db('test');
 const profiles = db.collection('profiles');
 
 app.use(express.static('myapp/public'));
-app.use(express.json({limit: '1mb'}));
-app.use(express.urlencoded({limit: '1mb', extended: true}));
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ limit: '1mb', extended: true }));
 app.use(cors());
 
 const CLASS_MAP = {
@@ -185,23 +210,25 @@ app.get("/api/players/stats", async (req, res) => {
         // });
 
         // Retrieve snapshots of profiles from local storage (WARNING: not persistent)
-        // const response = snapshots;
-        // const response = profiles.find();
-
-        profiles.findOne().then((response) => {
-            if (response == null) {
-                response = [];
-            } else {
-                response = [response];
-            }
-
+        if (noDb == true) {
+            const response = snapshots;
             res.status(200).send(response);
-        })
-        .catch((error) => {
-            throw(error);
-        });
+        } else {
+            profiles.findOne()
+                .then((response) => {
+                    if (response == null) {
+                        response = [];
+                    } else {
+                        response = [response];
+                    }
 
-        // res.status(200).send(response);
+                    res.status(200).send(response);
+                })
+                .catch((error) => {
+                    throw (error);
+                });
+        }
+
     } catch (error) {
         console.log(error);
 
@@ -234,24 +261,27 @@ app.get("/api/players/:name", async (req, res) => {
         // });
 
         // Search through snapshots array for the requested display name (WARNING: slow for large arrays)
-        // profile = snapshots.find(element => 
-        //     element.displayName.localeCompare(req.params.name) == 0
-        // );
-       
-        profiles.findOne({
-            displayName: req.params.name
-        }).then((profile) => {
-            res.status(200).send(profile);
-        }).catch((error) => {
-            throw(error);
-        });
+        if (noDb == true) {
+            profile = snapshots.find(element =>
+                element.displayName.localeCompare(req.params.name) == 0
+            );
 
-        // if (profile != undefined) {
-        //     res.status(200).send(profile);
-        // }
-        // else {
-        //     throw ("No profile with that display name was found!");
-        // }
+            if (profile != undefined) {
+                res.status(200).send(profile);
+            }
+            else {
+                throw ("No profile with that display name was found!");
+            }
+        } else {
+            profiles.findOne({
+                displayName: req.params.name
+            }).then((profile) => {
+                res.status(200).send(profile);
+            }).catch((error) => {
+                throw (error);
+            });
+        }
+
     } catch (error) {
         console.log(error);
 
@@ -270,21 +300,24 @@ app.delete("/api/players/:name", async (req, res) => {
         var origSnapshotLength = snapshots.length;
 
         // Delete specific snapshot of profile from array
-        // snapshots = snapshots.filter(element =>
-        //     element.displayName.localeCompare(req.params.name) != 0
-        // );
+        if (noDb == true) {
+            snapshots = snapshots.filter(element =>
+                element.displayName.localeCompare(req.params.name) != 0
+            );
 
-        // if (snapshots.length < origSnapshotLength) console.log("Successfully deleted " + req.params.name);
+            if (snapshots.length < origSnapshotLength) console.log("Successfully deleted " + req.params.name);
 
-        profiles.deleteMany({
-            displayName: req.params.name
-        }).then((profile) => {
             res.status(204).send();
-        }).catch((error) => {
-            throw(error);
-        });
+        } else {
+            profiles.deleteMany({
+                displayName: req.params.name
+            }).then((profile) => {
+                res.status(204).send();
+            }).catch((error) => {
+                throw (error);
+            });
+        }
 
-        // res.status(204).send();
     } catch (error) {
         console.log(error);
 
@@ -301,15 +334,19 @@ app.post("/api/players/stats", async (req, res) => {
         //     Body: JSON.stringify(req.body)
         // });
 
-        snapshots.push(req.body);
-
-        profiles.insertOne(req.body).then(() => {
-            console.log("Successfully added " + req.body.displayName);
+        if (noDb == true) {
+            snapshots.push(req.body);
             res.status(201).send("");
-        }).catch((error) => {
-            throw(error);
-        });
-        
+        } else {
+            profiles.insertOne(req.body)
+                .then(() => {
+                    console.log("Successfully added " + req.body.displayName);
+                    res.status(201).send("");
+                }).catch((error) => {
+                    throw (error);
+                });
+        }
+
     } catch (error) {
         console.log(error);
 
