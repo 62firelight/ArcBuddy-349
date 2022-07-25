@@ -2,9 +2,12 @@ const compression = require('compression')
 const express = require('express')
 const cors = require('cors');
 const destinyApi = require('node-destiny-2');
+const { MongoClient }= require('mongodb');
 
 const app = express();
 const port = 3000;
+
+const db = new MongoClient('mongodb://127.0.0.1:27017');
 
 app.use(express.static('myapp/public'));
 app.use(express.json({limit: '1mb'}));
