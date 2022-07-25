@@ -18,6 +18,11 @@
   },
   "dependencies": {
     "compression": "^1.7.4",
-    "mongodb": "^4.8.0"
+    "mongodb": "^4.8.0",
+    "nodemon": "^2.0.19"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   }
 }

@@ -32,7 +32,7 @@ mongoClient.connect()
         console.log(`Couldn't connect to MongoDB. Using in-memory database...`);
         noDb = true;
     });
-    
+
 const db = mongoClient.db('test');
 const profiles = db.collection('profiles');
 
