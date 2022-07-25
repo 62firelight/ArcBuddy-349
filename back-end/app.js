@@ -23,7 +23,9 @@ if (process.argv.length > 2) {
     }
 }
 
-const mongoClient = new MongoClient('mongodb://127.0.0.1:27017');
+const mongoClient = new MongoClient('mongodb://127.0.0.1:27017', {
+    serverSelectionTimeoutMS: 2000
+});
 
 // test connection
 mongoClient.connect()
@@ -336,6 +338,7 @@ app.post("/api/players/stats", async (req, res) => {
 
         if (noDb == true) {
             snapshots.push(req.body);
+            console.log("Successfully added " + req.body.displayName);
             res.status(201).send("");
         } else {
             profiles.insertOne(req.body)
