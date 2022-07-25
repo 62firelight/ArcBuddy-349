@@ -54,7 +54,8 @@ export class StatSectionComponent implements OnInit {
       {
         data: [],
         label: 'Kills',
-        backgroundColor: "#008080"
+        backgroundColor: '#008080',
+        hoverBackgroundColor: 'white'
       }
     ],
   };
