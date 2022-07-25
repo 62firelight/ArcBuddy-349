@@ -1,0 +1,23 @@
+{
+  "name": "arcbuddy-349",
+  "version": "1.0.0",
+  "description": "App aimed at giving quality-of-life features to Destiny 2 players",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"cd back-end && npm run dev\" \"cd front-end && npm start\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/62firelight/ArcBuddy-349.git"
+  },
+  "author": "62firelight",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/62firelight/ArcBuddy-349/issues"
+  },
+  "homepage": "https://github.com/62firelight/ArcBuddy-349#readme",
+  "dependencies": {
+    "concurrently": "^7.3.0"
+  }
+}
