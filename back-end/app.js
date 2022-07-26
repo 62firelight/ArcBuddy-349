@@ -3,6 +3,7 @@ const express = require('express')
 const cors = require('cors');
 const destinyApi = require('node-destiny-2');
 const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 
 const app = express();
 const port = 3000;
@@ -23,20 +24,72 @@ if (process.argv.length > 2) {
     }
 }
 
-const mongoClient = new MongoClient('mongodb://127.0.0.1:27017', {
-    serverSelectionTimeoutMS: 2000
-});
+// const characterSchema = new mongoose.Schema({
+//     characterId: string,
 
-// test connection
-mongoClient.connect()
-    .then((result) => console.log('Successfully connected to MongoDB.'))
+//     race: string,
+//     class: string,
+//     light: string,
+//     emblem: string,
+
+//     mergedStats?: Object,
+//     pveStats?: Object,
+//     pvpStats?: Object
+// });
+// const Character = mongoose.model(characterSchema);
+
+const profileSchema = undefined;
+
+mongoose.connect('mongodb://127.0.0.1:27017', {serverSelectionTimeoutMS: 2000})
+    .then(() => {
+        console.log('Successfully connected to MongoDB through Mongoose.');
+
+        // profileSchema = new mongoose.Schema({
+        //     iconPath: String,
+        //     displayName: String,
+        //     membershipType: String,
+        //     membershipId: String,
+
+        //     dateCreated: Date,
+
+        //     characters: [{
+        //         characterId: String,
+
+        //         race: String,
+        //         class: String,
+        //         light: String,
+        //         emblem: String,
+
+        //         mergedStats: Object,
+        //         pveStats: Object,
+        //         pvpStats: Object
+        //     }],
+        //     mergedStats: Object,
+        //     pveStats: Object,
+        //     pvpStats: Object
+        // });
+    })
     .catch((error) => {
-        console.log(`Couldn't connect to MongoDB. Using in-memory database...`);
+        console.log(`Couldn't connect to MongoDB through Mongoose. Using in-memory database...`);
         noDb = true;
-    });
+    });;
 
-const db = mongoClient.db('test');
-const profiles = db.collection('profiles');
+
+
+// const mongoClient = new MongoClient('mongodb://127.0.0.1:27017', {
+//     serverSelectionTimeoutMS: 2000
+// });
+
+// // test connection
+// mongoClient.connect()
+//     .then((result) => console.log('Successfully connected to MongoDB.'))
+//     .catch((error) => {
+//         console.log(`Couldn't connect to MongoDB. Using in-memory database...`);
+//         noDb = true;
+//     });
+
+// const db = mongoClient.db('test');
+// const profiles = db.collection('profiles');
 
 app.use(express.static('myapp/public'));
 app.use(express.json({ limit: '1mb' }));
@@ -216,19 +269,19 @@ app.get("/api/players/stats", async (req, res) => {
             const response = snapshots;
             res.status(200).send(response);
         } else {
-            profiles.findOne()
-                .then((response) => {
-                    if (response == null) {
-                        response = [];
-                    } else {
-                        response = [response];
-                    }
+            // profiles.findOne()
+            //     .then((response) => {
+            //         if (response == null) {
+            //             response = [];
+            //         } else {
+            //             response = [response];
+            //         }
 
-                    res.status(200).send(response);
-                })
-                .catch((error) => {
-                    throw (error);
-                });
+            //         res.status(200).send(response);
+            //     })
+            //     .catch((error) => {
+            //         throw (error);
+            //     });
         }
 
     } catch (error) {
@@ -275,13 +328,13 @@ app.get("/api/players/:name", async (req, res) => {
                 throw ("No profile with that display name was found!");
             }
         } else {
-            profiles.findOne({
-                displayName: req.params.name
-            }).then((profile) => {
-                res.status(200).send(profile);
-            }).catch((error) => {
-                throw (error);
-            });
+            // profiles.findOne({
+            //     displayName: req.params.name
+            // }).then((profile) => {
+            //     res.status(200).send(profile);
+            // }).catch((error) => {
+            //     throw (error);
+            // });
         }
 
     } catch (error) {
@@ -311,13 +364,13 @@ app.delete("/api/players/:name", async (req, res) => {
 
             res.status(204).send();
         } else {
-            profiles.deleteMany({
-                displayName: req.params.name
-            }).then((profile) => {
-                res.status(204).send();
-            }).catch((error) => {
-                throw (error);
-            });
+            // profiles.deleteMany({
+            //     displayName: req.params.name
+            // }).then((profile) => {
+            //     res.status(204).send();
+            // }).catch((error) => {
+            //     throw (error);
+            // });
         }
 
     } catch (error) {
@@ -341,13 +394,13 @@ app.post("/api/players/stats", async (req, res) => {
             console.log("Successfully added " + req.body.displayName);
             res.status(201).send("");
         } else {
-            profiles.insertOne(req.body)
-                .then(() => {
-                    console.log("Successfully added " + req.body.displayName);
-                    res.status(201).send("");
-                }).catch((error) => {
-                    throw (error);
-                });
+            // profiles.insertOne(req.body)
+            //     .then(() => {
+            //         console.log("Successfully added " + req.body.displayName);
+            //         res.status(201).send("");
+            //     }).catch((error) => {
+            //         throw (error);
+            //     });
         }
 
     } catch (error) {
