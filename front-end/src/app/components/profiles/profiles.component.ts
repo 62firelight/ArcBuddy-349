@@ -33,7 +33,13 @@ export class ProfilesComponent implements OnInit {
     this.refresh();
 
     this.addingProfiles.subscribe((profile) => {
-      this.addProfile(profile);
+      if (this.profiles.some((profile2) => profile.displayName == profile2.displayName) == true) {
+        console.log(`Profile already exists at ${profile.dateCreated.toLocaleString()}`);
+
+        this.updateProfile(profile);
+      } else {
+        this.addProfile(profile);
+      }      
     });
 
     this.changingProfiles.subscribe((profile) => {
@@ -68,6 +74,15 @@ export class ProfilesComponent implements OnInit {
 
     this.profileService.getProfile(profile.displayName).subscribe((result) => {
       this.setProfileEvent.emit(profile);
+    });
+  }
+
+  updateProfile(profile: Profile): void {
+    this.error = '';
+
+    this.profileService.updateProfile(profile.displayName, profile).subscribe((result) => {
+      this.refresh();
+      this.fetchingProfiles = false;
     });
   }
 
