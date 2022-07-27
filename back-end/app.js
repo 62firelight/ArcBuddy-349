@@ -24,52 +24,8 @@ if (process.argv.length > 2) {
     }
 }
 
-// const characterSchema = new mongoose.Schema({
-//     characterId: string,
-
-//     race: string,
-//     class: string,
-//     light: string,
-//     emblem: string,
-
-//     mergedStats?: Object,
-//     pveStats?: Object,
-//     pvpStats?: Object
-// });
-// const Character = mongoose.model(characterSchema);
-
-var profileSchema = undefined;
-var profileModel = undefined;
-
 mongoose.connect('mongodb://127.0.0.1:27017', { serverSelectionTimeoutMS: 2000 })
     .then(() => {
-        // profileSchema = new mongoose.Schema({
-        //     iconPath: String,
-        //     displayName: String,
-        //     membershipType: String,
-        //     membershipId: String,
-
-        //     dateCreated: Date,
-
-        //     characters: [{
-        //         characterId: String,
-
-        //         race: String,
-        //         class: String,
-        //         light: String,
-        //         emblem: String,
-
-        //         mergedStats: Object,
-        //         pveStats: Object,
-        //         pvpStats: Object
-        //     }],
-        //     mergedStats: Object,
-        //     pveStats: Object,
-        //     pvpStats: Object
-        // });
-
-        // Profile = mongoose.model('Profile', profileSchema);
-
         console.log('Successfully connected to MongoDB through Mongoose.');
     })
     .catch((error) => {
@@ -77,22 +33,9 @@ mongoose.connect('mongodb://127.0.0.1:27017', { serverSelectionTimeoutMS: 2000 }
 
         console.log(`Couldn't connect to MongoDB through Mongoose. Using in-memory database...`);
         noDb = true;
+
+        process.exit();
     });;
-
-// const mongoClient = new MongoClient('mongodb://127.0.0.1:27017', {
-//     serverSelectionTimeoutMS: 2000
-// });
-
-// // test connection
-// mongoClient.connect()
-//     .then((result) => console.log('Successfully connected to MongoDB.'))
-//     .catch((error) => {
-//         console.log(`Couldn't connect to MongoDB. Using in-memory database...`);
-//         noDb = true;
-//     });
-
-// const db = mongoClient.db('test');
-// const profiles = db.collection('profiles');
 
 app.use(express.static('myapp/public'));
 app.use(express.json({ limit: '1mb' }));
