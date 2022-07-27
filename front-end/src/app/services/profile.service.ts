@@ -49,6 +49,11 @@ export class ProfileService {
     return this.http.post<Profile>(url, profile, httpOptions);
   }
 
+  updateProfile(name: string, profile: Profile): Observable<Profile> {
+    const url = `api/players/${name}`;
+    return this.http.put<Profile>(url, profile, httpOptions);
+  }
+
   deleteProfile(name: string | undefined): Observable<Profile> {
     const url = `api/players/${name}`;
     return this.http.delete<Profile>(url);

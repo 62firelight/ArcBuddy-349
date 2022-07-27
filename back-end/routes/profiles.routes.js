@@ -10,6 +10,9 @@ module.exports = (app) => {
     // Retrieve a single Profile with displayName
     app.get('/api/players/:name', profiles.findOne);
 
+    // Update a Profile with displayName
+    app.put('/api/players/:name', profiles.update);
+
     // Delete a Profile with displayName
     app.delete('/api/players/:name', profiles.delete);
 }

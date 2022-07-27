@@ -6,8 +6,6 @@ const profileSchema = new mongoose.Schema({
     membershipType: String,
     membershipId: String,
 
-    dateCreated: Date,
-
     characters: [{
         characterId: String,
 
@@ -22,7 +20,8 @@ const profileSchema = new mongoose.Schema({
     }],
     mergedStats: Object,
     pveStats: Object,
-    pvpStats: Object
-});
+    pvpStats: Object,
+    dateCreated: Date
+}, { _id : false });
 
 module.exports = mongoose.model('Profile', profileSchema);

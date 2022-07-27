@@ -75,6 +75,31 @@ exports.findOne = (req, res) => {
     }
 }
 
+exports.update = (req, res) => {
+    try {
+        if (server.getNoDb() == true) {
+
+            res.status(204).send("");
+        } else {
+            const newProfile = new Profile(req.body);
+
+            Profile.replaceOne({
+                displayName: req.params.name
+            }, newProfile)
+            .then(() => {
+                console.log(`Successfully updated ${req.params.name}`);
+                res.status(204).send("");
+            }).catch((error) => {
+                throw (error);
+            });
+            
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(404).send("Failed to delete profile for specified Destiny player.");
+    }
+}
+
 exports.delete = (req, res) => {
     try {
         if (server.getNoDb() == true) {
