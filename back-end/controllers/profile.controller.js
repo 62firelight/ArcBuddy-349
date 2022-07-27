@@ -78,7 +78,12 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     try {
         if (server.getNoDb() == true) {
+            let index = snapshots.findIndex(e => e.displayName.localeCompare(req.params.name) == 0);
 
+            if (index != -1) {
+                snapshots[index] = req.body;
+            }
+            console.log(`Successfully updated ${req.params.name}`);
             res.status(204).send("");
         } else {
             const newProfile = new Profile(req.body);
