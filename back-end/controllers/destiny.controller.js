@@ -1,42 +1,21 @@
+const server = require('../app.js');
 const destinyApi = require('node-destiny-2');
 
-const CLASS_MAP = {
+const classMap = {
     0: 'Titan',
     1: 'Hunter',
     2: 'Warlock'
 }
 
-const RACE_MAP = {
+const raceMap = {
     0: 'Human',
     1: 'Awoken',
     2: 'Exo'
 }
 
-const createClient = async () => {
-    try {
-        // const response = await getApiKey();
-        // const apiKey = JSON.parse(response.SecretString).apiKey;
-        const apiKey = process.env.ARC_KEY;
-
-        console.log(`Successfully retrieved API key`);
-
-        return new destinyApi({
-            key: apiKey
-        });
-    } catch (error) {
-        console.log("Couldn't retrieve API key from AWS Secrets Manager");
-    }
-}
-
-var destiny = undefined;
-
-createClient().then((destinyClient) => {
-    destiny = destinyClient;
-
-    // 3, '4611686018468181342', '2305843009301648414' (Exo Hunter)
-});
-
 exports.searchDestinyPlayer = (req, res) => {
+    const destiny = server.getDestiny();
+
     if (destiny == undefined) {
         console.log(`Couldn't create Destiny 2 API wrapper object!`);
         res.send(404).send(`Couldn't create Destiny 2 API wrapper object!`);
@@ -68,6 +47,8 @@ exports.searchDestinyPlayer = (req, res) => {
 };
 
 exports.getHistoricalStats = (req, res) => {
+    const destiny = server.getDestiny();
+
     if (destiny == undefined) {
         console.log(`Couldn't create Destiny 2 API wrapper object!`);
         res.send(404).send(`Couldn't create Destiny 2 API wrapper object!`);
@@ -81,7 +62,7 @@ exports.getHistoricalStats = (req, res) => {
             // console.log(JSON.stringify(response.Response, null, 2));
             // console.log(response.Response.mergedAllCharacters.results.allPvE.allTime);
 
-            var characterStats = {}
+            let characterStats = {}
 
             // fetch merged stats for account
             characterStats.mergedStats = response.Response.mergedAllCharacters.merged.allTime;
@@ -115,6 +96,8 @@ exports.getHistoricalStats = (req, res) => {
 };
 
 exports.getProfile = (req, res) => {
+    const destiny = server.getDestiny();
+
     if (destiny == undefined) {
         console.log(`Couldn't create Destiny 2 API wrapper object!`);
         res.send(404).send(`Couldn't create Destiny 2 API wrapper object!`);
@@ -129,19 +112,19 @@ exports.getProfile = (req, res) => {
 
             const characters = response.Response.characters.data;
 
-            var fetchedCharacters = [];
+            let fetchedCharacters = [];
 
-            var i = 0;
+            let i = 0;
             for (let [key] of Object.entries(characters)) {
                 const fetchedCharacter = characters[key];
 
-                // console.log(`${RACE_MAP[fetchedCharacter.raceType]} ${CLASS_MAP[fetchedCharacter.classType]}`);
+                // console.log(`${raceMap[fetchedCharacter.raceType]} ${classMap[fetchedCharacter.classType]}`);
 
-                var newCharacter = {};
+                let newCharacter = {};
                 newCharacter = {};
                 newCharacter.characterId = fetchedCharacter.characterId;
-                newCharacter.race = RACE_MAP[fetchedCharacter.raceType];
-                newCharacter.class = CLASS_MAP[fetchedCharacter.classType];
+                newCharacter.race = raceMap[fetchedCharacter.raceType];
+                newCharacter.class = classMap[fetchedCharacter.classType];
                 newCharacter.light = fetchedCharacter.light;
                 newCharacter.emblem = `https://www.bungie.net${fetchedCharacter.emblemBackgroundPath}`;
 
