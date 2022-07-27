@@ -38,43 +38,46 @@ if (process.argv.length > 2) {
 // });
 // const Character = mongoose.model(characterSchema);
 
-const profileSchema = undefined;
+var profileSchema = undefined;
+var profileModel = undefined;
 
-mongoose.connect('mongodb://127.0.0.1:27017', {serverSelectionTimeoutMS: 2000})
+mongoose.connect('mongodb://127.0.0.1:27017', { serverSelectionTimeoutMS: 2000 })
     .then(() => {
+        profileSchema = new mongoose.Schema({
+            iconPath: String,
+            displayName: String,
+            membershipType: String,
+            membershipId: String,
+
+            dateCreated: Date,
+
+            characters: [{
+                characterId: String,
+
+                race: String,
+                class: String,
+                light: String,
+                emblem: String,
+
+                mergedStats: Object,
+                pveStats: Object,
+                pvpStats: Object
+            }],
+            mergedStats: Object,
+            pveStats: Object,
+            pvpStats: Object
+        });
+
+        Profile = mongoose.model('Profile', profileSchema);
+
         console.log('Successfully connected to MongoDB through Mongoose.');
-
-        // profileSchema = new mongoose.Schema({
-        //     iconPath: String,
-        //     displayName: String,
-        //     membershipType: String,
-        //     membershipId: String,
-
-        //     dateCreated: Date,
-
-        //     characters: [{
-        //         characterId: String,
-
-        //         race: String,
-        //         class: String,
-        //         light: String,
-        //         emblem: String,
-
-        //         mergedStats: Object,
-        //         pveStats: Object,
-        //         pvpStats: Object
-        //     }],
-        //     mergedStats: Object,
-        //     pveStats: Object,
-        //     pvpStats: Object
-        // });
     })
     .catch((error) => {
+        console.log(error);
+
         console.log(`Couldn't connect to MongoDB through Mongoose. Using in-memory database...`);
         noDb = true;
     });;
-
-
 
 // const mongoClient = new MongoClient('mongodb://127.0.0.1:27017', {
 //     serverSelectionTimeoutMS: 2000
@@ -142,7 +145,7 @@ var destiny = undefined;
 createClient().then((destinyClient) => {
     destiny = destinyClient;
 
-    // 3, '4611686018468181342'
+    // 3, '4611686018468181342', '2305843009301648414' (Exo Hunter)
 });
 
 var snapshots = [];
@@ -269,6 +272,21 @@ app.get("/api/players/stats", async (req, res) => {
             const response = snapshots;
             res.status(200).send(response);
         } else {
+            Profile.find()
+                .then((response) => {
+
+                    // if (response == null) {
+                    //     response = [];
+                    // } else {
+                    //     response = [response];
+                    // }
+
+                    res.status(200).send(response);
+                })
+                .catch((error) => {
+                    throw (error);
+                });
+
             // profiles.findOne()
             //     .then((response) => {
             //         if (response == null) {
@@ -328,6 +346,14 @@ app.get("/api/players/:name", async (req, res) => {
                 throw ("No profile with that display name was found!");
             }
         } else {
+            Profile.find({
+                displayName: req.params.name
+            }).then((profile) => {
+                res.status(200).send(profile);
+            }).catch((error) => {
+                throw (error);
+            });
+
             // profiles.findOne({
             //     displayName: req.params.name
             // }).then((profile) => {
@@ -364,9 +390,19 @@ app.delete("/api/players/:name", async (req, res) => {
 
             res.status(204).send();
         } else {
+            Profile.deleteMany({
+                displayName: req.params.name
+            }).then((profile) => {
+                console.log("Successfully deleted " + req.params.name);
+                res.status(204).send();
+            }).catch((error) => {
+                throw (error);
+            });
+
             // profiles.deleteMany({
             //     displayName: req.params.name
             // }).then((profile) => {
+            //     console.log("Successfully deleted " + req.params.name);
             //     res.status(204).send();
             // }).catch((error) => {
             //     throw (error);
@@ -394,6 +430,15 @@ app.post("/api/players/stats", async (req, res) => {
             console.log("Successfully added " + req.body.displayName);
             res.status(201).send("");
         } else {
+            const profile = new Profile(req.body);
+            profile.save()
+                .then(() => {
+                    console.log("Successfully added " + req.body.displayName);
+                    res.status(201).send("");
+                }).catch((error) => {
+                    throw (error);
+                });
+
             // profiles.insertOne(req.body)
             //     .then(() => {
             //         console.log("Successfully added " + req.body.displayName);
