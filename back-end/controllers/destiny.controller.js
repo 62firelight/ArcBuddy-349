@@ -1,4 +1,4 @@
-const server = require('../app.js');
+const server = require('../server.js');
 const destinyApi = require('node-destiny-2');
 
 const classMap = {

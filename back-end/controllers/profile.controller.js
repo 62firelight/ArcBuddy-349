@@ -1,5 +1,5 @@
 const Profile = require('../models/profile.model.js');
-const server = require('../app.js');
+const server = require('../server.js');
 
 let snapshots = [];
 
