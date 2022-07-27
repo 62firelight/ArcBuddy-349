@@ -43,32 +43,32 @@ var profileModel = undefined;
 
 mongoose.connect('mongodb://127.0.0.1:27017', { serverSelectionTimeoutMS: 2000 })
     .then(() => {
-        profileSchema = new mongoose.Schema({
-            iconPath: String,
-            displayName: String,
-            membershipType: String,
-            membershipId: String,
+        // profileSchema = new mongoose.Schema({
+        //     iconPath: String,
+        //     displayName: String,
+        //     membershipType: String,
+        //     membershipId: String,
 
-            dateCreated: Date,
+        //     dateCreated: Date,
 
-            characters: [{
-                characterId: String,
+        //     characters: [{
+        //         characterId: String,
 
-                race: String,
-                class: String,
-                light: String,
-                emblem: String,
+        //         race: String,
+        //         class: String,
+        //         light: String,
+        //         emblem: String,
 
-                mergedStats: Object,
-                pveStats: Object,
-                pvpStats: Object
-            }],
-            mergedStats: Object,
-            pveStats: Object,
-            pvpStats: Object
-        });
+        //         mergedStats: Object,
+        //         pveStats: Object,
+        //         pvpStats: Object
+        //     }],
+        //     mergedStats: Object,
+        //     pveStats: Object,
+        //     pvpStats: Object
+        // });
 
-        Profile = mongoose.model('Profile', profileSchema);
+        // Profile = mongoose.model('Profile', profileSchema);
 
         console.log('Successfully connected to MongoDB through Mongoose.');
     })
@@ -112,6 +112,8 @@ const RACE_MAP = {
 }
 
 const apiUrl = `http://localhost:${port}`
+
+require('./routes/profiles.routes.js')(app);
 
 app.listen(port, () => {
     ;
@@ -258,199 +260,4 @@ app.get("/api/players/character/:type/:id", async (req, res) => {
 
             res.status(404).send('Could not find characters for specified Destiny player');
         });
-});
-
-app.get("/api/players/stats", async (req, res) => {
-    try {
-        // Retrieve snapshots of profiles from S3 bucket
-        // const response = await listObjectsCommand({
-        //     Bucket: "arc-buddy"
-        // });
-
-        // Retrieve snapshots of profiles from local storage (WARNING: not persistent)
-        if (noDb == true) {
-            const response = snapshots;
-            res.status(200).send(response);
-        } else {
-            Profile.find()
-                .then((response) => {
-
-                    // if (response == null) {
-                    //     response = [];
-                    // } else {
-                    //     response = [response];
-                    // }
-
-                    res.status(200).send(response);
-                })
-                .catch((error) => {
-                    throw (error);
-                });
-
-            // profiles.findOne()
-            //     .then((response) => {
-            //         if (response == null) {
-            //             response = [];
-            //         } else {
-            //             response = [response];
-            //         }
-
-            //         res.status(200).send(response);
-            //     })
-            //     .catch((error) => {
-            //         throw (error);
-            //     });
-        }
-
-    } catch (error) {
-        console.log(error);
-
-        res.status(404).send("Can't find snapshots");
-    }
-});
-
-app.get("/api/players/:name", async (req, res) => {
-    try {
-        // Retrieve specific snapshot of profile from S3 bucket
-        // const response = await getObjectCommand({
-        //     Bucket: "arc-buddy",
-        //     Key: req.params.name + ".json"
-        // });
-
-        var profile = undefined;
-
-        // Store all of data chunks returned from the response data stream 
-        // into an array then use Array#join() to use the returned contents as a String
-        // let responseDataChunks = [];
-
-        // Attach a 'data' listener to add the chunks of data to our array
-        // Each chunk is a Buffer instance
-        // response.Body.on('data', chunk => responseDataChunks.push(chunk));
-
-        // Once the stream has no more data, join the chunks into a string and return the string
-        // response.Body.once('end', () => {
-        //     profile = JSON.parse(responseDataChunks.join(''));
-        //     res.status(200).send(profile);
-        // });
-
-        // Search through snapshots array for the requested display name (WARNING: slow for large arrays)
-        if (noDb == true) {
-            profile = snapshots.find(element =>
-                element.displayName.localeCompare(req.params.name) == 0
-            );
-
-            if (profile != undefined) {
-                res.status(200).send(profile);
-            }
-            else {
-                throw ("No profile with that display name was found!");
-            }
-        } else {
-            Profile.find({
-                displayName: req.params.name
-            }).then((profile) => {
-                res.status(200).send(profile);
-            }).catch((error) => {
-                throw (error);
-            });
-
-            // profiles.findOne({
-            //     displayName: req.params.name
-            // }).then((profile) => {
-            //     res.status(200).send(profile);
-            // }).catch((error) => {
-            //     throw (error);
-            // });
-        }
-
-    } catch (error) {
-        console.log(error);
-
-        res.status(404).send("Can't find snapshot for specified Destiny player");
-    }
-});
-
-app.delete("/api/players/:name", async (req, res) => {
-    try {
-        // Delete specific snapshot of profile from S3 bucket
-        // const response = await deleteObjectCommand({
-        //     Bucket: "arc-buddy",
-        //     Key: req.params.name + ".json"
-        // });
-
-        var origSnapshotLength = snapshots.length;
-
-        // Delete specific snapshot of profile from array
-        if (noDb == true) {
-            snapshots = snapshots.filter(element =>
-                element.displayName.localeCompare(req.params.name) != 0
-            );
-
-            if (snapshots.length < origSnapshotLength) console.log("Successfully deleted " + req.params.name);
-
-            res.status(204).send();
-        } else {
-            Profile.deleteMany({
-                displayName: req.params.name
-            }).then((profile) => {
-                console.log("Successfully deleted " + req.params.name);
-                res.status(204).send();
-            }).catch((error) => {
-                throw (error);
-            });
-
-            // profiles.deleteMany({
-            //     displayName: req.params.name
-            // }).then((profile) => {
-            //     console.log("Successfully deleted " + req.params.name);
-            //     res.status(204).send();
-            // }).catch((error) => {
-            //     throw (error);
-            // });
-        }
-
-    } catch (error) {
-        console.log(error);
-
-        res.status(404).send("Can't find snapshot for specified Destiny player");
-    }
-});
-
-app.post("/api/players/stats", async (req, res) => {
-    try {
-        // Store specific snapshot of profile in S3 bucket
-        // const response = await putObjectCommand({
-        //     Bucket: "arc-buddy",
-        //     Key: req.body.displayName + ".json",
-        //     Body: JSON.stringify(req.body)
-        // });
-
-        if (noDb == true) {
-            snapshots.push(req.body);
-            console.log("Successfully added " + req.body.displayName);
-            res.status(201).send("");
-        } else {
-            const profile = new Profile(req.body);
-            profile.save()
-                .then(() => {
-                    console.log("Successfully added " + req.body.displayName);
-                    res.status(201).send("");
-                }).catch((error) => {
-                    throw (error);
-                });
-
-            // profiles.insertOne(req.body)
-            //     .then(() => {
-            //         console.log("Successfully added " + req.body.displayName);
-            //         res.status(201).send("");
-            //     }).catch((error) => {
-            //         throw (error);
-            //     });
-        }
-
-    } catch (error) {
-        console.log(error);
-
-        res.status(404).send("Couldn't create snapshot for specified Destiny player");
-    }
 });
