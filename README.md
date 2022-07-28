@@ -1,4 +1,5 @@
 # Arc Buddy
+[![Jasmine Tests](https://github.com/62firelight/ArcBuddy-349/actions/workflows/main.yml/badge.svg)](https://github.com/62firelight/ArcBuddy-349/actions/workflows/main.yml)
 
 Arc Buddy is a web application that uses the [Bungie.Net API](https://bungie-net.github.io/) to give quality-of-life features for [Destiny 2](https://store.steampowered.com/app/1085660/Destiny_2/) players. Examples of these features include being able to look up player stats and save "snapshots" of player stats.
 
