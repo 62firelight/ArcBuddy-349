@@ -13,10 +13,10 @@ jobs:
           node-version: 14.x
 
       - name: npm dependencies
-        run: npm install
+        run: cd front-end && npm install
 
       - name: Setup
-        run: npm ci
+        run: cd front-end && npm ci
 
       - name: Test
         run: |
