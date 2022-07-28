@@ -1,16 +1,22 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ProfileService } from 'src/app/services/profile.service';
 
 import { SearchComponent } from './search.component';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
+  let profileService: ProfileService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SearchComponent ]
+      declarations: [ SearchComponent ],
+      imports: [ HttpClientTestingModule ],
+      providers: [ ProfileService ]
     })
     .compileComponents();
+    profileService = TestBed.inject(ProfileService);
   });
 
   beforeEach(() => {

@@ -29,6 +29,8 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { NgChartsModule } from 'ng2-charts';
 
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
 import { CharactersComponent } from './components/characters/characters.component';
 import { CamelConverterPipe } from './components/pipes/camelConverter/camel-converter.pipe';
 import { DestinyStatPipe } from './components/pipes/destinyStat/destiny-stat.pipe';
@@ -64,6 +66,7 @@ import { StatSectionComponent } from './components/stat-section/stat-section.com
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+    HttpClientTestingModule,
     MatIconModule,
     MatCardModule,
     MatButtonModule,
