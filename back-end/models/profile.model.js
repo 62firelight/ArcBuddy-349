@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const profileSchema = new mongoose.Schema({
+    _id: String,
     iconPath: String,
     displayName: String,
     membershipType: String,

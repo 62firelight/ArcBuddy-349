@@ -1,8 +1,7 @@
 import { Character } from "./Character";
 
 export interface Profile {
-    Key?: string;
-
+    _id: string;
     iconPath: string;
     displayName: string;
     membershipType: string;

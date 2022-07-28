@@ -10,6 +10,8 @@ exports.create = (req, res) => {
             console.log("Successfully added " + req.body.displayName);
             res.status(201).send("");
         } else {
+            // manually set id to membership id
+            req.body._id = req.body.membershipId;
             const profile = new Profile(req.body);
             profile.save()
                 .then(() => {
@@ -21,7 +23,7 @@ exports.create = (req, res) => {
         }
     } catch (error) {
         console.log(error);
-        res.status(404).send('Failed to create profile for specified Destiny player.');
+        res.status(422).send('Failed to create profile for specified Destiny player.');
     }
 };
 
@@ -87,7 +89,6 @@ exports.update = (req, res) => {
             res.status(204).send("");
         } else {
             const newProfile = new Profile(req.body);
-
             Profile.replaceOne({
                 displayName: req.params.name
             }, newProfile)
@@ -101,7 +102,7 @@ exports.update = (req, res) => {
         }
     } catch (error) {
         console.log(error);
-        res.status(404).send("Failed to delete profile for specified Destiny player.");
+        res.status(422).send("Failed to delete profile for specified Destiny player.");
     }
 }
 
