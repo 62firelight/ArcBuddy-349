@@ -1,4 +1,4 @@
-name: Jasmine Tests
+name: CI Angular app through Github Actions
 on: push
 jobs:
   build:
