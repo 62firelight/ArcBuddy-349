@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ProfileDeleteDialog } from './profile-delete.component';
+import { ProfileUpdateDialog } from './profile-update.component';
 
 @Component({
   selector: 'app-profiles',
@@ -27,16 +28,19 @@ export class ProfilesComponent implements OnInit {
   @Output()
   setProfileEvent = new EventEmitter<Profile>();
 
-  constructor(private profileService: ProfileService, public deleteDialog: MatDialog) { }
+  constructor(private profileService: ProfileService, public deleteDialog: MatDialog, public updateDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.refresh();
 
     this.addingProfiles.subscribe((profile) => {
-      if (this.profiles.some((profile2) => profile.displayName == profile2.displayName) == true) {
-        console.log(`Profile already exists at ${profile.dateCreated.toLocaleString()}`);
+      const existingProfile = this.profiles.find((profile) => profile.displayName == profile.displayName);
 
-        this.updateProfile(profile);
+      if (existingProfile != undefined) {
+        console.log(`Profile already exists at ${existingProfile.dateCreated.toLocaleString()}`);
+
+        // this.updateProfile(profile);
+        this.openUpdateDialog(profile, existingProfile);
       } else {
         this.addProfile(profile);
       }      
@@ -74,6 +78,23 @@ export class ProfilesComponent implements OnInit {
 
     this.profileService.getProfile(profile.displayName).subscribe((result) => {
       this.setProfileEvent.emit(profile);
+    });
+  }
+
+  openUpdateDialog(profile: Profile, originalProfile: Profile): void {
+    const dialogRef = this.updateDialog.open(ProfileUpdateDialog, {
+      data: {
+        profile: profile,
+        originalProfile: originalProfile
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Update ${profile.displayName}? ${result}`);
+
+      if (result == true) {
+        this.updateProfile(profile);
+      }
     });
   }
 
