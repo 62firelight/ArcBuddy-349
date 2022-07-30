@@ -19,21 +19,6 @@ export class ProfileService {
 
   constructor(private http : HttpClient) { }
 
-  getName(name: string, id: string): Observable<Profile> {
-    const url = `api/players/${name}/${id}`;
-    return this.http.get<Profile>(url);
-  }
-
-  getCharacters(type: string, id: string): Observable<Character[]> {
-    const url = `api/players/character/${type}/${id}`;
-    return this.http.get<Character[]>(url);
-  }
-
-  getStats(type: string, id: string): Observable<Object> {
-    const url = `api/players/account/${type}/${id}`;
-    return this.http.get<Object>(url);
-  }
-
   getProfile(name: string | undefined): Observable<Profile> {
     const url = `api/players/${name}`;
     return this.http.get<Profile>(url);

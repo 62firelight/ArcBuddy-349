@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { Character } from 'src/app/Character';
 import { Helper } from 'src/app/Helper';
 import { Profile } from 'src/app/Profile';
-import { ProfileService } from 'src/app/services/profile.service';
+import { DestinyService } from 'src/app/services/destiny.service';
 
 @Component({
   selector: 'app-stats',
@@ -44,7 +44,7 @@ export class StatsComponent implements OnInit {
   @Output()
   addProfileEvent = new EventEmitter<Profile>();
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private destinyService: DestinyService) { }
 
   ngOnInit(): void {
     // by default, show PvE stats for all characters
@@ -76,13 +76,13 @@ export class StatsComponent implements OnInit {
     this.fetchingCharacters = true;
 
     // get IDs for all characters associated with given profile
-    this.profileService.getCharacters(this.profile.membershipType, this.profile.membershipId)
+    this.destinyService.getCharacters(this.profile.membershipType, this.profile.membershipId)
       .subscribe((characters) => {
         this.profile.characters = characters;
         this.fetchingCharacters = false;
 
         // get all stats for the given profile
-        this.profileService.getStats(this.profile.membershipType, this.profile.membershipId)
+        this.destinyService.getStats(this.profile.membershipType, this.profile.membershipId)
           .subscribe((profile: any) => {
             this.profile.mergedStats = profile.mergedStats;
             this.profile.pveStats = profile.pveStats;
