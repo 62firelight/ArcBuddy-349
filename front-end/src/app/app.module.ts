@@ -26,6 +26,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { NgChartsModule } from 'ng2-charts';
 
@@ -79,6 +80,7 @@ import { ProfileUpdateDialog } from './components/profiles/profile-update.compon
     MatListModule,
     MatTabsModule,
     MatMenuModule,
+    MatAutocompleteModule,
     NgChartsModule,
     ClipboardModule
   ],
