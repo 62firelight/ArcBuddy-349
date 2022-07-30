@@ -32,8 +32,6 @@ describe('ProfilesComponent', () => {
       }
     );
 
-    
-
     await TestBed.configureTestingModule({
       declarations: [ ProfilesComponent ],
       providers: [
@@ -58,6 +56,11 @@ describe('ProfilesComponent', () => {
 
   it('find all profiles', () => {
     component.refresh();
+
+    // check that getProfiles has been called
     expect(fakeProfileService.getProfiles).toHaveBeenCalled();
+    
+    // check that profiles matches test profiles
+    expect(component.profiles).toBe(testProfiles);
   });
 });
