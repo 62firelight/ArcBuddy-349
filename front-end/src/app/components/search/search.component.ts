@@ -2,9 +2,8 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Subject } from 'rxjs';
 
-import { Character } from 'src/app/Character';
 import { Profile } from 'src/app/Profile';
-import { ProfileService } from 'src/app/services/profile.service';
+import { DestinyService } from 'src/app/services/destiny.service';
 
 @Component({
   selector: 'app-search',
@@ -28,7 +27,7 @@ export class SearchComponent implements OnInit {
   @Output()
   newProfileEvent = new EventEmitter<Profile>();
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private destinyService: DestinyService) { }
 
   ngOnInit(): void {
   }
@@ -50,7 +49,7 @@ export class SearchComponent implements OnInit {
     var id = nameId[1];
     // console.log("Bungie name: " + name + "#" + id);
 
-    this.profileService.getName(name, id).subscribe((result) => {
+    this.destinyService.getName(name, id).subscribe((result) => {
       // console.log(result);
       this.error = ``;
       this.newProfileEvent.emit(result);
