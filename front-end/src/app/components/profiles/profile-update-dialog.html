@@ -1,8 +1,8 @@
 <h2 mat-dialog-title>Profile Update</h2>
 <mat-dialog-content>
-<p><b>{{ data.profile.displayName }}</b> was already created on {{ data.originalProfile.dateCreated | date : 'short'}}.</p>
+<p><strong>{{ data.profile.displayName }}</strong> was already created on {{ data.originalProfile.dateCreated | date : 'short'}}.</p>
 
-<p>Are you sure you want to overwrite <b>{{ data.profile.displayName }}</b> with the profile seen on {{ data.profile.dateCreated | date : 'short'}}?</p>
+<p>Are you sure you want to overwrite <strong>{{ data.profile.displayName }}</strong> with the profile seen on {{ data.profile.dateCreated | date : 'short'}}?</p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="false" cdkFocusInitial>No</button>
