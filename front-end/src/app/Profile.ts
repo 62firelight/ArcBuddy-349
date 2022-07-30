@@ -7,7 +7,7 @@ export interface Profile {
     membershipType: string;
     membershipId: string;
     
-    dateCreated: Date;
+    dateCreated: any;
 
     characters: Character[];
     mergedStats: Object;

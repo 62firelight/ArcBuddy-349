@@ -17,6 +17,8 @@ export class ProfileService {
   private apiUrl = 'localhost:3000';
   // private apiUrl = 'http://ec2-3-87-199-253.compute-1.amazonaws.com';
 
+  public getProfilesUrl = `api/players/stats`;
+
   constructor(private http : HttpClient) { }
 
   getName(name: string, id: string): Observable<Profile> {
@@ -40,8 +42,8 @@ export class ProfileService {
   }
 
   getProfiles(): Observable<Profile[]> {
-    const url = `api/players/stats`;
-    return this.http.get<Profile[]>(url);
+    // const url = `api/players/stats`;
+    return this.http.get<Profile[]>(this.getProfilesUrl);
   }
 
   addProfile(profile: Profile): Observable<Profile> {

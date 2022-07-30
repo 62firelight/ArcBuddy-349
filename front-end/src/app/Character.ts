@@ -3,7 +3,7 @@ export interface Character {
 
     race: string;
     class: string;
-    light: string;
+    light: string | number;
     emblem: string;
 
     mergedStats?: Object;
