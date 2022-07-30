@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Subject } from 'rxjs';
 
 import { Character } from 'src/app/Character';
@@ -12,13 +13,13 @@ import { ProfileService } from 'src/app/services/profile.service';
 })
 export class SearchComponent implements OnInit {
 
-  title = "Arc Buddy";
-
   name!: string;
 
   error!: string;
 
   profiles!: Profile[];
+
+  options: string[] = [];
 
   changingStats: Subject<Profile> = new Subject<Profile>();
   
@@ -53,6 +54,11 @@ export class SearchComponent implements OnInit {
       // console.log(result);
       this.error = ``;
       this.newProfileEvent.emit(result);
+
+      // add successful result to autocomplete panel 
+      // if (this.options.some((option) => option == this.name) == false) {
+      //   this.options.push(this.name);
+      // }
     }, (error) => {
       this.error = `Couldn't find requested Bungie Name. Are you sure that ${this.name} is a registered Bungie.net user?`;
     });
