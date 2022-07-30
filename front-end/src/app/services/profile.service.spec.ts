@@ -33,25 +33,25 @@ describe('NameService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('can GET all profiles', () => {
-    const testProfile: Profile[] = [testData];
+  // it('can GET all profiles', () => {
+  //   const testProfile: Profile[] = [testData];
 
-    // Make an HTTP GET request
-    httpClient.get<Profile[]>('api/players/stats').subscribe((profile) => {
-      // When observable resolves, result should match test data
-      expect(profile).toEqual(testProfile)
-    });
+  //   // Make an HTTP GET request
+  //   httpClient.get<Profile[]>('api/players/stats').subscribe((profile) => {
+  //     // When observable resolves, result should match test data
+  //     expect(profile).toEqual(testProfile)
+  //   });
 
-    // The following `expectOne()` will match the request's URL.
-    // If no requests or multiple requests matched that URL
-    // `expectOne()` would throw.
-    const req = httpTestingController.expectOne('api/players/stats');
+  //   // The following `expectOne()` will match the request's URL.
+  //   // If no requests or multiple requests matched that URL
+  //   // `expectOne()` would throw.
+  //   const req = httpTestingController.expectOne('api/players/stats');
 
-    // Assert that the request is a GET.
-    expect(req.request.method).toEqual('GET');
+  //   // Assert that the request is a GET.
+  //   expect(req.request.method).toEqual('GET');
 
-    // Respond with mock data, causing Observable to resolve.
-    // Subscribe callback asserts that correct data was returned.
-    req.flush(testProfile);
-  });
+  //   // Respond with mock data, causing Observable to resolve.
+  //   // Subscribe callback asserts that correct data was returned.
+  //   req.flush(testProfile);
+  // });
 });
