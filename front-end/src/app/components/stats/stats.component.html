@@ -1,39 +1,41 @@
-<div *ngIf="fetchingStats">
-    <mat-spinner [diameter]="50">
-    </mat-spinner>
-    Fetching stats...
-</div>
+<div class="stat-container">
 
-<div *ngIf="profile != undefined && fetchingStats == false">
+    <div class="in-progress" *ngIf="fetchingStats">
+        <mat-spinner [diameter]="50">
+        </mat-spinner>
+        Fetching stats...
+    </div>
 
-    <h1> {{ profile.displayName }} <img class="profile-icon" [src]="profile.iconPath"></h1>
+    <div *ngIf="profile != undefined && fetchingStats == false">
 
-    <mat-card-subtitle> Last Updated: {{ profile.dateCreated | date : 'short'}}
-    </mat-card-subtitle>
+        <h1> {{ profile.displayName }} <img class="profile-icon" [src]="profile.iconPath"></h1>
 
-    <div class="row">
-        <div class="column left">
-            <app-characters [characters]="profile.characters" [currentId]="currentId"
-                (newCharacterIdEvent)="updateStats($event)">
-            </app-characters>
-        </div>
+        <mat-card-subtitle> Last Updated: {{ profile.dateCreated | date : 'short'}}
+        </mat-card-subtitle>
 
-        <div class="column right">
-            <h2> Stats </h2>
+        <div class="row">
+            <div class="column left">
+                <app-characters [characters]="profile.characters" [currentId]="currentId"
+                    (newCharacterIdEvent)="updateStats($event)">
+                </app-characters>
+            </div>
 
-            <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
-                Save Stats
-            </button>
-            <br>
-            <br>
+            <div class="column right">
+                <h2> Stats </h2>
 
-            <mat-button-toggle-group [(ngModel)]="currentMode" (change)="displayedStats=getMode(currentMode)">
-                <mat-button-toggle value="Merged">All</mat-button-toggle>
-                <mat-button-toggle value="PvE">PvE</mat-button-toggle>
-                <mat-button-toggle value="PvP">PvP</mat-button-toggle>
-            </mat-button-toggle-group>
+                <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
+                    Save Stats
+                </button>
+                <br>
+                <br>
 
-            <!-- <mat-tab-group mat-align-tabs="center">
+                <mat-button-toggle-group [(ngModel)]="currentMode" (change)="displayedStats=getMode(currentMode)">
+                    <mat-button-toggle value="Merged">All</mat-button-toggle>
+                    <mat-button-toggle value="PvE">PvE</mat-button-toggle>
+                    <mat-button-toggle value="PvP">PvP</mat-button-toggle>
+                </mat-button-toggle-group>
+
+                <!-- <mat-tab-group mat-align-tabs="center">
                 <mat-tab label="Merged">
                     <div class="stat-section"
                         *ngIf="fetchingStats == false && checkEmptyObject(displayedStats) == false">
@@ -63,19 +65,20 @@
                 </mat-tab>
             </mat-tab-group> -->
 
-            <div *ngIf="checkEmptyObject(displayedStats) == true">
-                <br>
-                <br>
-                No {{ currentMode }} stats were found
-            </div>
+                <div *ngIf="checkEmptyObject(displayedStats) == true">
+                    <br>
+                    <br>
+                    No {{ currentMode }} stats were found
+                </div>
 
-            <div class="stat-section" *ngIf="checkEmptyObject(displayedStats) == false">
-                <app-stat-section *ngFor="let section of sections | keyvalue: helper.numberedKeyOrder"
-                    [section]="section.value" [sectionName]="section.key" [displayedStats]="displayedStats"
-                    [newDisplayedStatsEvent]="newDisplayedStatsEvent">
-                </app-stat-section>
-            </div>
+                <div class="stat-section" *ngIf="checkEmptyObject(displayedStats) == false">
+                    <app-stat-section *ngFor="let section of sections | keyvalue: helper.numberedKeyOrder"
+                        [section]="section.value" [sectionName]="section.key" [displayedStats]="displayedStats"
+                        [newDisplayedStatsEvent]="newDisplayedStatsEvent">
+                    </app-stat-section>
+                </div>
 
+            </div>
         </div>
     </div>
 </div>

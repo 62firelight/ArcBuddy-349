@@ -5,6 +5,9 @@
             <mat-icon>menu</mat-icon>
         </button>
         <h1>{{ title }}</h1>
+        <span class="example-spacer"></span>
+        <app-search (newProfileEvent)="changingStats.next($event)">
+        </app-search>
     </mat-toolbar>
 
     <mat-sidenav-container class="content mat-app-background darkMode" autosize>
@@ -17,8 +20,8 @@
 
         <mat-sidenav-content>
             <!-- Search bar -->
-            <app-search (newProfileEvent)="changingStats.next($event)">
-            </app-search>
+            <!-- <app-search (newProfileEvent)="changingStats.next($event)">
+            </app-search> -->
             <!-- Stats display -->
             <app-stats [changingStats]="changingStats" [changingProfiles]="changingProfiles"
                 (addProfileEvent)="addingProfiles.next($event); sidenav.open();">

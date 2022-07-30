@@ -1,8 +1,8 @@
 <form (ngSubmit)="onSubmit()" class="search-form">
-    <mat-form-field class="search-full-width" appearance="fill">
-        <mat-label for="text">
+    <mat-form-field class="search-full-width" appearance="standard">
+        <!-- <mat-label for="text">
             Search Bungie Name...
-        </mat-label>
+        </mat-label> -->
         <input matInput name="text" [(ngModel)]="name" placeholder="62firelight#8173" autocomplete="off" [matAutocomplete]="auto">
         <button mat-icon-button matSuffix mat-button>
             <mat-icon>
@@ -12,7 +12,7 @@
     </mat-form-field>
 </form>
 <br>
-<mat-error>{{ error }}</mat-error>
+<!-- <mat-error>{{ error }}</mat-error> -->
 
 <mat-autocomplete #auto>
     <mat-option *ngFor="let option of options" [value]="option">

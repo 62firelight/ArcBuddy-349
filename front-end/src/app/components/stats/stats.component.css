@@ -34,3 +34,7 @@ mat-spinner {
 .stat-section {
     padding: 0 0 4em 0;
 }
+
+.stat-container {
+    margin: 2em 0 0 0;
+}
