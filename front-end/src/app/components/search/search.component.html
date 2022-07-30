@@ -4,6 +4,9 @@
             Search Bungie Name...
         </mat-label> -->
         <input matInput name="text" [(ngModel)]="name" placeholder="62firelight#8173" autocomplete="off" [matAutocomplete]="auto">
+        <button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
+            <mat-icon>close</mat-icon>
+          </button>
         <button mat-icon-button matSuffix mat-button>
             <mat-icon>
                 search
