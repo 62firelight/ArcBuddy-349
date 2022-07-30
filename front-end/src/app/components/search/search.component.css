@@ -1,15 +1,8 @@
 .search-form {
-    /* min-width: 150px;
-    max-width: 500px;
-    width: 100%; */
-    /* margin: 1.33em 0 1.33em 0; */
-    display: inline-block;
+    margin: 2em 0 0 0;
     font-size: 16px;
+    min-width: 450px;
 }
-
-/* .search-full-width {
-    width: 100%;
-} */
 
 mat-form-field {
     width: 100%;
