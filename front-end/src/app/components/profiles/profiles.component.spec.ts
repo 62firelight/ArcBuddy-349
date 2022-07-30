@@ -55,4 +55,9 @@ describe('ProfilesComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('find all profiles', () => {
+    component.refresh();
+    expect(fakeProfileService.getProfiles).toHaveBeenCalled();
+  });
 });
