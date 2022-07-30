@@ -1,8 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
 import testData from 'src/app/services/test-data';
+import { ProfileDeleteDialog } from './profile-delete.component';
+import { ProfileUpdateDialog } from './profile-update.component';
 
 import { ProfilesComponent } from './profiles.component';
 
@@ -13,6 +16,8 @@ describe('ProfilesComponent', () => {
   let fixture: ComponentFixture<ProfilesComponent>;
 
   let fakeProfileService: ProfileService;
+  let fakeProfileDeleteDialog: ProfileDeleteDialog;
+  let fakeProfileUpdateDialog: ProfileUpdateDialog;
 
   beforeEach(async () => {
     // Create fake profile service
@@ -27,11 +32,15 @@ describe('ProfilesComponent', () => {
       }
     );
 
+    
+
     await TestBed.configureTestingModule({
       declarations: [ ProfilesComponent ],
       providers: [
         // Use fake instead of original
-        { provide: ProfileService, useValue: fakeProfileService }
+        { provide: ProfileService, useValue: fakeProfileService },
+        { provide: MatDialog, useValue: fakeProfileDeleteDialog },
+        { provide: MatDialog, useValue: fakeProfileUpdateDialog }
       ]
     })
     .compileComponents();
@@ -43,7 +52,7 @@ describe('ProfilesComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
