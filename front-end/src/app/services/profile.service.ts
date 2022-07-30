@@ -19,14 +19,14 @@ export class ProfileService {
 
   constructor(private http : HttpClient) { }
 
-  getProfile(name: string | undefined): Observable<Profile> {
-    const url = `api/players/${name}`;
-    return this.http.get<Profile>(url);
-  }
-
   getProfiles(): Observable<Profile[]> {
     const url = `api/players/stats`;
     return this.http.get<Profile[]>(url);
+  }
+
+  getProfile(name: string | undefined): Observable<Profile> {
+    const url = `api/players/${name}`;
+    return this.http.get<Profile>(url);
   }
 
   addProfile(profile: Profile): Observable<Profile> {
