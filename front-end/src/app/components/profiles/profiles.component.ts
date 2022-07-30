@@ -104,6 +104,8 @@ export class ProfilesComponent implements OnInit {
     this.profileService.updateProfile(profile.displayName, profile).subscribe((result) => {
       this.refresh();
       this.fetchingProfiles = false;
+
+      this.error = `${profile.displayName} successfully updated to ${profile.dateCreated.toLocaleString()}`;
     });
   }
 
@@ -128,6 +130,8 @@ export class ProfilesComponent implements OnInit {
       // console.log(`Successfully deleted ${profile.displayName}`);
       this.refresh();
       this.fetchingProfiles = false;
+
+      this.error = `${profile.displayName} successfully deleted`;
     })
   }
 
