@@ -4,8 +4,12 @@
 }
 
 .all-characters {
-    width: 10rem;
-    padding: 0 8.75rem 0 0;
+    display: flex;
+    width: 18.75rem;
+    height: 3.796875rem;
+    align-items: center;
+    justify-content: center;
+    background: #212121;
 }
 
 .character:hover {
