@@ -4,3 +4,60 @@ ul {
     margin: 0;
     padding: 0;
 }
+
+.character {
+    /* all: unset; */
+    /* display: inline-block; */
+    /* margin-right: 1rem; */
+    /* Just to show space between the book to the right. */
+    /* position: relative; */
+    cursor: pointer;
+    margin: 2rem 0 2rem 0;
+}
+
+.character:hover {
+    opacity: 0.65;
+}
+
+.character:hover .character-emblem {
+    opacity: 0.65;
+    /* background-color: rgba(0, 0, 0, 0.75); */
+}
+
+.character-emblem {
+    vertical-align: top;
+    height: auto;
+    max-width: 300px;
+    width: auto;
+}
+
+.character-info {
+    /* all: unset; */
+
+    /* background: rgba(0,0,0,.75); */
+    color: #FFF;
+    padding: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: left;
+    margin: 0 0 0 4.5rem;
+}
+
+.character-class {
+    margin: 0 0 0 0;
+}
+
+strong {
+    font-size: 20px;
+    color: yellow;
+    float: right;
+    margin: 0 1.5rem 1.5rem 0;
+}
+
+small {
+    color: gray;
+    font-size: 12px;
+    margin: 0 0 0 0;
+}

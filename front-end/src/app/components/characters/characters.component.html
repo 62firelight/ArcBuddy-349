@@ -1,15 +1,55 @@
 <h2>Characters</h2>
 
-<mat-button-toggle-group [(ngModel)]="currentId" (change)="displayCharacter(currentId)" [vertical]="true">
+<!-- <mat-button-toggle-group [(ngModel)]="currentId" (change)="displayCharacter(currentId)" [vertical]="true">
     <mat-button-toggle value="">All Characters</mat-button-toggle>
-    <!-- <button (click)="displayCharacter('')">All Characters</button> -->
-    <mat-button-toggle *ngFor="let character of characters" [value]="character.characterId">{{ character.race }} {{
-        character.class }}</mat-button-toggle>
-    <!-- <button (click)="displayCharacter(character.characterId)">{{ character.race }} {{ character.class }}</button> -->
-</mat-button-toggle-group>
+    <mat-button-toggle *ngFor="let character of characters" [value]="character.characterId" class="character">
+        <img [src]="character.emblem" alt="Character Emblem" class="character-emblem">
+        <div class="character-info"> -->
+<!-- <p class="character-class">
+                {{ character.class }} <strong>{{ character.light }}</strong>
+            </p> -->
+<!-- {{ character.race }} {{ character.class }} <strong>{{ character.light }}</strong>
+        </div>
+    </mat-button-toggle> -->
+<!-- <mat-button-toggle *ngFor="let character of characters" [value]="character.characterId"> {{ character.race }} {{
+        character.class }}</mat-button-toggle> -->
+<!-- </mat-button-toggle-group> -->
+
+<mat-list>
+    <mat-list-item (click)="displayCharacter('')" class="character">
+        <div class="all-characters">
+            All Characters
+        </div>
+    </mat-list-item>
+    <mat-list-item *ngFor="let character of characters" (click)="displayCharacter(character.characterId)" class="character"> 
+        <img [src]="character.emblem" alt="Character Emblem"
+            class="character-emblem">
+        <div class="character-info">
+            <!-- <p class="character-class">
+                {{ character.class }} <strong>{{ character.light }}</strong>
+            </p> -->
+             {{ character.class }} <strong>{{ character.light }}</strong>
+             <br> 
+             <small>{{ character.race }}</small>
+        </div>
+    </mat-list-item>
+</mat-list>
 
 <!-- <div *ngFor="let character of characters">
     <img [src]="character.emblem">
+</div> -->
+
+<!-- <div class="character">
+    <img src="https://www.bungie.net/common/destiny2_content/icons/73835952fbfdb9315de347b5abc2d087.jpg"
+        alt="Character Emblem" class="character-emblem">
+    <div class="character-info">
+        <p class="character-class">
+            Hunter <strong>1375</strong>
+        </p>
+        <p class="character-race">
+            Exo
+        </p>
+    </div>
 </div> -->
 
 <!-- <mat-list>
