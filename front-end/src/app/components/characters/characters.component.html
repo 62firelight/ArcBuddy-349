@@ -20,6 +20,7 @@
         <div class="all-characters">
             All Characters
         </div>
+        <div class="arrow-right" *ngIf="currentId == ''"></div>
     </mat-list-item>
     <mat-list-item *ngFor="let character of characters" (click)="displayCharacter(character.characterId)" class="character"> 
         <img [src]="character.emblem" alt="Character Emblem"
@@ -32,6 +33,7 @@
              <br> 
              <small>{{ character.race }}</small>
         </div>
+        <div class="arrow-right" *ngIf="currentId == character.characterId"></div>
     </mat-list-item>
 </mat-list>
 

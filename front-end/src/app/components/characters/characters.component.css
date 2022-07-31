@@ -1,16 +1,4 @@
-ul {
-    list-style-type: none;
-    /* text-align: left; */
-    margin: 0;
-    padding: 0;
-}
-
 .character {
-    /* all: unset; */
-    /* display: inline-block; */
-    /* margin-right: 1rem; */
-    /* Just to show space between the book to the right. */
-    /* position: relative; */
     cursor: pointer;
     margin: 2rem 0 2rem 0;
 }
@@ -21,7 +9,6 @@ ul {
 
 .character:hover .character-emblem {
     opacity: 0.65;
-    /* background-color: rgba(0, 0, 0, 0.75); */
 }
 
 .character-emblem {
@@ -32,9 +19,6 @@ ul {
 }
 
 .character-info {
-    /* all: unset; */
-
-    /* background: rgba(0,0,0,.75); */
     color: #FFF;
     padding: 0;
     bottom: 0;
@@ -45,19 +29,25 @@ ul {
     margin: 0 0 0 4.5rem;
 }
 
-.character-class {
-    margin: 0 0 0 0;
-}
-
 strong {
     font-size: 20px;
     color: yellow;
-    float: right;
-    margin: 0 1.5rem 1.5rem 0;
+    /* float: right; */
+    /* margin: 0 2rem 1.5rem 0; */
+    margin: 0 0 0 auto;
 }
 
 small {
     color: gray;
     font-size: 12px;
     margin: 0 0 0 0;
+}
+
+.arrow-right {
+    margin: 0 0 0 1rem;
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid gray;
 }
