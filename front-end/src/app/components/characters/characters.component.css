@@ -3,6 +3,11 @@
     margin: 2rem 0 2rem 0;
 }
 
+.all-characters {
+    width: 10rem;
+    padding: 0 8.75rem 0 0;
+}
+
 .character:hover {
     opacity: 0.65;
 }
