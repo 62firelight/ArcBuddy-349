@@ -79,11 +79,3 @@ const initializeServer = async () => {
 };
 
 initializeServer();
-
-// const date1 = new Date();
-
-// setTimeout(() => {
-//     const date2 = new Date();
-
-//     console.log(`${date2.toLocaleString()} > ${date1.toLocaleString()} ? ${date2 > date1 ? 'yes' : 'no'}`);
-// }, 1000);
