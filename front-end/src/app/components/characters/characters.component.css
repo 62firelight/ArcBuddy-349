@@ -5,10 +5,10 @@
 
 .all-characters {
     display: flex;
-    width: 18.75rem;
-    height: 3.796875rem;
     align-items: center;
     justify-content: center;
+    width: 18.75rem;
+    height: 3.796875rem;
     background: #212121;
 }
 
@@ -41,9 +41,8 @@
 strong {
     font-size: 20px;
     color: yellow;
-    /* float: right; */
-    /* margin: 0 2rem 1.5rem 0; */
-    margin: 0 0 0 auto;
+    float: right;
+    margin: 0 4rem 1.5rem 0;
 }
 
 small {
