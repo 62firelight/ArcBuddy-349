@@ -13,6 +13,10 @@
         <mat-card-subtitle> Last Updated: {{ profile.dateCreated | date : 'short'}}
         </mat-card-subtitle>
 
+        <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
+            Save
+        </button>
+
         <div class="row">
             <div class="column left">
                 <app-characters [characters]="profile.characters" [currentId]="currentId"
@@ -22,12 +26,6 @@
 
             <div class="column right">
                 <h2> Stats </h2>
-
-                <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
-                    Save Stats
-                </button>
-                <br>
-                <br>
 
                 <mat-button-toggle-group [(ngModel)]="currentMode" (change)="displayedStats=getMode(currentMode)">
                     <mat-button-toggle value="Merged">All</mat-button-toggle>
