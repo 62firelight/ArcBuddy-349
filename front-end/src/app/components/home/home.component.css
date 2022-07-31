@@ -79,6 +79,6 @@ mat-toolbar {
     min-height: 80px;
 }
 
-.example-spacer {
-    flex: 0.5 0.5 auto;
+.toolbar-spacer {
+    flex: 0.45 0.45 auto;
 }
