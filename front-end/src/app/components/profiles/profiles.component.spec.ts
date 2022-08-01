@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -18,6 +19,7 @@ describe('ProfilesComponent', () => {
   let fakeProfileService: ProfileService;
   let fakeProfileDeleteDialog: ProfileDeleteDialog;
   let fakeProfileUpdateDialog: ProfileUpdateDialog;
+  let fakeSnackbar: MatSnackBar;
 
   beforeEach(async () => {
     // Create fake profile service
@@ -38,7 +40,8 @@ describe('ProfilesComponent', () => {
         // Use fake instead of original
         { provide: ProfileService, useValue: fakeProfileService },
         { provide: MatDialog, useValue: fakeProfileDeleteDialog },
-        { provide: MatDialog, useValue: fakeProfileUpdateDialog }
+        { provide: MatDialog, useValue: fakeProfileUpdateDialog },
+        { provide: MatSnackBar, useValue: fakeSnackbar }
       ]
     })
     .compileComponents();
