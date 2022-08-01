@@ -5,6 +5,7 @@ import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ProfileDeleteDialog } from './profile-delete.component';
 import { ProfileUpdateDialog } from './profile-update.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profiles',
@@ -28,7 +29,7 @@ export class ProfilesComponent implements OnInit {
   @Output()
   setProfileEvent = new EventEmitter<Profile>();
 
-  constructor(private profileService: ProfileService, public deleteDialog: MatDialog, public updateDialog: MatDialog) { }
+  constructor(private profileService: ProfileService, public deleteDialog: MatDialog, public updateDialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.refresh();
@@ -69,7 +70,12 @@ export class ProfilesComponent implements OnInit {
       // console.log(`Successfully saved ${profile.displayName}`);
       this.refresh();
 
-      this.error = `${profile.displayName} successfully saved at ${profile.dateCreated.toLocaleString()}`;
+      const addProfileSuccess = `${profile.displayName} successfully saved at ${profile.dateCreated.toLocaleString()}`;
+
+      this.snackBar.open(addProfileSuccess, 'Close', {
+        duration: 3000
+      });
+      // this.error = addProfileSuccess;
     });
   }
 
@@ -105,7 +111,11 @@ export class ProfilesComponent implements OnInit {
       this.refresh();
       this.fetchingProfiles = false;
 
-      this.error = `${profile.displayName} successfully updated to ${profile.dateCreated.toLocaleString()}`;
+      const updateProfileSuccess = `${profile.displayName} successfully updated to ${profile.dateCreated.toLocaleString()}`;
+      this.snackBar.open(updateProfileSuccess, 'Close', {
+        duration: 3000
+      });
+      // this.error = updateProfileSuccess;
     });
   }
 
@@ -131,7 +141,11 @@ export class ProfilesComponent implements OnInit {
       this.refresh();
       this.fetchingProfiles = false;
 
-      this.error = `${profile.displayName} successfully deleted`;
+      const deleteProfileSuccess = `${profile.displayName} successfully deleted`;
+      this.snackBar.open(deleteProfileSuccess, 'Close', {
+        duration: 3000
+      });
+      // this.error = deleteProfileSuccess;
     })
   }
 
