@@ -27,6 +27,12 @@
             <div class="column right">
                 <h2> Stats </h2>
 
+                <!-- <mat-chip-list>
+                    <mat-chip (click)="displayedStats=getMode('Merged')" color="accent" selected>All</mat-chip>
+                    <mat-chip (click)="displayedStats=getMode('PvE')" color="accent" selected>PvE</mat-chip>
+                    <mat-chip (click)="displayedStats=getMode('PvP')" color="accent" selected>PvP</mat-chip>
+                </mat-chip-list> -->
+
                 <mat-button-toggle-group [(ngModel)]="currentMode" (change)="displayedStats=getMode(currentMode)">
                     <mat-button-toggle value="Merged">All</mat-button-toggle>
                     <mat-button-toggle value="PvE">PvE</mat-button-toggle>
