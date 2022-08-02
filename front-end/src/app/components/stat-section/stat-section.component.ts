@@ -119,6 +119,8 @@ export class StatSectionComponent implements OnInit {
 
     if (this.stats.size <= 0) {
       this.isVisible = false;
+    } else {
+      this.isVisible = true;
     }
   }
 
