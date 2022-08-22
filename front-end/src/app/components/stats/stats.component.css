@@ -43,3 +43,7 @@ mat-spinner {
     display: flex;
     justify-content: center;
 }
+
+.landing-page-text {
+    margin: 1.5rem;
+}
