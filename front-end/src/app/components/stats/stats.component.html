@@ -86,15 +86,25 @@
         </div>
     </div>
 
-    <ng-template class="landing-page" #landingPage>
-        <ng-container *ngIf="fetchingStats == false">
-            <div class="landing-page-img">
+    <ng-template #landingPage>
+        <ng-container class="landing-page" *ngIf="fetchingStats == false">
+            <div class="landing-page-block">
+                <div class="landing-page-text">
+                    <h1>Track your Destiny 2 stats</h1>
+                    <p>See a summary of your Destiny 2 stats, along with aggregated <br> stats for each of your
+                        characters.</p>
+                </div>
+
                 <img src="assets/StatsLandingPage.png" alt="Track your Destiny 2 stats">
             </div>
-            
-            <div class="landing-page-text">
-                <h1>Track your Destiny 2 stats</h1>
-                <p>See a summary of your Destiny 2 stats, along with aggregated <br> stats for each of your characters.</p>
+
+            <div class="landing-page-block">
+                <div class="landing-page-text">
+                    <h1>See graph summaries</h1>
+                    <p>Arc Buddy shows you graph summaries for your character stats.</p>
+                </div>                
+
+                <img src="assets/GraphLandingPage.png" alt="See graphs of your weapon kills">
             </div>
         </ng-container>
     </ng-template>
