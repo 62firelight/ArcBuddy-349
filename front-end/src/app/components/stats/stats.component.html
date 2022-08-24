@@ -87,25 +87,27 @@
     </div>
 
     <ng-template #landingPage>
-        <ng-container class="landing-page" *ngIf="fetchingStats == false">
-            <div class="landing-page-block">
-                <div class="landing-page-text">
-                    <h1>Track your Destiny 2 stats</h1>
-                    <p>See a summary of your Destiny 2 stats, along with aggregated <br> stats for each of your
-                        characters.</p>
+        <ng-container *ngIf="fetchingStats == false">
+            <div class="landing-page">
+                <div class="landing-page-block">
+                    <div class="landing-page-text">
+                        <h1>Track your Destiny 2 stats.</h1>
+                        <p>See a summary of your Destiny 2 stats, along with aggregated <br> stats for each of your
+                            characters.</p>
+                    </div>
+    
+                    <img src="assets/StatsLandingPage.png" alt="Track your Destiny 2 stats">
                 </div>
-
-                <img src="assets/StatsLandingPage.png" alt="Track your Destiny 2 stats">
-            </div>
-
-            <div class="landing-page-block">
-                <div class="landing-page-text">
-                    <h1>See graph summaries</h1>
-                    <p>Arc Buddy shows you graph summaries for your character stats.</p>
-                </div>                
-
-                <img src="assets/GraphLandingPage.png" alt="See graphs of your weapon kills">
-            </div>
+    
+                <div class="landing-page-block">
+                    <div class="landing-page-text">
+                        <h1>See graph summaries.</h1>
+                        <p>Arc Buddy shows you graph summaries for your characters' <br>weapon kills, so you can see your favored (and least favored)<br> weapons.</p>
+                    </div>                
+    
+                    <img src="assets/GraphLandingPage.png" alt="See graphs of your weapon kills">
+                </div>
+            </div>            
         </ng-container>
     </ng-template>
 </div>
