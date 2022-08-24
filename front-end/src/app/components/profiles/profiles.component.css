@@ -4,7 +4,10 @@
     margin: 1px 0 1px 0;
 } */
 
-h1 {
+.profiles-header {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     margin-top: 2rem;
 }
 

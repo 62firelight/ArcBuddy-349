@@ -1,11 +1,12 @@
-<h1>Saved Profiles</h1>
+<div class="profiles-header">
+    <h1>Saved Profiles</h1>
 
-<button mat-icon-button (click)="refresh()">
-    <mat-icon>
-        <div class="refresh"> refresh</div>
-    </mat-icon>
-</button>
-
+    <button mat-icon-button (click)="refresh()">
+        <mat-icon>
+            <div class="refresh"> refresh</div>
+        </mat-icon>
+    </button>
+</div>
 
 <p class="saved">
     {{ error }}
@@ -18,7 +19,7 @@
 <mat-list>
     <mat-list-item *ngFor="let profile of profiles" id="buttons">
         <div class="profile-name">
-            {{ profile.displayName }} 
+            {{ profile.displayName }}
             <mat-card-subtitle>{{ profile.dateCreated | date : 'short'}}</mat-card-subtitle>
         </div>
 
