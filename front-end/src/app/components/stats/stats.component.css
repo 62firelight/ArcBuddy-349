@@ -5,7 +5,6 @@ mat-spinner {
 }
 
 .row {
-    /* width: 100%; */
     display: flex;
     justify-content: center;
     margin: 0 20rem;
@@ -16,6 +15,7 @@ mat-spinner {
 }
 
 .left {
+    margin-top: 4rem;
     flex: 15%;
 }
 
