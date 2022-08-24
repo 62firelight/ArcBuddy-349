@@ -2,5 +2,5 @@
 <app-search (newProfileEvent)="changingStats.next($event)">
             </app-search>
 <app-stats [changingStats]="changingStats" [changingProfiles]="changingProfiles"
-    (addProfileEvent)="addingProfiles.next($event); sidenav.open();">
+    (addProfileEvent)="addingProfiles.next($event)">
 </app-stats>
