@@ -80,5 +80,9 @@ mat-toolbar {
 }
 
 .toolbar-spacer {
-    flex: 0.43 0.43 auto;
+    flex: 0.75 0.75 auto;
+}
+
+.toolbar-spacer-end {
+    flex: 1 1 auto;
 }
