@@ -49,9 +49,14 @@ mat-spinner {
     height: 100%;
 }
 
+.landing-page-header {
+    font-size: 2.5em;
+    margin: 0.67em 0;
+}
+
 .landing-page-block {
     display: flex;
-    margin: 2rem 15rem;
+    margin: 1.5rem 15rem;
     justify-content: center;
     align-items: flex-start;    
 }
