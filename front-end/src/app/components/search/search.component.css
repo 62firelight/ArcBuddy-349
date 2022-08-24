@@ -1,7 +1,7 @@
 .search-form {
     display: flex;
     justify-content: center;
-    margin: 1em 0 0 0;
+    margin-top: 1em;
     font-size: 1.125em;
     min-width: 560px;
 }
