@@ -1,1 +1,6 @@
-<p>search-page works!</p>
+
+<app-search (newProfileEvent)="changingStats.next($event)">
+            </app-search>
+<app-stats [changingStats]="changingStats" [changingProfiles]="changingProfiles"
+    (addProfileEvent)="addingProfiles.next($event); sidenav.open();">
+</app-stats>

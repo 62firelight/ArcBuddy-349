@@ -6,7 +6,7 @@
         Fetching stats...
     </div>
 
-    <div *ngIf="profile != undefined && fetchingStats == false; else landingPage">
+    <div *ngIf="profile != undefined && fetchingStats == false">
 
         <h1> {{ profile.displayName }} <img class="profile-icon" [src]="profile.iconPath"></h1>
 
@@ -85,41 +85,4 @@
             </div>
         </div>
     </div>
-
-    <ng-template #landingPage>
-        <ng-container *ngIf="fetchingStats == false">
-            <div class="landing-page">
-                <div class="landing-page-block">
-                    <div class="landing-page-header">
-                        Welcome to Arc Buddy!
-                    </div>
-                </div>
-
-                <div class="landing-page-block">
-                    <div class="landing-page-text">
-                        <h1>Track your Destiny 2 stats.</h1>
-                        <p>
-                            See a summary of your Destiny 2 stats, along with
-                            aggregated stats for each of your characters.
-                        </p>
-                    </div>
-
-                    <img src="assets/StatsLandingPage.png" alt="Track your Destiny 2 stats">
-                </div>
-
-                <div class="landing-page-block">
-                    <div class="landing-page-text">
-                        <h1>See graph summaries.</h1>
-                        <p>
-                            Arc Buddy shows you graph summaries for your
-                            characters' weapon kills, so you can see
-                            your favored (and least favored) weapons.
-                        </p>
-                    </div>
-
-                    <img src="assets/GraphLandingPage.png" alt="See graphs of your weapon kills">
-                </div>
-            </div>
-        </ng-container>
-    </ng-template>
 </div>
