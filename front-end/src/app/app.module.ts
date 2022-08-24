@@ -43,6 +43,9 @@ import { StatComponent } from './components/stat/stat.component';
 import { ProfileDeleteDialog } from './components/profiles/profile-delete.component';
 import { StatSectionComponent } from './components/stat-section/stat-section.component';
 import { ProfileUpdateDialog } from './components/profiles/profile-update.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +61,10 @@ import { ProfileUpdateDialog } from './components/profiles/profile-update.compon
     StatComponent,
     ProfileDeleteDialog,
     ProfileUpdateDialog,
-    StatSectionComponent
+    StatSectionComponent,
+    LandingPageComponent,
+    HomePageComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,

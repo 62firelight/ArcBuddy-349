@@ -1,0 +1,28 @@
+mat-toolbar {
+    min-height: 80px;
+}
+
+.mat-toolbar a {
+    color: white;
+    text-decoration: none;
+}
+
+.mat-toolbar a:hover {
+    opacity: 0.5;
+}
+
+.toolbar-spacer {
+    flex: 0.22 0.22 auto;
+}
+
+.toolbar-header {
+    font-size: 1.5em;
+}
+
+.toolbar-spacer-end {
+    flex: 0.075 0.075 auto;
+}
+
+.toolbar-links a {
+    margin: 0 1em;
+}

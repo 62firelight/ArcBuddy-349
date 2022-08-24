@@ -1,0 +1,68 @@
+html, body, .darkMode {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    overflow: scroll;
+}
+
+button {
+    background: none;
+    border: none;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+img {
+    width: 35px;
+    height: 35px;
+    margin-right: 8px;
+}
+
+.stat-sidenav {
+    padding: 20px;
+    text-align: top;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    background: none;
+    border: none;
+    margin: 20px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.search-button {
+    width: 2px;
+}
+
+img {
+    width: 35px;
+    height: 35px;
+    margin-right: 8px;
+}
+
+mat-icon {
+    cursor: pointer;
+}
+
+mat-spinner {
+    margin: auto;
+    margin-top: 32px;
+}
+
+mat-sidenav {
+    min-width: 345px;
+    max-width: 350px;
+}
