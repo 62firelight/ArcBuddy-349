@@ -1,6 +1,7 @@
 const compression = require('compression')
 const express = require('express')
 const cors = require('cors');
+const QuriaAPI = require('quria').Quria;
 const destinyApi = require('node-destiny-2');
 const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose');
@@ -65,9 +66,13 @@ const initializeServer = async () => {
     // if connection fails, then terminate the server immediately
     try {
         console.log('Attempting to connect to Bungie.net API...')
-        destiny = await new destinyApi({ key: process.env.ARC_KEY });
+        destinyOld = await new destinyApi({ key: process.env.ARC_KEY });
+        destiny = new QuriaAPI({
+            API_KEY: process.env.ARC_KEY
+        }).destiny2;
         console.log('Successfully connected to Bungie.net API.\n');
     } catch (error) {
+        console.error(error);
         console.error('Failed to connect to Bungie.net API. Terminating server.\n');
         process.exit();
     }

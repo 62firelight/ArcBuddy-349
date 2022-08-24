@@ -1,5 +1,6 @@
 const server = require('../server.js');
 const destinyApi = require('node-destiny-2');
+const QuriaAPI = require('quria').Quria;
 
 const classMap = {
     0: 'Titan',
@@ -26,7 +27,7 @@ exports.searchDestinyPlayer = (req, res) => {
 
     const bungieName = name + "#" + id;
 
-    destiny.searchDestinyPlayer(-1, bungieName)
+    destiny.SearchDestinyPlayerByBungieName(-1, bungieName)
         .then(response => {
             const data = response.Response[0];
             // console.log(data);
@@ -57,7 +58,7 @@ exports.getHistoricalStats = (req, res) => {
     const membershipType = req.params.type;
     const membershipId = req.params.id;
 
-    destiny.getHistoricalStatsForAccount(membershipType, membershipId)
+    destiny.GetHistoricalStatsForAccount(membershipId, membershipType)
         .then(response => {
             // console.log(JSON.stringify(response.Response, null, 2));
             // console.log(response.Response.mergedAllCharacters.results.allPvE.allTime);
@@ -106,10 +107,9 @@ exports.getProfile = (req, res) => {
     const membershipType = req.params.type;
     const membershipId = req.params.id;
 
-    destiny.getProfile(membershipType, membershipId, [200])
+    destiny.GetProfile(membershipId, membershipType, {components: [200]})
         .then(response => {
             // console.log(JSON.stringify(response.Response, null, 2));
-
             const characters = response.Response.characters.data;
 
             let fetchedCharacters = [];
