@@ -46,6 +46,7 @@ import { ProfileUpdateDialog } from './components/profiles/profile-update.compon
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { SearchPageComponent } from './components/search-page/search-page.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     StatSectionComponent,
     LandingPageComponent,
     HomePageComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    SearchPageComponent
   ],
   imports: [
     BrowserModule,
