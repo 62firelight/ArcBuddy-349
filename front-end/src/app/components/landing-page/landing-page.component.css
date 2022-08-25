@@ -5,7 +5,7 @@
 
 .landing-page-block {
     display: flex;
-    margin-top: 3rem;
+    margin-bottom: 3rem;
     justify-content: center;
     align-items: flex-start;    
 }
