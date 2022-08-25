@@ -5,6 +5,9 @@ const QuriaAPI = require('quria').Quria;
 const destinyApi = require('node-destiny-2');
 const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose');
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
 
 const app = express();
 const port = 3000;
@@ -88,7 +91,45 @@ const initializeServer = async () => {
         console.error('Failed to connect to Bungie.net API. Terminating server.\n');
         process.exit();
     }
+    // 3, '4611686018468181342', '2305843009301648414' (Exo Hunter)
 
+    // Download Destiny manifest
+    if (fs.existsSync('./manifest.sqlite3') || fs.existsSync('./manifest.zip')) {        
+        console.log('Manifest file and/or archive detected.')
+    } else {
+        destiny.GetDestinyManifest()
+        .then((response) => {
+            // console.log(JSON.stringify(response, null, 2));
+            if (response.Response.mobileWorldContentPaths.en === undefined) {
+                throw('Manifest not found');
+            }
+
+            // manifest location
+            const manifestLocation = `https://www.bungie.net${response.Response.mobileWorldContentPaths.en}`;
+            console.log(`Manifest located at ${manifestLocation}`);
+            const file = fs.createWriteStream("manifest.zip");
+
+            console.log('Manifest found. Downloading manifest...');
+            https.get(manifestLocation, (manifest) => {
+                manifest.pipe(file);
+
+                file.on("finish", () => {
+                    file.close();
+                    console.log("Download of manifest completed");
+                });
+            });
+            
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }    
+
+    // Unzip Destiny manifest
+    if (fs.existsSync('./manifest.sqlite3') == false && fs.existsSync('./manifest.zip')) {
+        console.log('Unzipping manifest archive...');
+    }
+    
     // Attempt to fetch access token
     // console.log('Attempting to fetch access token...')
     // const refreshResponse = await oauth.RefreshAccessToken(process.env.REFRESH_TOKEN);
@@ -101,8 +142,7 @@ const initializeServer = async () => {
     //     process.exit();
     // }
     // console.log(`Access token: ${accessToken}`);
-    // console.log('Successfully fetched access token.\n');
-    // 3, '4611686018468181342', '2305843009301648414' (Exo Hunter)
+    // console.log('Successfully fetched access token.\n');    
 
     app.listen(port, () => {
         console.log(`Server running at ${apiUrl}.`);
