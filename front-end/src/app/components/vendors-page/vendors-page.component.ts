@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DestinyService } from 'src/app/services/destiny.service';
 
 @Component({
   selector: 'app-vendors-page',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VendorsPageComponent implements OnInit {
 
-  constructor() { }
+  items: string[] = [];
+
+  constructor(private destinyService: DestinyService) { }
 
   ngOnInit(): void {
+    this.destinyService.getVendors()
+      .subscribe((res) => {
+        if ((<any> res).Response != undefined) {
+          const saleItems = (<any> res).Response.sales.data['350061650'].saleItems;          
+
+          for (var saleItem in saleItems) {
+            this.items.push(saleItems[saleItem].itemHash);
+          }
+        }      
+      });
   }
 
 }

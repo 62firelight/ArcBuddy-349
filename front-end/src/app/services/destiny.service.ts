@@ -25,4 +25,9 @@ export class DestinyService {
     const url = `api/players/character/${type}/${id}`;
     return this.http.get<Character[]>(url);
   }
+
+  getVendors(): Observable<Object> {
+    const url = `api/vendors`;
+    return this.http.get<Object>(url);
+  }
 }
