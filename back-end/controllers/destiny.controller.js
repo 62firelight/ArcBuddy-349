@@ -156,17 +156,13 @@ exports.getVendors = (req, res) => {
     // const membershipId = req.params.id;
     // const membershipType = req.params.type;
     
-    destiny.GetVendors('2305843009301648414', '4611686018468181342', 3, { components: [400] }, {
-        access_token: '',
-        refresh_token: ''
-    })
+    destiny.GetVendors('2305843009301648414', '4611686018468181342', 3, { components: [400] }, { access_token: server.getAccessToken() })
         .then((response) => {
             // console.log(JSON.stringify(response, null, 2));
 
             if (response.ErrorCode == 12) {
                 res.status(404).send('Insufficient privileges');
             } else {
-                console.log('Success');
                 res.status(200).send(response);
             }
             
@@ -175,6 +171,6 @@ exports.getVendors = (req, res) => {
             console.error(error);
 
             res.status(404).send("Couldn't fetch vendors");
-        })
+        });
 
 };

@@ -1,5 +1,5 @@
-const compression = require('compression')
-const express = require('express')
+const compression = require('compression');
+const express = require('express');
 const cors = require('cors');
 const QuriaAPI = require('quria').Quria;
 const destinyApi = require('node-destiny-2');
@@ -20,7 +20,12 @@ const mongoUri = 'mongodb://127.0.0.1:27017';
 let destiny = undefined;
 exports.getDestiny = function getDestiny() {
     return destiny;
-}
+};
+
+let accessToken = undefined;
+exports.getAccessToken = function getAccessToken() {
+    return accessToken;
+};
 
 let noDb = false;
 exports.getNoDb = function getNoDb() {
@@ -68,9 +73,15 @@ const initializeServer = async () => {
         console.log('Attempting to connect to Bungie.net API...')
         // destinyOld = await new destinyApi({ key: process.env.ARC_KEY });
 
-        destiny = new QuriaAPI({
-            API_KEY: process.env.ARC_KEY
-        }).destiny2;
+        const quria = new QuriaAPI({
+            API_KEY: process.env.ARC_KEY,
+            CLIENT_ID: '37960',
+            CLIENT_SECRET: process.env.CLIENT_SECRET
+        });
+
+        oauth = quria.oauth;
+        destiny = quria.destiny2;
+
         console.log('Successfully connected to Bungie.net API.\n');
     } catch (error) {
         console.error(error);
@@ -78,17 +89,19 @@ const initializeServer = async () => {
         process.exit();
     }
 
-    /*
-    OAuth process
-
-    if access token works
-        do OAuth stuff // (with hardcoded character ID???)
-    else
-        try to refresh the token // call GetOAuthAccessToken endpoint with body params grant_type="refresh_token" and code={refresh_token}
-        if token couldn't be refreshed
-            print error message // rely on server admin to authorize again            
-
-    */
+    // Attempt to fetch access token
+    // console.log('Attempting to fetch access token...')
+    // const refreshResponse = await oauth.RefreshAccessToken(process.env.REFRESH_TOKEN);
+    // // console.log(refreshResponse);
+    // if (refreshResponse.access_token != undefined) {
+    //     accessToken = refreshResponse.access_token;
+    // } else {
+    //     console.error(error);
+    //     console.error('Failed to fetch access token. Terminating server.\n');
+    //     process.exit();
+    // }
+    // console.log(`Access token: ${accessToken}`);
+    // console.log('Successfully fetched access token.\n');
     // 3, '4611686018468181342', '2305843009301648414' (Exo Hunter)
 
     app.listen(port, () => {
