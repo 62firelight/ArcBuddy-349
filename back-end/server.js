@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
+const extract = require('extract-zip');
 
 const app = express();
 const port = 3000;
@@ -33,6 +34,10 @@ exports.getAccessToken = function getAccessToken() {
 let noDb = false;
 exports.getNoDb = function getNoDb() {
     return noDb;
+}
+
+function isEmpty(path) {
+    return fs.readdirSync(path).length === 0;
 }
 
 // read command line arguments if they were passed in
@@ -94,42 +99,49 @@ const initializeServer = async () => {
     // 3, '4611686018468181342', '2305843009301648414' (Exo Hunter)
 
     // Download Destiny manifest
-    if (fs.existsSync('./manifest.sqlite3') || fs.existsSync('./manifest.zip')) {        
+    if (isEmpty('./manifest') == false || fs.existsSync('./manifest.zip')) {
         console.log('Manifest file and/or archive detected.')
     } else {
-        destiny.GetDestinyManifest()
-        .then((response) => {
-            // console.log(JSON.stringify(response, null, 2));
-            if (response.Response.mobileWorldContentPaths.en === undefined) {
-                throw('Manifest not found');
-            }
+        // destiny.GetDestinyManifest()
+        //     .then((response) => {
+        //         // console.log(JSON.stringify(response, null, 2));
+        //         if (response.Response.mobileWorldContentPaths.en === undefined) {
+        //             throw ('Manifest not found');
+        //         }
 
-            // manifest location
-            const manifestLocation = `https://www.bungie.net${response.Response.mobileWorldContentPaths.en}`;
-            console.log(`Manifest located at ${manifestLocation}`);
-            const file = fs.createWriteStream("manifest.zip");
+        //         // manifest location
+        //         const manifestLocation = `https://www.bungie.net${response.Response.mobileWorldContentPaths.en}`;
+        //         console.log(`Manifest located at ${manifestLocation}`);
+        //         const file = fs.createWriteStream("manifest.zip");
 
-            console.log('Manifest found. Downloading manifest...');
-            https.get(manifestLocation, (manifest) => {
-                manifest.pipe(file);
+        //         console.log('Manifest location found. Downloading manifest...');
+        //         https.get(manifestLocation, (manifest) => {
+        //             manifest.pipe(file);
 
-                file.on("finish", () => {
-                    file.close();
-                    console.log("Download of manifest completed");
-                });
-            });
-            
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    }    
+        //             file.on("finish", () => {
+        //                 file.close();
+        //                 console.log("Download of manifest completed");
+        //             });
+        //         });
+
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
+    }
 
     // Unzip Destiny manifest
-    if (fs.existsSync('./manifest.sqlite3') == false && fs.existsSync('./manifest.zip')) {
+    if (isEmpty('./manifest') && fs.existsSync('./manifest.zip')) {
         console.log('Unzipping manifest archive...');
+        try {
+            await extract('./manifest.zip', { dir: `${__dirname}/manifest` });
+            console.log('Extraction of manifest complete');
+        } catch (error) {
+            console.error(error);
+            console.error('Something bad happened when unzipping the manifest.');
+        }
     }
-    
+
     // Attempt to fetch access token
     // console.log('Attempting to fetch access token...')
     // const refreshResponse = await oauth.RefreshAccessToken(process.env.REFRESH_TOKEN);
