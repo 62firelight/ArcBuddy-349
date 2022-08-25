@@ -10,7 +10,7 @@
 
 .landing-page-header-text {
     font-size: 2.5em;
-    margin: 0.67em 0 1em 0;
+    margin-bottom: 1em;
 }
 
 .landing-page-header-gap {
@@ -19,7 +19,8 @@
 
 .landing-page-block {
     display: flex;
-    margin: 3rem 18rem;
+    margin-top: 3rem;
+    /* margin: 3rem 18rem; */
     justify-content: center;
     align-items: flex-start;    
 }

@@ -10,7 +10,7 @@
         </button>
     </mat-card-title-group>
 
-    <mat-grid-list cols="7" rowHeight="9em" gutterSize="0" *ngIf="showAsChart == false">
+    <mat-grid-list cols="5" rowHeight="9em" gutterSize="0" *ngIf="showAsChart == false">
         <mat-grid-tile *ngFor="let stat of stats | keyvalue: helper.numberedKeyOrder">
             <app-stat [statName]="stat.key" [statValue]="stat.value | destinyStat">
             </app-stat>

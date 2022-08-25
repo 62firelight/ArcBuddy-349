@@ -1,11 +1,10 @@
 .search-form {
     display: flex;
     justify-content: center;
-    margin-top: 1em;
     font-size: 1.125em;
     min-width: 560px;
 }
 
 mat-form-field {
-    width: 25%;
+    width: 35%;
 }
