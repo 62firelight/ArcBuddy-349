@@ -19,7 +19,7 @@ exports.searchDestinyPlayer = (req, res) => {
 
     if (destiny == undefined) {
         console.log(`Couldn't create Destiny 2 API wrapper object!`);
-        res.send(404).send(`Couldn't create Destiny 2 API wrapper object!`);
+        res.status(404).send(`Couldn't create Destiny 2 API wrapper object!`);
     }
 
     const name = req.params.name;
@@ -52,7 +52,7 @@ exports.getHistoricalStats = (req, res) => {
 
     if (destiny == undefined) {
         console.log(`Couldn't create Destiny 2 API wrapper object!`);
-        res.send(404).send(`Couldn't create Destiny 2 API wrapper object!`);
+        res.status(404).send(`Couldn't create Destiny 2 API wrapper object!`);
     }
 
     const membershipType = req.params.type;
@@ -101,7 +101,7 @@ exports.getProfile = (req, res) => {
 
     if (destiny == undefined) {
         console.log(`Couldn't create Destiny 2 API wrapper object!`);
-        res.send(404).send(`Couldn't create Destiny 2 API wrapper object!`);
+        res.status(404).send(`Couldn't create Destiny 2 API wrapper object!`);
     }
 
     const membershipType = req.params.type;
@@ -142,4 +142,39 @@ exports.getProfile = (req, res) => {
 
             res.status(404).send('Could not find characters for specified Destiny player');
         });
+};
+
+exports.getVendors = (req, res) => {
+    const destiny = server.getDestiny();
+
+    if (destiny == undefined) {
+        console.log(`Couldn't create Destiny 2 API wrapper object!`);
+        res.status(404).send(`Couldn't create Destiny 2 API wrapper object!`);
+    }
+    
+    // const characterId = req.params.characterId;
+    // const membershipId = req.params.id;
+    // const membershipType = req.params.type;
+    
+    destiny.GetVendors('2305843009301648414', '4611686018468181342', 3, { components: [400] }, {
+        access_token: '',
+        refresh_token: ''
+    })
+        .then((response) => {
+            // console.log(JSON.stringify(response, null, 2));
+
+            if (response.ErrorCode == 12) {
+                res.status(404).send('Insufficient privileges');
+            } else {
+                console.log('Success');
+                res.status(200).send(response);
+            }
+            
+        })
+        .catch((error) => {
+            console.error(error);
+
+            res.status(404).send("Couldn't fetch vendors");
+        })
+
 };

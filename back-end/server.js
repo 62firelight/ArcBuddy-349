@@ -67,6 +67,7 @@ const initializeServer = async () => {
     try {
         console.log('Attempting to connect to Bungie.net API...')
         // destinyOld = await new destinyApi({ key: process.env.ARC_KEY });
+
         destiny = new QuriaAPI({
             API_KEY: process.env.ARC_KEY
         }).destiny2;
@@ -76,6 +77,18 @@ const initializeServer = async () => {
         console.error('Failed to connect to Bungie.net API. Terminating server.\n');
         process.exit();
     }
+
+    /*
+    OAuth process
+
+    if access token works
+        do OAuth stuff // (with hardcoded character ID???)
+    else
+        try to refresh the token // call GetOAuthAccessToken endpoint with body params grant_type="refresh_token" and code={refresh_token}
+        if token couldn't be refreshed
+            print error message // rely on server admin to authorize again            
+
+    */
     // 3, '4611686018468181342', '2305843009301648414' (Exo Hunter)
 
     app.listen(port, () => {

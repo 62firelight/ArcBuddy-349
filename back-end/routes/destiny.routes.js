@@ -6,4 +6,6 @@ module.exports = (app) => {
     app.get('/api/players/account/:type/:id', destiny.getHistoricalStats);
 
     app.get('/api/players/character/:type/:id', destiny.getProfile);
+
+    app.get('/api/vendors', destiny.getVendors);
 };
