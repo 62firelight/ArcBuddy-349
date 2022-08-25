@@ -9,6 +9,7 @@ const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const extract = require('extract-zip');
+const sqlite3 = require('sqlite3').verbose();
 
 const app = express();
 const port = 3000;
@@ -141,6 +142,17 @@ const initializeServer = async () => {
             console.error('Something bad happened when unzipping the manifest.');
         }
     }
+
+    const db = new sqlite3.Database('./manifest/world_sql_content_c0b6f372037834a3fc8e8f12c3b02363.content');
+
+    db.serialize(() => {
+        db.each("SELECT json FROM DestinyRaceDefinition WHERE id = -1491684358;", (err, row) => {
+            // console.log(row.id + ": " + row.info);
+            console.log(JSON.stringify(row.json, null, 2));
+        });
+    });
+
+    db.close();
 
     // Attempt to fetch access token
     // console.log('Attempting to fetch access token...')
