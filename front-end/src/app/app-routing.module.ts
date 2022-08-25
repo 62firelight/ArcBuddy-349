@@ -7,12 +7,14 @@ import { ProfilesComponent } from './components/profiles/profiles.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { SearchComponent } from './components/search/search.component';
 import { StatsComponent } from './components/stats/stats.component';
+import { VendorsPageComponent } from './components/vendors-page/vendors-page.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: '/search', pathMatch: 'full' },
   { path: '', component: LandingPageComponent},
   { path: 'search', component: SearchPageComponent },
-  { path: 'profiles', component: ProfilesComponent }
+  { path: 'profiles', component: ProfilesComponent },
+  { path: 'vendors', component: VendorsPageComponent }
 ];
 
 @NgModule({

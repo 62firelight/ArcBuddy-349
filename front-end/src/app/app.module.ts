@@ -47,6 +47,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
+import { VendorsPageComponent } from './components/vendors-page/vendors-page.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { SearchPageComponent } from './components/search-page/search-page.compon
     LandingPageComponent,
     HomePageComponent,
     ToolbarComponent,
-    SearchPageComponent
+    SearchPageComponent,
+    VendorsPageComponent
   ],
   imports: [
     BrowserModule,
