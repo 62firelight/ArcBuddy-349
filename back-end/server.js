@@ -66,7 +66,7 @@ const initializeServer = async () => {
     // if connection fails, then terminate the server immediately
     try {
         console.log('Attempting to connect to Bungie.net API...')
-        destinyOld = await new destinyApi({ key: process.env.ARC_KEY });
+        // destinyOld = await new destinyApi({ key: process.env.ARC_KEY });
         destiny = new QuriaAPI({
             API_KEY: process.env.ARC_KEY
         }).destiny2;
