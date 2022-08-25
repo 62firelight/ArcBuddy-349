@@ -3,9 +3,22 @@
     height: 100%;
 }
 
+.landing-page-block {
+    display: flex;
+    margin-top: 3rem;
+    justify-content: center;
+    align-items: flex-start;    
+}
+
 .landing-page-header {
     display: flex;
     flex-direction: column;
+}
+
+.landing-page-header button {
+    align-self: center;
+    max-width: 35%;
+    background-color: #006565;
 }
 
 .landing-page-header-text {
@@ -15,14 +28,6 @@
 
 .landing-page-header-gap {
     margin: 5rem 0;
-}
-
-.landing-page-block {
-    display: flex;
-    margin-top: 3rem;
-    /* margin: 3rem 18rem; */
-    justify-content: center;
-    align-items: flex-start;    
 }
 
 .landing-page-block img {
