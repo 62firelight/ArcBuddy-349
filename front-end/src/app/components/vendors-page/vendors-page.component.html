@@ -1,3 +1,5 @@
+<h1>Tower Vendors</h1>
+
 <div class="vendors" *ngIf="fetchingVendors == false">
     <div class="vendor-block" *ngFor="let vendor of vendors | keyvalue">
         <h2>{{ vendor.key }}</h2>
@@ -8,4 +10,10 @@
             </li>
         </ul>
     </div>
+</div>
+
+<div class="in-progress" *ngIf="fetchingVendors">
+    <mat-spinner [diameter]="50">
+    </mat-spinner>
+    Fetching vendors...
 </div>

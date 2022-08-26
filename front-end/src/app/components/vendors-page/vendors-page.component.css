@@ -10,6 +10,14 @@ ul li {
 }
 
 ul li img {
-    max-width: 48px;
-    max-height: 48px;
+    max-width: 64px;
+    max-height: 64px;
+}
+
+.in-progress {
+    margin-top: 2rem;
+}
+
+.vendor-block {
+    margin: 4rem 0;
 }
