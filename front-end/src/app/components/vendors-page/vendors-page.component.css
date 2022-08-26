@@ -2,7 +2,6 @@ ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: inline-flex;
 }
 
 ul li {
@@ -24,11 +23,13 @@ ul li img {
     display: flex;
     flex-flow: row wrap;
     align-items: flex-start;
+    justify-content: flex-start;
     margin: 4rem 0;
 }
 
 .vendor-block img {
     object-fit: none;
+    opacity: 0.75;
 }
 
 .vendor-info {
@@ -51,5 +52,8 @@ ul li img {
 }
 
 .vendor-items {
+    display: flex;
+    flex-flow: row wrap;
+    margin-left: 2.5rem;
     max-width: 50%;
 }
