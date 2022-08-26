@@ -45,6 +45,11 @@ exports.selectListFromDefinition = (req, res) => {
 
     const hashes = req.body.hashes;
 
+    if (hashes === undefined) {
+        res.status(404).send('Invalid request body.');
+        return;
+    }
+
     // convert hashes
     let convertedHashes = [];
     for (let hash of hashes) {

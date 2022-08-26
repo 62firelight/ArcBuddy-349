@@ -21,8 +21,8 @@ export class ManifestService {
     return this.http.get<any>(url);
   }
 
-  selectListFromDefinition(name: string, hashes: string): Observable<any[]> {
+  selectListFromDefinition(name: string, hashes: string[]): Observable<any[]> {
     const url = `api/manifest/${name}`;
-    return this.http.post<any>(url, hashes, httpOptions);
+    return this.http.post<any>(url, { hashes: hashes }, httpOptions);
   }
 }
