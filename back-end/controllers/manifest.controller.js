@@ -33,3 +33,48 @@ exports.selectFromDefinition = (req, res) => {
     });
 
 };
+
+exports.selectListFromDefinition = (req, res) => {
+    const db = server.getDb();
+    if (db === undefined) {
+        res.status(500).send('Manifest was not loaded properly!');
+        return;
+    }
+
+    const name = req.params.name;
+
+    const hashes = req.body.hashes;
+
+    // convert hashes
+    let convertedHashes = [];
+    for (let hash of hashes) {
+        const convertedHash = server.convertHash(hash);
+        convertedHashes.push(convertedHash.toString());
+    }
+
+    // console.log(convertedHashes.toString());
+    let definitions = [];
+    db.each(`SELECT * FROM Destiny${name}Definition WHERE id IN (${convertedHashes.toString()})`, function (err, row) {
+        if (err != null || row === undefined) {
+            res.status(404).send('Could not find definitions.');
+            return;
+        }
+        
+        const vendorDefinition = JSON.parse(row.json);  
+        if (vendorDefinition === undefined) {
+            res.status(404).send('Could not find definitions.');
+            return;
+        }
+
+        const definition = {
+            name: vendorDefinition.displayProperties.name,
+            icon: `https://www.bungie.net${vendorDefinition.displayProperties.icon}`
+        };
+
+        definitions.push(definition);
+    }, function () {
+        res.status(200).send(definitions);
+    });
+
+    
+};

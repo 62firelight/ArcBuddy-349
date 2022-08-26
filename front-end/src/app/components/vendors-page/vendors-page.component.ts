@@ -41,23 +41,30 @@ export class VendorsPageComponent implements OnInit {
 
               // retrieve vendor items
               const saleItems = (<any>res).Response.sales.data[`${towerVendorHash}`].saleItems;
-              for (let saleItem in saleItems) {
-                this.manifestService.selectFromDefinition('InventoryItem', saleItems[saleItem].itemHash)
-                  .subscribe((res) => {
-                    let item = {
-                      name: res.displayProperties.name,
-                      icon: `https://www.bungie.net${res.displayProperties.icon}`
-                    };
 
-                    let vendorItems = this.vendors.get(vendorName);
-                    if (vendorItems === undefined) {
-                      return;
-                    }
+              console.log(saleItems);
+              // this.manifestService.selectFromDefinition('InventoryItem', saleItems)
+              //     .subscribe((res) => {
+              //       console.log(res);
+              //       // this.vendorItems = res;
+              //     });
+              // for (let saleItem in saleItems) {
+              //   this.manifestService.selectFromDefinition('InventoryItem', saleItems[saleItem].itemHash)
+              //     .subscribe((res) => {
+              //       let item = {
+              //         name: res.displayProperties.name,
+              //         icon: `https://www.bungie.net${res.displayProperties.icon}`
+              //       };
 
-                    vendorItems.push(item);
-                  });
+              //       let vendorItems = this.vendors.get(vendorName);
+              //       if (vendorItems === undefined) {
+              //         return;
+              //       }
 
-              }
+              //       vendorItems.push(item);
+              //     });
+
+              // }
             });
         }
       });
