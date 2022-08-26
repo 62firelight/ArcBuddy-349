@@ -14,7 +14,8 @@ export class VendorsPageComponent implements OnInit {
     '3361454721', // Tess Everis
     '1976548992', // Ikora Rey
     '4230408743', // Monument to Lost Lights
-    '3484140575' // Quest Archive
+    '3484140575', // Quest Archive
+    '3347378076' // Suraya Hawthorne
   ]);
 
   fetchingVendors = true;
