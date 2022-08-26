@@ -33,10 +33,21 @@ ul li img {
 
 .vendor-info {
     position: absolute;
-    margin: 0 0 0 4.5rem;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    text-align: left;
+    margin: 5rem 0 0 1rem;
+}
+
+.vendor-info strong {
+    margin: 0;
+    padding: 0;
+    font-size: 2em;    
+}
+
+.vendor-info small {
+    color: gray;
+    font-size: 1.25em;
+    margin: 0;
+    padding: 0;
 }
 
 .vendor-items {

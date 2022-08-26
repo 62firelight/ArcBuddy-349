@@ -11,7 +11,9 @@ export class VendorsPageComponent implements OnInit {
 
   vendors: Map<any, any[]> = new Map([[{
     "name": "Commander Zavala",
-    "largeIcon": "https://www.bungie.net/common/destiny2_content/icons/0a599ca6fad56a014f14475b73a6a1d8.jpg"
+    "subtitle": "Titan Vanguard",
+    "largeIcon": "https://www.bungie.net/common/destiny2_content/icons/0a599ca6fad56a014f14475b73a6a1d8.jpg",
+    
   }, [
     {
       "name": "Heroic Projection",
@@ -131,6 +133,7 @@ export class VendorsPageComponent implements OnInit {
 
     //           const newVendor = {
     //             name: vendorName,
+    //             subtitle: vendor.displayProperties.subtitle,
     //             largeIcon: `https://www.bungie.net${vendor.displayProperties.largeIcon}`
     //           };
 
