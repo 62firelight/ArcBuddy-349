@@ -10,7 +10,7 @@ ul li {
 
 ul li img {
     border: 3px solid white;
-    margin: 0.16rem 0.16rem;
+    margin: 0rem 0.16rem 0.16rem 0.16rem;
     max-width: 64px;
     max-height: 64px;
 }
