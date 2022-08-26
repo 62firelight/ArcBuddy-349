@@ -51,19 +51,6 @@ let loadManifest = exports.loadManifest = async function loadManifest() {
 
         db = new sqlite3.Database(`./manifest/${manifestFile}`);
         console.log('Successfully loaded manifest.\n')
-
-        // db.serialize(() => {
-        //     const titanId = convertHash('2803282938');
-        //     // const adaId = convertHash('350061650');
-
-        //     // -1491684358
-        //     db.each(`SELECT * FROM DestinyRaceDefinition WHERE id = ${titanId};`, (err, row) => {
-        //         // console.log(row.id + ": " + row.info);
-        //         console.log(JSON.parse(row.json));
-        //         // console.log(JSON.stringify(row.json, null, 2));
-        //     });
-        // });
-        // db.close();
     } catch (err) {
         console.log(err);
         console.log("Couldn't open Destiny Manifest.\n");
