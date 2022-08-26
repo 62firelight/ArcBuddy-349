@@ -6,10 +6,12 @@ ul {
 }
 
 ul li {
-    margin: 0 0.67rem;
+    
 }
 
 ul li img {
+    border: 3px solid white;
+    margin: 0.16rem 0.16rem;
     max-width: 64px;
     max-height: 64px;
 }
@@ -19,5 +21,24 @@ ul li img {
 }
 
 .vendor-block {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
     margin: 4rem 0;
+}
+
+.vendor-block img {
+    object-fit: none;
+}
+
+.vendor-info {
+    position: absolute;
+    margin: 0 0 0 4.5rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.vendor-items {
+    max-width: 50%;
 }

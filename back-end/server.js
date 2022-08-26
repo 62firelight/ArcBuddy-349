@@ -183,18 +183,18 @@ const initializeServer = async () => {
     }
 
     // Attempt to fetch access token
-    // console.log('Attempting to fetch access token...')
-    // const refreshResponse = await oauth.RefreshAccessToken(process.env.REFRESH_TOKEN);
-    // // console.log(refreshResponse);
-    // if (refreshResponse.access_token != undefined) {
-    //     accessToken = refreshResponse.access_token;
-    // } else {
-    //     console.log(error);
-    //     console.log('Failed to fetch access token. Terminating server.\n');
-    //     process.exit();
-    // }
+    console.log('Attempting to fetch access token...')
+    const refreshResponse = await oauth.RefreshAccessToken(process.env.REFRESH_TOKEN);
+    // console.log(refreshResponse);
+    if (refreshResponse.access_token != undefined) {
+        accessToken = refreshResponse.access_token;
+    } else {
+        console.log(error);
+        console.log('Failed to fetch access token. Terminating server.\n');
+        process.exit();
+    }
     // console.log(`Access token: ${accessToken}`);
-    // console.log('Successfully fetched access token.\n');    
+    console.log('Successfully fetched access token.\n');    
 
     app.listen(port, () => {
         console.log(`Server running at ${apiUrl}.`);

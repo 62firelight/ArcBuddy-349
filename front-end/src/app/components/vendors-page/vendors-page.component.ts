@@ -9,7 +9,7 @@ import { ManifestService } from 'src/app/services/manifest.service';
 })
 export class VendorsPageComponent implements OnInit {
 
-  vendors: Map<string, any[]> = new Map();
+  vendors: Map<any, any[]> = new Map();
   hiddenVendors: Set<string> = new Set([
     '3361454721', // Tess Everis
     '1976548992', // Ikora Rey
@@ -27,7 +27,7 @@ export class VendorsPageComponent implements OnInit {
     this.destinyService.getVendors()
       .subscribe((res) => {
         // get vendor hashes
-        const towerVendorHashes: string[] = (<any>res).Response.vendorGroups.data.groups['3'].vendorHashes;
+        const towerVendorHashes: string[] = (<any>res).Response.vendorGroups.data.groups['4'].vendorHashes;
         const numOfHashes = towerVendorHashes.length;        
         let numOfHashesIdentified = 0;
 
@@ -42,7 +42,13 @@ export class VendorsPageComponent implements OnInit {
           this.manifestService.selectFromDefinition('Vendor', towerVendorHash)
             .subscribe((vendor) => {
               const vendorName = vendor.displayProperties.name;
-              this.vendors.set(vendorName, []);
+
+              const newVendor = {
+                name: vendorName,
+                largeIcon: `https://www.bungie.net${vendor.displayProperties.largeIcon}`
+              };
+
+              this.vendors.set(newVendor, []);
 
               // store hashes
               const saleItems = (<any>res).Response.sales.data[`${towerVendorHash}`].saleItems;
@@ -54,11 +60,9 @@ export class VendorsPageComponent implements OnInit {
               // retrieve vendor items
               this.manifestService.selectListFromDefinition('InventoryItem', hashes)
                 .subscribe((vendorItems) => {
-                  this.vendors.set(vendorName, vendorItems);
+                  this.vendors.set(newVendor, vendorItems);
 
-                  numOfHashesIdentified++;
-                  console.log(`Number of identified hashes: ${numOfHashesIdentified}`);
-                  console.log(`Number of hashes left: ${numOfHashesIdentified - numOfHashes}`);
+                  numOfHashesIdentified++;                  
                   if (numOfHashesIdentified >= numOfHashes) {
                     this.fetchingVendors = false;
                   }
