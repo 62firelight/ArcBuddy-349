@@ -44,11 +44,9 @@ let unzipManifest = exports.unzipManifest = async function unzipManifest() {
 let loadManifest = exports.loadManifest = async function loadManifest() {
     try {
         const manifestFiles = fs.readdirSync('./manifest');
-
         if (manifestFiles.length <= 0) {
             throw ('No files in manifest folder!');
         }
-
         const manifestFile = manifestFiles[0];
 
         db = new sqlite3.Database(`./manifest/${manifestFile}`);
@@ -114,6 +112,7 @@ app.get('/', (req, res) => {
 });
 require('./routes/destiny.routes.js')(app);
 require('./routes/profiles.routes.js')(app);
+require('./routes/manifest.routes.js')(app);
 
 const initializeServer = async () => {
     // connect to MongoDB database
@@ -152,7 +151,8 @@ const initializeServer = async () => {
 
     // Download Destiny manifest
     if (isEmpty('./manifest') == false && fs.existsSync('./manifest.zip')) {
-        console.log('Manifest file detected.\n');
+        console.log('Manifest file detected.');
+        await loadManifest();
     } else if (isEmpty('./manifest') && fs.existsSync('./manifest.zip')) {
         console.log('Manifest archive detected but no manifest file detected. Unzipping manifest...');
         await unzipManifest();
