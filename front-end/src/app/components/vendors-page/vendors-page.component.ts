@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DestinyService } from 'src/app/services/destiny.service';
+import { ManifestService } from 'src/app/services/manifest.service';
 
 @Component({
   selector: 'app-vendors-page',
@@ -8,20 +9,57 @@ import { DestinyService } from 'src/app/services/destiny.service';
 })
 export class VendorsPageComponent implements OnInit {
 
-  items: string[] = [];
+  vendors: Map<string, any[]> = new Map();
+  hiddenVendors: Set<string> =  new Set([
+    '3361454721', // Tess Everis
+    '1976548992', // Ikora Rey
+    '4230408743', // Monument to Lost Lights
+    '3484140575' // Quest Archive
+  ]);
 
-  constructor(private destinyService: DestinyService) { }
+  towerVendors: any[] = [];
+  items: any[] = [];
+
+  constructor(private destinyService: DestinyService, private manifestService: ManifestService) { }
 
   ngOnInit(): void {
+    // fetch vendors and the items they sell
     this.destinyService.getVendors()
       .subscribe((res) => {
-        if ((<any> res).Response != undefined) {
-          const saleItems = (<any> res).Response.sales.data['350061650'].saleItems;          
+        const towerVendorHashes: string[] = (<any> res).Response.vendorGroups.data.groups['3'].vendorHashes;
 
-          for (var saleItem in saleItems) {
-            this.items.push(saleItems[saleItem].itemHash);
+        for (let towerVendorHash of towerVendorHashes) {
+          if (this.hiddenVendors.has(`${towerVendorHash}`)) {
+            continue;
           }
-        }      
+          
+          // retrieve vendor name
+          this.manifestService.selectFromDefinition('Vendor', towerVendorHash)
+            .subscribe((vendor) => {
+              const vendorName = vendor.displayProperties.name;
+              this.vendors.set(vendorName, []);
+
+              // retrieve vendor items
+              const saleItems = (<any>res).Response.sales.data[`${towerVendorHash}`].saleItems;
+              for (let saleItem in saleItems) {
+                this.manifestService.selectFromDefinition('InventoryItem', saleItems[saleItem].itemHash)
+                  .subscribe((res) => {
+                    let item = {
+                      name: res.displayProperties.name,
+                      icon: `https://www.bungie.net${res.displayProperties.icon}`
+                    };
+
+                    let vendorItems = this.vendors.get(vendorName);
+                    if (vendorItems === undefined) {
+                      return;
+                    }
+
+                    vendorItems.push(item);
+                  });
+
+              }
+            });
+        }
       });
   }
 

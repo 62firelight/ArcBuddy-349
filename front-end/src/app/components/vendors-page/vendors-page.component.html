@@ -1,5 +1,17 @@
-<h1>Ada-1 Items</h1>
+<div class="vendor-block" *ngFor="let vendor of vendors | keyvalue">
+    <h2>{{ vendor.key }}</h2>
+
+    <ul *ngFor="let vendorItem of vendor.value">
+        <li>
+            <img [src]="vendorItem.icon" [alt]="vendorItem.name" [title]="vendorItem.name">
+        </li>
+    </ul>
+</div>
+
+<!-- <h2 >{{ towerVendor }}</h2>
 
 <ul *ngFor="let item of items">
-    <li>{{ item }}</li>
-</ul>
+    <li>
+        <img [src]="item.icon" [alt]="item.name" [title]="item.name">
+    </li>
+</ul> -->
