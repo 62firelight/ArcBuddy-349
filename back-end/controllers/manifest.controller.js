@@ -73,6 +73,7 @@ exports.selectListFromDefinition = (req, res) => {
 
         const definition = {
             name: vendorDefinition.displayProperties.name,
+            hash: vendorDefinition.hash,
             icon: `https://www.bungie.net${vendorDefinition.displayProperties.icon}`
         };
 

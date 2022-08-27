@@ -156,7 +156,7 @@ exports.getVendors = (req, res) => {
     // const membershipId = req.params.id;
     // const membershipType = req.params.type;
     
-    destiny.GetVendors('2305843009301648414', '4611686018468181342', 3, { components: [400, 402] }, { access_token: server.getAccessToken() })
+    destiny.GetVendors('2305843009301648414', '4611686018468181342', 3, { components: [400, 401, 402] }, { access_token: server.getAccessToken() })
         .then((response) => {
             // console.log(JSON.stringify(response, null, 2));
 

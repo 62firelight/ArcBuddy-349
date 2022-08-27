@@ -2,20 +2,36 @@
 
 <div class="vendors" *ngIf="fetchingVendors == false">
     <div class="vendor-block" *ngFor="let vendor of vendors | keyvalue">
-        <img [src]="vendor.key.largeIcon" [title]="vendor.key.name">
+        <img id="vendor-icon" [src]="vendor.key.largeIcon" [title]="vendor.key.name">
         <div class="vendor-info">
             <strong>{{ vendor.key.name }}</strong>
             <br>
             <small>{{ vendor.key.subtitle }}</small>
-        </div>        
-    
-        <div class="vendor-items">
-            <ul *ngFor="let vendorItem of vendor.value">
+        </div>
+
+        <div class="vendor-categories">
+            <div class="vendor-category" *ngFor="let category of vendor.value | keyvalue">
+                <h2>{{ category.key }}</h2>
+                <mat-divider></mat-divider>
+                
+                <ul>
+                    <li *ngFor="let vendorItem of category.value">
+                        <img [src]="vendorItem.icon" [alt]="vendorItem.name" [title]="vendorItem.name">
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- <ul>
+                <li>
+                    
+                </li>
+            </ul> -->
+        <!-- <ul *ngFor="let vendorItem of vendor.value">
                 <li>
                     <img [src]="vendorItem.icon" [alt]="vendorItem.name" [title]="vendorItem.name">
                 </li>
-            </ul>
-        </div>        
+            </ul> -->
     </div>
 </div>
 
