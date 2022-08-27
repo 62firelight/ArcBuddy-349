@@ -65,17 +65,17 @@ exports.selectListFromDefinition = (req, res) => {
             return;
         }
         
-        const vendorDefinition = JSON.parse(row.json);  
-        if (vendorDefinition === undefined) {
+        const definition = JSON.parse(row.json);  
+        if (definition === undefined) {
             res.status(404).send('Could not find definitions.');
             return;
         }
 
-        const definition = {
-            name: vendorDefinition.displayProperties.name,
-            hash: vendorDefinition.hash,
-            icon: `https://www.bungie.net${vendorDefinition.displayProperties.icon}`
-        };
+        // const definition = {
+        //     name: vendorDefinition.displayProperties.name,
+        //     hash: vendorDefinition.hash,
+        //     icon: `https://www.bungie.net${vendorDefinition.displayProperties.icon}`
+        // };
 
         definitions.push(definition);
     }, function () {

@@ -2,11 +2,11 @@
 
 <div class="vendors" *ngIf="fetchingVendors == false">
     <div class="vendor-block" *ngFor="let vendor of vendors | keyvalue">
-        <img id="vendor-icon" [src]="vendor.key.largeIcon" [title]="vendor.key.name">
+        <img id="vendor-icon" src="bungie.net{{vendor.key.displayProperties.largeIcon}}" [title]="vendor.key.displayProperties.name">
         <div class="vendor-info">
-            <strong>{{ vendor.key.name }}</strong>
+            <strong>{{ vendor.key.displayProperties.name }}</strong>
             <br>
-            <small>{{ vendor.key.subtitle }}</small>
+            <small>{{ vendor.key.displayProperties.subtitle }}</small>
         </div>
 
         <div class="vendor-categories">
