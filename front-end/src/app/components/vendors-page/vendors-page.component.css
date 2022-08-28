@@ -63,7 +63,7 @@
 .vendor-items img {
     object-fit: none;
     border: 2px solid white;
-    margin: 0.16rem;
+    margin: 0 0.16rem 0.16rem 0.16rem;
     max-width: 64px;
     max-height: 64px;
 }
