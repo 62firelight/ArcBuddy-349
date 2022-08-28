@@ -2,7 +2,8 @@
 
 <div class="vendors" *ngIf="fetchingVendors == false">
     <div class="vendor-block" *ngFor="let vendor of vendors | keyvalue">
-        <img id="vendor-icon" src="https://www.bungie.net{{vendor.key.displayProperties.largeIcon}}" [title]="vendor.key.displayProperties.name">
+        <img id="vendor-icon" src="https://www.bungie.net{{vendor.key.displayProperties.largeIcon}}"
+            [title]="vendor.key.displayProperties.name">
         <div class="vendor-info">
             <strong>{{ vendor.key.displayProperties.name }}</strong>
             <br>
@@ -13,33 +14,17 @@
             <div class="vendor-category" *ngFor="let category of vendor.value | keyvalue">
                 <h2>{{ category.key }}</h2>
                 <mat-divider></mat-divider>
-                
+
                 <div class="vendor-items">
-                    <img *ngFor="let vendorItem of category.value" 
-                        
-                        src="https://www.bungie.net{{vendorItem.displayProperties.icon}}" 
-                        [alt]="vendorItem.displayProperties.name" 
-                        [title]="vendorItem.displayProperties.name">
+                    <ng-container *ngFor="let vendorItem of category.value">
+                        <img *ngIf="vendorItem.displayProperties.icon !== undefined"
+                            src="https://www.bungie.net{{vendorItem.displayProperties.icon}}"
+                            [alt]="vendorItem.displayProperties.name" [title]="vendorItem.displayProperties.name">
+                    </ng-container>
+
                 </div>
-                
-                <!-- <ul>
-                    <li *ngFor="let vendorItem of category.value">
-                        <img src="https://www.bungie.net{{vendorItem.displayProperties.icon}}" [alt]="vendorItem.displayProperties.name" [title]="vendorItem.displayProperties.name">
-                    </li>
-                </ul> -->
             </div>
         </div>
-
-        <!-- <ul>
-                <li>
-                    
-                </li>
-            </ul> -->
-        <!-- <ul *ngFor="let vendorItem of vendor.value">
-                <li>
-                    <img [src]="vendorItem.icon" [alt]="vendorItem.name" [title]="vendorItem.name">
-                </li>
-            </ul> -->
     </div>
 </div>
 
