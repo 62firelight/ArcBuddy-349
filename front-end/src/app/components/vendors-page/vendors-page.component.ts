@@ -124,13 +124,26 @@ export class VendorsPageComponent implements OnInit {
           for (const vendorName of vendorsMap.keys()) {
             const vendorItemsMap = vendorsMap.get(vendorName);
             for (const vendorCategory of vendorItemsMap.keys()) {
-              const vendorCategoryItems = vendorItemsMap.get(vendorCategory)
+              const vendorCategoryItems = vendorItemsMap.get(vendorCategory);
 
+              let indexesToDelete: number[] = [];
               vendorCategoryItems.forEach((vendorCategoryItem: any, index: number) => {
                 const itemHash = vendorCategoryItem.itemHash;
+                const itemDefinition = itemDefinitionsObj[itemHash];
 
-                vendorCategoryItems[index] = itemDefinitionsObj[itemHash];
+                vendorCategoryItems[index] = itemDefinition;
+
+                // mark item for deletion if there is no icon
+                if (itemDefinition.displayProperties.hasIcon == false) {
+                  indexesToDelete.push(index);
+                }
               });
+
+              // delete any marked items (and the category if corresponding array value is empty)
+              _.pullAt(vendorCategoryItems, indexesToDelete);
+              if (vendorCategoryItems.length <= 0) {
+                vendorItemsMap.delete(vendorCategory);
+              }
             }
           }
 

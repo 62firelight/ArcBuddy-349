@@ -17,7 +17,7 @@
 
                 <div class="vendor-items">
                     <ng-container *ngFor="let vendorItem of category.value">
-                        <img *ngIf="vendorItem.displayProperties.icon !== undefined"
+                        <img *ngIf="vendorItem.displayProperties.hasIcon"
                             src="https://www.bungie.net{{vendorItem.displayProperties.icon}}"
                             [alt]="vendorItem.displayProperties.name" [title]="vendorItem.displayProperties.name">
                     </ng-container>
