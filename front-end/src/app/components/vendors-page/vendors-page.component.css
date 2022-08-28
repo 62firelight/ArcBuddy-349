@@ -4,7 +4,7 @@
 
 .vendor-block {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     align-items: flex-start;
     justify-content: flex-start;
     margin: 4rem 0;
@@ -42,6 +42,7 @@
     display: flex;
     flex-flow: column wrap;
     justify-content: flex-start;
+    margin: 0.33rem 0;
 }
 
 .vendor-category h2 {
@@ -54,12 +55,25 @@
     margin-bottom: 1em;
 }
 
+.vendor-items {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.vendor-items img {
+    object-fit: none;
+    border: 3px solid white;
+    margin: 0rem 0.16rem 0.16rem 0.16rem;
+    max-width: 64px;
+    max-height: 64px;
+}
+
 /* .vendor-items {
     display: flex;
     flex-flow: row wrap;
     margin-left: 2.5rem;
     max-width: 50%;
-} */
+}
 
 ul {
     display: inline-flex;
@@ -78,4 +92,4 @@ ul li img {
     margin: 0rem 0.16rem 0.16rem 0.16rem;
     max-width: 64px;
     max-height: 64px;
-}
+} */

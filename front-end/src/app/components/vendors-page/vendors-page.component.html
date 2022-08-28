@@ -14,11 +14,19 @@
                 <h2>{{ category.key }}</h2>
                 <mat-divider></mat-divider>
                 
-                <ul>
+                <div class="vendor-items">
+                    <img *ngFor="let vendorItem of category.value" 
+                        
+                        src="https://www.bungie.net{{vendorItem.displayProperties.icon}}" 
+                        [alt]="vendorItem.displayProperties.name" 
+                        [title]="vendorItem.displayProperties.name">
+                </div>
+                
+                <!-- <ul>
                     <li *ngFor="let vendorItem of category.value">
                         <img src="https://www.bungie.net{{vendorItem.displayProperties.icon}}" [alt]="vendorItem.displayProperties.name" [title]="vendorItem.displayProperties.name">
                     </li>
-                </ul>
+                </ul> -->
             </div>
         </div>
 
