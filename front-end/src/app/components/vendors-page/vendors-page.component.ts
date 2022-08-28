@@ -5,7 +5,6 @@ import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { forkJoin } from 'rxjs/index';
 import * as _ from 'lodash';
-import { isObjectLike } from 'lodash';
 
 @Component({
   selector: 'app-vendors-page',
@@ -35,20 +34,19 @@ export class VendorsPageComponent implements OnInit {
         switchMap(res => {
           // get vendor hashes
           const towerVendorHashes: string[] = (<any>res).Response.vendorGroups.data.groups['4'].vendorHashes;
-          const sales = (<any>res).Response.sales.data;
-          const categories = (<any>res).Response.categories.data
 
+          // pass on vendor data from manifest + API response
           return forkJoin([this.manifestService.selectListFromDefinition('Vendor', towerVendorHashes),
-          // this.manifestService.selectListFromDefinition('InventoryItem', Array.from(hashesMap.values())),
-          of(towerVendorHashes), of(sales), of(categories)]);
-          // TODO: reduce number of observables in array (as we can extract the parts we need from the response later)
+          of(res)]);
         }),
         switchMap(array => {
           // retrieve observables from array
           const vendorDefinitions = array[0];
-          const towerVendorHashes = array[1];
-          const sales = array[2];
-          const categories = array[3];
+          const res = array[1];
+
+          // get sale items and categories for all vendors
+          const saleItems = (<any>res).Response.sales.data;
+          const categories = (<any>res).Response.categories.data;
 
           // for each vendor, find its categories and corresponding items
           let vendorsMap = new Map();
@@ -62,13 +60,14 @@ export class VendorsPageComponent implements OnInit {
 
             const vendorDisplayCategories = vendorDefinition.displayCategories;
             const vendorCategories: any[] = categories[towerVendorHash].categories;
-            const vendorSaleItems: any[] = Object.values(sales[towerVendorHash].saleItems);
+            const vendorSaleItems: any[] = Object.values(saleItems[towerVendorHash].saleItems);
 
+            // create an array of display category indexes
             const displayCategoryIndexes = vendorCategories.map(
               (vendorCategory: { displayCategoryIndex: any; }) => vendorCategory.displayCategoryIndex
             );
 
-            // map display categories from API data to display categories from manifest data
+            // map display category data from API to display category data from manifest
             let vendorItemsMap = new Map();
             for (const vendorDisplayCategory of vendorDisplayCategories) {
               if (displayCategoryIndexes.includes(vendorDisplayCategory.index)) {
@@ -108,18 +107,20 @@ export class VendorsPageComponent implements OnInit {
           });
 
           return forkJoin([this.manifestService.selectListFromDefinition('InventoryItem', allItemHashes),
-            of(vendorsMap)]);
+          of(vendorsMap)]);
         }),
         switchMap(array => {
           // retrieve observables from array
           const itemDefinitions = array[0];
           const vendorsMap = array[1];
 
+          // create an object containing item hash keys and item definition values
           let itemDefinitionsObj: { [key: string]: any } = {};
           for (var i = 0; i < itemDefinitions.length; i++) {
             itemDefinitionsObj[itemDefinitions[i].hash] = itemDefinitions[i];
           }
 
+          // map item data from API to item data in manifest
           for (const vendorName of vendorsMap.keys()) {
             const vendorItemsMap = vendorsMap.get(vendorName);
             for (const vendorCategory of vendorItemsMap.keys()) {
@@ -138,131 +139,10 @@ export class VendorsPageComponent implements OnInit {
       )
       .subscribe(result => {
         this.vendors = result;
-
-        console.log(result);
-
         this.fetchingVendors = false;
       });
-
-    // this.destinyService.getVendors()
-    //   .subscribe((res) => {
-    //     // get vendor hashes
-    //     const towerVendorHashes: string[] = (<any>res).Response.vendorGroups.data.groups['4'].vendorHashes;
-    //     const numOfHashes = towerVendorHashes.length;
-    //     let numOfHashesIdentified = 0;
-
-    //     // identify each vendor hash
-    //     for (let towerVendorHash of towerVendorHashes) {
-    //       if (this.hiddenVendors.has(`${towerVendorHash}`)) {
-    //         numOfHashesIdentified++;
-    //         continue;
-    //       }
-
-    //       const categories = (<any>res).Response.categories.data[towerVendorHash].categories;
-
-    //       // retrieve vendor name
-    //       this.manifestService.selectFromDefinition('Vendor', towerVendorHash)
-    //         .subscribe((vendor) => {
-
-    //           const displayCategories = vendor.displayCategories;
-
-    //           // map the vendor's display category names to item indexes
-    //           for (let category of categories) {
-    //             const displayCategoryIndex = category.displayCategoryIndex;
-
-    //             const originalSize = categoriesMap.size;
-    //             for (let displayCategory of displayCategories) {
-    //               if (displayCategory.index == displayCategoryIndex) {
-    //                 categoriesMap.set(displayCategory.displayProperties.name, category.itemIndexes);
-    //                 break;
-    //               }
-    //             }
-    //           }
-
-    //           const newVendor = {
-    //             name: vendor.displayProperties.name,
-    //             subtitle: vendor.displayProperties.subtitle,
-    //             largeIcon: `https://www.bungie.net${vendor.displayProperties.largeIcon}`
-    //           };
-
-    //           this.vendors.set(newVendor, new Map());
-
-    //           const saleItems = (<any>res).Response.sales.data[`${towerVendorHash}`].saleItems;
-
-    //           let hashesMap = new Map();
-
-    //           // store hashes
-    //           let hashes = [];
-    //           for (let saleItem in saleItems) {
-    //             hashesMap.set(saleItems[saleItem].itemHash, saleItem);
-    //             hashes.push(saleItems[saleItem].itemHash);
-    //           }
-
-    //           // retrieve vendor items
-    //           this.manifestService.selectListFromDefinition('InventoryItem', hashes)
-    //             .subscribe((vendorItems) => {
-
-    //               let itemsMap = new Map();
-    //               for (const vendorItem of vendorItems) {
-    //                 // let items = [];
-
-    //                 // console.log(vendorItem);
-    //                 const itemIndex = parseInt(hashesMap.get(vendorItem.hash));
-    //                 // console.log(itemIndex);
-
-    //                 for (const [category, itemIndexes] of categoriesMap) {
-    //                   // console.log(`${itemIndexes} includes ${itemIndex}? ${itemIndexes.includes(itemIndex)}`);                    
-    //                   if (itemIndexes.includes(itemIndex)) {
-    //                     let items = itemsMap.get(category);
-    //                     if (items === undefined) {
-    //                       items = [];
-    //                     }
-
-    //                     items.push(vendorItem);
-    //                     itemsMap.set(category, items);
-    //                     break;
-    //                   }
-    //                 }
-    //                 // console.log(itemsMap);
-    //               }
-    //               this.vendors.set(newVendor, itemsMap);
-    //               // this.vendors.set(newVendor, vendorItems);
-
-    //               numOfHashesIdentified++;
-    //               if (numOfHashesIdentified >= numOfHashes) {
-    //                 this.fetchingVendors = false;
-    //                 console.log(this.vendors);
-    //               }
-    //             });
-    //         });
-    //     }
-    //   });
 
     this.fetchingVendors = true;
   }
 
 }
-
-// code for individual item retrievals 
-// this.manifestService.selectFromDefinition('InventoryItem', saleItems)
-//     .subscribe((res) => {
-//       console.log(res);
-//       // this.vendorItems = res;
-//     });
-// for (let saleItem in saleItems) {
-//   this.manifestService.selectFromDefinition('InventoryItem', saleItems[saleItem].itemHash)
-//     .subscribe((res) => {
-//       let item = {
-//         name: res.displayProperties.name,
-//         icon: `https://www.bungie.net${res.displayProperties.icon}`
-//       };
-
-//       let vendorItems = this.vendors.get(vendorName);
-//       if (vendorItems === undefined) {
-//         return;
-//       }
-
-//       vendorItems.push(item);
-//     });
-
-// }
