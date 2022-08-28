@@ -4,6 +4,8 @@ import { ManifestService } from 'src/app/services/manifest.service';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { forkJoin } from 'rxjs/index';
+import * as _ from 'lodash';
+import { isObjectLike } from 'lodash';
 
 @Component({
   selector: 'app-vendors-page',
@@ -11,144 +13,6 @@ import { forkJoin } from 'rxjs/index';
   styleUrls: ['./vendors-page.component.css']
 })
 export class VendorsPageComponent implements OnInit {
-
-  // vendors: Map<any, Map<any, any[]>> = new Map(
-  //   [
-  //     [
-  //       {
-  //         "name": "Commander Zavala",
-  //         "subtitle": "Titan Vanguard",
-  //         "largeIcon": "https://www.bungie.net/common/destiny2_content/icons/0a599ca6fad56a014f14475b73a6a1d8.jpg"
-  //       },
-  //       new Map([
-  //         [
-  //           "Rank Rewards",
-  //           [
-  //             {
-  //               "name": "Heroic Projection",
-  //               "hash": 2199880738,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/61501df78712cef806f681b9c168b10d.jpg"
-  //             },
-  //             {
-  //               "name": "Enhancement Core",
-  //               "hash": 3853748946,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/259c571eb7f9f85e56be657f371e303f.jpg"
-  //             },
-  //             {
-  //               "name": "Enhancement Prism",
-  //               "hash": 4257549984,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/0397d34d04b687484f73665bb714227b.jpg"
-  //             },
-  //             {
-  //               "name": "Powerful Gear",
-  //               "hash": 277576667,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/962055a3f8c73eff98f140f6fac79392.png"
-  //             },
-  //             {
-  //               "name": "Cry Mutiny",
-  //               "hash": 616582330,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/e217beb03b57ecac1ca69df7e5421981.jpg"
-  //             },
-  //             {
-  //               "name": "Duskbloom",
-  //               "hash": 1902811978,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/ab4383c4a3b7d929ca9ff248d537ba5c.png"
-  //             },
-  //             {
-  //               "name": "Reset Rank",
-  //               "hash": 2133694745,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/2bd6547fa8f170d8868c8ab24b9fe84a.jpg"
-  //             }
-  //           ]
-  //         ],
-  //         [
-  //           "Quests",
-  //           [
-  //             {
-  //               "name": "High-Risk, High-Reward",
-  //               "hash": 2390666069,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/392146717730b6a9002ff8824ec5d466.jpg"
-  //             }
-  //           ]
-  //         ],
-  //         [
-  //           "Bounties",
-  //           [
-  //             {
-  //               "name": "They Were the Champions",
-  //               "hash": 2852283123,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/91121c659c5cc0d8938dfe004426c3fd.jpg"
-  //             },
-  //             {
-  //               "name": "Additional Bounties",
-  //               "hash": 2910071312,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/81488d496b87d7adb212420e21b1469f.jpg"
-  //             },
-  //             {
-  //               "name": "Long Distance Plan",
-  //               "hash": 2987639079,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/91121c659c5cc0d8938dfe004426c3fd.jpg"
-  //             },
-  //             {
-  //               "name": "Horseshoes and Hand Grenades",
-  //               "hash": 3671936696,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/91121c659c5cc0d8938dfe004426c3fd.jpg"
-  //             },
-  //             {
-  //               "name": "Chain Gang",
-  //               "hash": 4145290890,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/91121c659c5cc0d8938dfe004426c3fd.jpg"
-  //             }
-  //           ]
-  //         ],
-  //         [
-  //           "Featured Armor",
-  //           [
-  //             {
-  //               "name": "Photosuede Strides",
-  //               "hash": 2949791538,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/79e7d60ece4b8f3bcad5a43d27da13ab.jpg"
-  //             },
-  //             {
-  //               "name": "Photosuede Cloak",
-  //               "hash": 3691455821,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/0dca1b12a88e0415c947d5b4c3255e80.jpg"
-  //             },
-  //             {
-  //               "name": "Photosuede Mask",
-  //               "hash": 4076604385,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/2659e9a8b82888129e61f267d9e9d559.jpg"
-  //             },
-  //             {
-  //               "name": "Photosuede Vest",
-  //               "hash": 469333264,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/071f2deb02a03accd24c3836c3748d1d.jpg"
-  //             },
-  //             {
-  //               "name": "Photosuede Grips",
-  //               "hash": 619556600,
-  //               "icon": "https://www.bungie.net/common/destiny2_content/icons/24139eb2e3cb100370cdf9840abae483.jpg"
-  //             }
-  //           ]
-  //         ],
-  //         [
-  //           "Armor",
-  //           [
-  //             {
-  //               "name": "Vanguard Tactician Armor",
-  //               "hash": 4252280581,
-  //               "icon": "https://www.bungie.netundefined"
-  //             },
-  //             {
-  //               "name": "Vanguard Tactician Arsenal",
-  //               "hash": 1616736576,
-  //               "icon": "https://www.bungie.netundefined"
-  //             }
-  //           ]
-  //         ]
-  //       ])
-  //     ]
-  //   ]);
 
   vendors: Map<any, Map<any, any[]>> = new Map();
   hiddenVendors: Set<string> = new Set([
@@ -159,79 +23,122 @@ export class VendorsPageComponent implements OnInit {
     '3347378076' // Suraya Hawthorne
   ]);
 
-  categories: any;
-  displayCategories: any;
-  hashesMap: any;
-
   fetchingVendors = false;
 
   constructor(private destinyService: DestinyService, private manifestService: ManifestService) { }
 
   ngOnInit(): void {
-    let categoriesMap = new Map();
-
     // fetch vendors and the items they sell
+    // TODO: Add error handling
     this.destinyService.getVendors()
       .pipe(
         switchMap(res => {
           // get vendor hashes
           const towerVendorHashes: string[] = (<any>res).Response.vendorGroups.data.groups['4'].vendorHashes;
-
-          let hashesMap = new Map();
-          let vendorItemsMap = new Map();
-          let categoriesMap = new Map();
-          for (const towerVendorHash of towerVendorHashes) {
-            const saleItems = (<any>res).Response.sales.data[`${towerVendorHash}`].saleItems;
-
-            for (let saleItem in saleItems) {
-              hashesMap.set(saleItems[saleItem].itemHash, saleItem);              
-            }
-            vendorItemsMap.set(towerVendorHash, saleItems);
-
-            const categories = (<any>res).Response.categories.data[towerVendorHash].categories;
-            categoriesMap.set(towerVendorHash, categories);
-          }
+          const sales = (<any>res).Response.sales.data;
+          const categories = (<any>res).Response.categories.data
 
           return forkJoin([this.manifestService.selectListFromDefinition('Vendor', towerVendorHashes),
-            this.manifestService.selectListFromDefinition('InventoryItem', Array.from(hashesMap.keys())),
-            of(vendorItemsMap), of(hashesMap), of(categoriesMap)]);
+          // this.manifestService.selectListFromDefinition('InventoryItem', Array.from(hashesMap.values())),
+          of(towerVendorHashes), of(sales), of(categories)]);
+          // TODO: reduce number of observables in array (as we can extract the parts we need from the response later)
         }),
         switchMap(array => {
-          console.log(array);
           // retrieve observables from array
           const vendorDefinitions = array[0];
-          const itemDefinitions = array[1];
-          const vendorItemsMap = array[2];
-          const hashesMap = array[3];
-          const categoriesMap = array[4];
+          const towerVendorHashes = array[1];
+          const sales = array[2];
+          const categories = array[3];
 
-          /*
-            need vendors in format <vendorObj, <string, itemObj>>
-          */
-
-          let itemsMap = new Map();
+          // for each vendor, find its categories and corresponding items
+          let vendorsMap = new Map();
           for (const vendorDefinition of vendorDefinitions) {
-            const vendorHash = vendorDefinition.hash;
+            const towerVendorHash = vendorDefinition.hash;
 
-            const vendorCategories = categoriesMap.get(vendorHash);
-            for (const vendorCategory of vendorCategories) {
-              const displayCategoryIndex = vendorCategory.displayCategoryIndex;
-              const itemIndexes = vendorCategory.itemIndexes;
+            // skip specific vendors
+            if (this.hiddenVendors.has(`${towerVendorHash}`)) {
+              continue;
+            }
+
+            const vendorDisplayCategories = vendorDefinition.displayCategories;
+            const vendorCategories: any[] = categories[towerVendorHash].categories;
+            const vendorSaleItems: any[] = Object.values(sales[towerVendorHash].saleItems);
+
+            const displayCategoryIndexes = vendorCategories.map(
+              (vendorCategory: { displayCategoryIndex: any; }) => vendorCategory.displayCategoryIndex
+            );
+
+            // map display categories from API data to display categories from manifest data
+            let vendorItemsMap = new Map();
+            for (const vendorDisplayCategory of vendorDisplayCategories) {
+              if (displayCategoryIndexes.includes(vendorDisplayCategory.index)) {
+                const itemIndexes = vendorCategories.find(
+                  vendorCategory => vendorCategory.displayCategoryIndex == vendorDisplayCategory.index
+                ).itemIndexes;
+
+                let vendorItems = [];
+                for (const itemIndex of itemIndexes) {
+                  const vendorItem = vendorSaleItems.find(vendorSaleItem =>
+                    (<any>vendorSaleItem).vendorItemIndex == itemIndex
+                  );
+                  vendorItems.push(vendorItem);
+                }
+                vendorItemsMap.set(vendorDisplayCategory.displayProperties.name, _.cloneDeep(vendorItems));
+                vendorItems = [];
+              } else {
+                continue;
+              }
+            }
+            vendorsMap.set(vendorDefinition, vendorItemsMap);
+          }
+
+          // get a list of all item hashes
+          let allItemHashes: any[] = [];
+          Array.from(vendorsMap.values()).forEach(vendorItemsMap => {
+            // retrieve 2D array containing item indexes arrays
+            const vendorItemArrays: any[] = Array.from(vendorItemsMap.values());
+
+            // convert 2D array into 1D array
+            const vendorItems: any[] = [].concat(...vendorItemArrays);
+
+            // retrieve all item hashes and store in 1D array
+            const vendorItemHashes = vendorItems.map(vendorItem => vendorItem.itemHash);
+
+            allItemHashes = allItemHashes.concat(vendorItemHashes);
+          });
+
+          return forkJoin([this.manifestService.selectListFromDefinition('InventoryItem', allItemHashes),
+            of(vendorsMap)]);
+        }),
+        switchMap(array => {
+          // retrieve observables from array
+          const itemDefinitions = array[0];
+          const vendorsMap = array[1];
+
+          let itemDefinitionsObj: { [key: string]: any } = {};
+          for (var i = 0; i < itemDefinitions.length; i++) {
+            itemDefinitionsObj[itemDefinitions[i].hash] = itemDefinitions[i];
+          }
+
+          for (const vendorName of vendorsMap.keys()) {
+            const vendorItemsMap = vendorsMap.get(vendorName);
+            for (const vendorCategory of vendorItemsMap.keys()) {
+              const vendorCategoryItems = vendorItemsMap.get(vendorCategory)
+
+              vendorCategoryItems.forEach((vendorCategoryItem: any, index: number) => {
+                const itemHash = vendorCategoryItem.itemHash;
+
+                vendorCategoryItems[index] = itemDefinitionsObj[itemHash];
+              });
             }
           }
 
-          // for (let vendor of vendors) {
-          //   if (this.hiddenVendors.has(`${vendor.hash}`)) {
-          //     continue;
-          //   }
-
-          //   this.vendors.set(vendor, new Map());
-          // }
-
-          return of('0');
+          return of(vendorsMap);
         })
       )
       .subscribe(result => {
+        this.vendors = result;
+
         console.log(result);
 
         this.fetchingVendors = false;
