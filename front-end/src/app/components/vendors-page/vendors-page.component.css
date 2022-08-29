@@ -2,9 +2,17 @@
     margin-top: 2rem;
 }
 
-.vendor-group h1 {
-    padding: 2rem;
-    font-size: 2em;
+.vendors button {
+    margin: 0 1rem 4rem 1rem;
+    background-color: #006565;
+}
+
+.vendor-group {
+    margin: 0.5rem 0;
+}
+
+.vendor-group .mat-expansion-panel-header {
+    font-size: 1.5em;
     background-color: #212121;
 }
 

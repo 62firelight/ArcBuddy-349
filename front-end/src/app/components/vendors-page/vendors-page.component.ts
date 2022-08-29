@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DestinyService } from 'src/app/services/destiny.service';
 import { ManifestService } from 'src/app/services/manifest.service';
 import { switchMap } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { forkJoin } from 'rxjs/index';
 import * as _ from 'lodash';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { KeyValue } from '@angular/common';
+import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-vendors-page',
@@ -24,8 +25,9 @@ export class VendorsPageComponent implements OnInit {
     '3484140575', // Quest Archive
     '3347378076' // Suraya Hawthorne
   ]);
-
   fetchingVendors = false;
+
+  @ViewChild(MatAccordion) accordion!: MatAccordion;
 
   constructor(private destinyService: DestinyService, private manifestService: ManifestService) { }
 
@@ -93,6 +95,7 @@ export class VendorsPageComponent implements OnInit {
               }
             }
             vendorsMap.set(vendorDefinition, vendorItemsMap);
+            // break;
           }
 
           // look up vendor group hashes in manifest
