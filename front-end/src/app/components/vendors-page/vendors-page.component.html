@@ -1,5 +1,5 @@
 <div class="vendors" *ngIf="fetchingVendors == false">
-    <div class="vendor-group" *ngFor="let vendorGroup of vendorGroups | keyvalue">
+    <div class="vendor-group" *ngFor="let vendorGroup of vendorGroups | keyvalue: vendorGroupAscOrder">
         <h1>{{ vendorGroup.key.categoryName }}</h1>
 
         <div class="vendor-block" *ngFor="let vendorMap of vendorGroup.value">

@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { forkJoin } from 'rxjs/index';
 import * as _ from 'lodash';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { KeyValue } from '@angular/common';
 
 @Component({
   selector: 'app-vendors-page',
@@ -99,7 +100,7 @@ export class VendorsPageComponent implements OnInit {
           const vendorGroupHashes: any[] = vendorGroups.map(vendorGroup => vendorGroup.vendorGroupHash);
 
           // pass on vendor group data from manifest + current vendor map + API response
-          return forkJoin([this.manifestService.selectListFromDefinition('VendorGroup', vendorGroupHashes), 
+          return forkJoin([this.manifestService.selectListFromDefinition('VendorGroup', vendorGroupHashes),
           of(vendorsMap), of(res)]);
         }),
         switchMap(array => {
@@ -125,7 +126,7 @@ export class VendorsPageComponent implements OnInit {
                 vendorsInVendorGroup.push(new Map([[vendor, categories]]));
 
                 vendorGroupsMap.set(vendorGroupDefinition, vendorsInVendorGroup);
-              }              
+              }
             }
           }
 
@@ -195,6 +196,11 @@ export class VendorsPageComponent implements OnInit {
       });
 
     this.fetchingVendors = true;
+  }
+
+  // Order by ascending order of vendor group
+  vendorGroupAscOrder = (a: KeyValue<any, Map<any, Map<any, any[]>>[]>, b: KeyValue<any, Map<any, Map<any, any[]>>[]>): number => {
+    return a.key.order > b.key.order ? 1 : (b.key.order > a.key.order ? -1 : 0);
   }
 
 }
