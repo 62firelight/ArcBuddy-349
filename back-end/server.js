@@ -57,9 +57,31 @@ let loadManifest = exports.loadManifest = async function loadManifest() {
     }
 };
 
+let refreshAccessToken = exports.refreshAccessToken = async function refreshAccessToken() {
+    if (oauth == undefined) {
+        console.log('Could not initialize OAuth from Quria.\n');
+        return undefined;
+    }
+
+    const refreshResponse = await oauth.RefreshAccessToken(process.env.REFRESH_TOKEN);
+    if (refreshResponse.access_token != undefined) {
+        const accessToken = refreshResponse.access_token;
+        return accessToken;
+    } else {
+        console.log(error);
+        console.log('Failed to fetch access token.\n');
+        return undefined;
+    }
+}
+
 let destiny = undefined;
 exports.getDestiny = function getDestiny() {
     return destiny;
+};
+
+let oauth = undefined;
+exports.getOauth = function getOauth() {
+    return oauth;
 };
 
 let accessToken = undefined;
@@ -184,16 +206,10 @@ const initializeServer = async () => {
 
     // Attempt to fetch access token
     console.log('Attempting to fetch access token...')
-    const refreshResponse = await oauth.RefreshAccessToken(process.env.REFRESH_TOKEN);
-    // console.log(refreshResponse);
-    if (refreshResponse.access_token != undefined) {
-        accessToken = refreshResponse.access_token;
-    } else {
-        console.log(error);
-        console.log('Failed to fetch access token. Terminating server.\n');
+    accessToken = await refreshAccessToken();
+    if (accessToken == undefined) {
         process.exit();
     }
-    // console.log(`Access token: ${accessToken}`);
     console.log('Successfully fetched access token.\n');    
 
     app.listen(port, () => {
