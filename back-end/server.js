@@ -1,4 +1,4 @@
-const compression = require('compression');
+// const compression = require('compression');
 const express = require('express');
 const cors = require('cors');
 const QuriaAPI = require('quria').Quria;
