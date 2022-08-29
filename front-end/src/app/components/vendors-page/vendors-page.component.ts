@@ -26,8 +26,10 @@ export class VendorsPageComponent implements OnInit {
     '3347378076' // Suraya Hawthorne
   ]);
   fetchingVendors = false;
+  error = false;
 
-  @ViewChild(MatAccordion) accordion!: MatAccordion;
+  @ViewChild(MatAccordion)
+  accordion!: MatAccordion;
 
   constructor(private destinyService: DestinyService, private manifestService: ManifestService) { }
 
@@ -194,8 +196,12 @@ export class VendorsPageComponent implements OnInit {
         })
       )
       .subscribe(result => {
+        this.error = false;
         this.vendorGroups = result;
         this.fetchingVendors = false;
+      }, 
+      err => {
+        this.error = true;       
       });
 
     this.fetchingVendors = true;
