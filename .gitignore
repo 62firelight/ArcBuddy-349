@@ -5,3 +5,4 @@ node_modules
 back-end/.aws/credentials
 back-end/manifest
 back-end/manifest.zip
+back-end/public

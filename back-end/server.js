@@ -10,14 +10,19 @@ const https = require('https');
 const fs = require('fs');
 const extract = require('extract-zip');
 const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
 const app = express();
 const port = 3000;
 
-app.use(express.static('myapp/public'));
+// app.use(express.static('myapp/public'));
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ limit: '1mb', extended: true }));
 app.use(cors());
+app.use(express.static('public'));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+})
 
 const apiUrl = `http://localhost:${port}`;
 const mongoUri = 'mongodb://127.0.0.1:27017';
@@ -117,11 +122,11 @@ if (process.argv.length > 2) {
 }
 
 // define routes
-app.get('/', (req, res) => {
-    res.send(`
-      Welcome to the API homepage for Arc Buddy! There's nothing special to see here right now.
-      `)
-});
+// app.get('/', (req, res) => {
+//     res.send(`
+//       Welcome to the API homepage for Arc Buddy! There's nothing special to see here right now.
+//       `)
+// });
 require('./routes/destiny.routes.js')(app);
 require('./routes/profiles.routes.js')(app);
 require('./routes/manifest.routes.js')(app);
@@ -181,9 +186,9 @@ const initializeServer = async () => {
                     throw ('Manifest not found.');
                 }
 
-                const manifestLocation = `https://www.bungie.net${manifestResponse.Response.mobileWorldContentPaths.en}`;                
+                const manifestLocation = `https://www.bungie.net${manifestResponse.Response.mobileWorldContentPaths.en}`;
                 const file = fs.createWriteStream("manifest.zip");
-                
+
                 // download manifest
                 console.log('Manifest location found. Downloading manifest...');
                 https.get(manifestLocation, (manifest) => {
@@ -197,7 +202,7 @@ const initializeServer = async () => {
 
                         resolve();
                     }).on('error', err => {
-                        throw(err);
+                        throw (err);
                     });
                 });
             } catch (err) {
@@ -213,7 +218,7 @@ const initializeServer = async () => {
     if (accessToken == undefined) {
         process.exit();
     }
-    console.log('Successfully fetched access token.\n');    
+    console.log('Successfully fetched access token.\n');
 
     app.listen(port, () => {
         console.log(`Server running at ${apiUrl}.`);
