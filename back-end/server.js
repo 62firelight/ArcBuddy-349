@@ -88,6 +88,9 @@ let accessToken = undefined;
 exports.getAccessToken = function getAccessToken() {
     return accessToken;
 };
+exports.setAccessToken = function setAccessToken(newAccessToken) {
+    accessToken = newAccessToken;
+};
 
 let noDb = false;
 exports.getNoDb = function getNoDb() {

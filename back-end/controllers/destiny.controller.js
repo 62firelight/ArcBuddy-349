@@ -163,6 +163,12 @@ exports.getVendors = (req, res) => {
         .then((response) => {
 
             if (response.ErrorCode == 12) {
+                // attempt to refresh access token for next request
+                server.refreshAccessToken()
+                    .then((accessToken) => {
+                        server.setAccessToken(accessToken);
+                    });
+
                 res.status(404).send('Insufficient privileges');
             } else {
                 res.status(200).send(response);
