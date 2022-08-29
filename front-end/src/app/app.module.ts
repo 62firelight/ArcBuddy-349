@@ -29,6 +29,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { NgChartsModule } from 'ng2-charts';
 
@@ -96,7 +97,8 @@ import { VendorsPageComponent } from './components/vendors-page/vendors-page.com
     NgChartsModule,
     ClipboardModule,
     MatSnackBarModule,
-    MatChipsModule
+    MatChipsModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
