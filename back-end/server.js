@@ -73,7 +73,6 @@ let refreshAccessToken = exports.refreshAccessToken = async function refreshAcce
         const accessToken = refreshResponse.access_token;
         return accessToken;
     } else {
-        console.log(error);
         console.log('Failed to fetch access token.\n');
         return undefined;
     }
