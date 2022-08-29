@@ -12,7 +12,7 @@ mat-toolbar {
 }
 
 .toolbar-spacer {
-    flex: 0.22 0.22 auto;
+    flex: 0.3 0.3 auto;
 }
 
 .toolbar-header {
@@ -20,7 +20,7 @@ mat-toolbar {
 }
 
 .toolbar-spacer-end {
-    flex: 0.075 0.075 auto;
+    flex: 0.4 0.4 auto;
 }
 
 .toolbar-links a {
