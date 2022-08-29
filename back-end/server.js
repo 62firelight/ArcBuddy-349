@@ -27,8 +27,8 @@ app.get('/', (req, res) => {
 const apiUrl = `http://localhost:${port}`;
 const mongoUri = 'mongodb://127.0.0.1:27017';
 
-let isEmpty = exports.isEmpty = function isEmpty(path) {
-    return fs.readdirSync(path).length === 0;
+let isEmpty = exports.isEmpty = function isEmpty(specifiedPath) {
+    return fs.readdirSync(specifiedPath).length === 0;
 };
 
 let convertHash = exports.convertHash = function convertHash(hash) {
