@@ -1,29 +1,35 @@
-<h1>Tower Vendors</h1>
-
 <div class="vendors" *ngIf="fetchingVendors == false">
-    <div class="vendor-block" *ngFor="let vendor of vendors | keyvalue">
-        <img id="vendor-icon" src="https://www.bungie.net{{vendor.key.displayProperties.largeIcon}}"
-            [title]="vendor.key.displayProperties.name">
-        <div class="vendor-info">
-            <strong>{{ vendor.key.displayProperties.name }}</strong>
-            <br>
-            <small>{{ vendor.key.displayProperties.subtitle }}</small>
-        </div>
+    <div class="vendor-group" *ngFor="let vendorGroup of vendorGroups | keyvalue">
+        <h1>{{ vendorGroup.key.categoryName }}</h1>
 
-        <div class="vendor-categories">
-            <div class="vendor-category" *ngFor="let category of vendor.value | keyvalue">
-                <h2>{{ category.key }}</h2>
-                <mat-divider></mat-divider>
-
-                <div class="vendor-items">
-                    <ng-container *ngFor="let vendorItem of category.value">
-                        <img *ngIf="vendorItem.displayProperties.hasIcon"
-                            src="https://www.bungie.net{{vendorItem.displayProperties.icon}}"
-                            [alt]="vendorItem.displayProperties.name" [title]="vendorItem.displayProperties.name">
-                    </ng-container>
-
+        <div class="vendor-block" *ngFor="let vendorMap of vendorGroup.value">
+            <ng-container *ngFor="let vendor of vendorMap | keyvalue">
+                <img id="vendor-icon" src="https://www.bungie.net{{vendor.key.displayProperties.largeIcon}}"
+                    alt=""
+                    [title]="vendor.key.displayProperties.name">
+                <div class="vendor-info">
+                    <strong>{{ vendor.key.displayProperties.name }}</strong>
+                    <br>
+                    <small>{{ vendor.key.displayProperties.subtitle }}</small>
                 </div>
-            </div>
+
+                <div class="vendor-categories">
+                    <div class="vendor-category" *ngFor="let category of vendor.value | keyvalue">
+                        <h2>{{ category.key }}</h2>
+                        <mat-divider></mat-divider>
+
+                        <div class="vendor-items">
+                            <ng-container *ngFor="let vendorItem of category.value">
+                                <img *ngIf="vendorItem.displayProperties.hasIcon"
+                                    src="https://www.bungie.net{{vendorItem.displayProperties.icon}}"
+                                    [alt]="vendorItem.displayProperties.name"
+                                    [title]="vendorItem.displayProperties.name">
+                            </ng-container>
+
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>

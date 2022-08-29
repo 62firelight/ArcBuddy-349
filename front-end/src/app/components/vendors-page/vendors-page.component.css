@@ -13,6 +13,8 @@
 .vendor-block #vendor-icon {
     object-fit: none;
     opacity: 0.5;
+    min-width: 525px;
+    min-height: 150px;
 }
 
 .vendor-info {

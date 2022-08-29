@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { forkJoin } from 'rxjs/index';
 import * as _ from 'lodash';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'app-vendors-page',
@@ -13,6 +14,7 @@ import * as _ from 'lodash';
 })
 export class VendorsPageComponent implements OnInit {
 
+  vendorGroups: Map<any, Map<any, Map<any, any[]>>[]> = new Map();
   vendors: Map<any, Map<any, any[]>> = new Map();
   hiddenVendors: Set<string> = new Set([
     '3361454721', // Tess Everis
@@ -32,11 +34,12 @@ export class VendorsPageComponent implements OnInit {
     this.destinyService.getVendors()
       .pipe(
         switchMap(res => {
-          // get vendor hashes
-          const towerVendorHashes: string[] = (<any>res).Response.vendorGroups.data.groups['4'].vendorHashes;
+          // get all vendor hashes converted from a 2D array to a 1D array
+          const vendorGroups: any[] = (<any>res).Response.vendorGroups.data.groups;
+          const vendorHashes: any[] = [].concat(...vendorGroups.map(vendorGroup => vendorGroup.vendorHashes));
 
           // pass on vendor data from manifest + API response
-          return forkJoin([this.manifestService.selectListFromDefinition('Vendor', towerVendorHashes),
+          return forkJoin([this.manifestService.selectListFromDefinition('Vendor', vendorHashes),
           of(res)]);
         }),
         switchMap(array => {
@@ -91,6 +94,41 @@ export class VendorsPageComponent implements OnInit {
             vendorsMap.set(vendorDefinition, vendorItemsMap);
           }
 
+          // look up vendor group hashes in manifest
+          const vendorGroups: any[] = (<any>res).Response.vendorGroups.data.groups;
+          const vendorGroupHashes: any[] = vendorGroups.map(vendorGroup => vendorGroup.vendorGroupHash);
+
+          // pass on vendor group data from manifest + current vendor map + API response
+          return forkJoin([this.manifestService.selectListFromDefinition('VendorGroup', vendorGroupHashes), 
+          of(vendorsMap), of(res)]);
+        }),
+        switchMap(array => {
+          // retrieve observables from array
+          const vendorGroupDefinitions = array[0];
+          const vendorsMap = array[1];
+          const res = array[2];
+
+          const vendorGroups: any[] = (<any>res).Response.vendorGroups.data.groups;
+
+          // divide vendors into vendor groups
+          let vendorGroupsMap: Map<any, Map<any, Map<any, any[]>>[]> = new Map();
+          for (const vendorGroup of vendorGroups) {
+            const vendorGroupDefinition = vendorGroupDefinitions.find(vendorGroupDefinition => vendorGroupDefinition.hash == vendorGroup.vendorGroupHash);
+            const vendorHashes = vendorGroup.vendorHashes;
+
+            for (const [vendor, categories] of vendorsMap.entries()) {
+              if (vendorHashes.includes(vendor.hash)) {
+                let vendorsInVendorGroup: Map<any, Map<any, any[]>>[] | undefined = vendorGroupsMap.get(vendorGroupDefinition);
+                if (vendorsInVendorGroup === undefined) {
+                  vendorsInVendorGroup = [];
+                }
+                vendorsInVendorGroup.push(new Map([[vendor, categories]]));
+
+                vendorGroupsMap.set(vendorGroupDefinition, vendorsInVendorGroup);
+              }              
+            }
+          }
+
           // get a list of all item hashes
           let allItemHashes: any[] = [];
           Array.from(vendorsMap.values()).forEach(vendorItemsMap => {
@@ -107,12 +145,13 @@ export class VendorsPageComponent implements OnInit {
           });
 
           return forkJoin([this.manifestService.selectListFromDefinition('InventoryItem', allItemHashes),
-          of(vendorsMap)]);
+          of(vendorsMap), of(vendorGroupsMap)]);
         }),
         switchMap(array => {
           // retrieve observables from array
           const itemDefinitions = array[0];
           const vendorsMap = array[1];
+          const vendorGroupsMap = array[2];
 
           // create an object containing item hash keys and item definition values
           let itemDefinitionsObj: { [key: string]: any } = {};
@@ -147,11 +186,11 @@ export class VendorsPageComponent implements OnInit {
             }
           }
 
-          return of(vendorsMap);
+          return of(vendorGroupsMap);
         })
       )
       .subscribe(result => {
-        this.vendors = result;
+        this.vendorGroups = result;
         this.fetchingVendors = false;
       });
 
