@@ -2,6 +2,12 @@
     margin-top: 2rem;
 }
 
+.vendor-group h1 {
+    padding: 2rem;
+    font-size: 2em;
+    background-color: #212121;
+}
+
 .vendor-block {
     display: flex;
     flex-flow: row nowrap;
