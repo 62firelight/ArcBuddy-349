@@ -6,8 +6,7 @@
 
     <mat-accordion multi>
         <mat-expansion-panel class="vendor-group"
-            *ngFor="let vendorGroup of vendorGroups | keyvalue: vendorGroupAscOrder"
-            [expanded]="true">
+            *ngFor="let vendorGroup of vendorGroups | keyvalue: vendorGroupAscOrder" [expanded]="true">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{ vendorGroup.key.categoryName }}
@@ -20,7 +19,6 @@
                         [title]="vendor.key.displayProperties.name">
                     <div class="vendor-info">
                         <strong>{{ vendor.key.displayProperties.name }}</strong>
-                        <br>
                         <small>{{ vendor.key.displayProperties.subtitle }}</small>
                     </div>
 

@@ -2,8 +2,12 @@
     margin-top: 2rem;
 }
 
+.vendors {
+    margin: 2rem 0;
+}
+
 .vendors button {
-    margin: 0 1rem 4rem 1rem;
+    margin: 0 1rem 1.5rem 1rem;
     background-color: #006565;
 }
 
@@ -26,28 +30,36 @@
 
 .vendor-block #vendor-icon {
     object-fit: none;
-    opacity: 0.5;
     min-width: 525px;
     min-height: 150px;
 }
 
 .vendor-info {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-end;
     position: absolute;
-    text-align: left;
-    margin: 5rem 0 0 1rem;
+    text-align: right;
+    margin-top: 5.4em;
+    min-width: 525px;
+    min-height: 75px;
+    background-color: rgba(11, 11, 11, 0.75);
+}
+
+.vendor-info * {
+    margin: 0 1rem 0 0;
+    opacity: 1;
 }
 
 .vendor-info strong {
-    margin: 0;
-    padding: 0;
-    font-size: 2em;    
+    margin-bottom: 0.33rem;
+    font-size: 2em;
 }
 
 .vendor-info small {
     color: gray;
     font-size: 1.25em;
-    margin: 0;
-    padding: 0;
+    margin-bottom: 1rem;
 }
 
 .vendor-categories {
