@@ -220,7 +220,7 @@ const initializeServer = async () => {
     }
     console.log('Successfully fetched access token.\n');
 
-    app.listen(port, () => {
+    app.listen(process.env.PORT || port, () => {
         console.log(`Server running at ${apiUrl}.`);
     });
 };
