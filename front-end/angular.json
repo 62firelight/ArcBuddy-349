@@ -42,7 +42,7 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
+                  "maximumWarning": "10kb",
                   "maximumError": "4kb"
                 }
               ],
@@ -74,6 +74,9 @@
             "development": {
               "browserTarget": "front-end:build:development"
             }
+          },
+          "options": {
+            "proxyConfig": "src/proxy.config.json"
           },
           "defaultConfiguration": "development"
         },
