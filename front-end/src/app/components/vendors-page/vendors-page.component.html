@@ -13,8 +13,8 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
 
-            <div class="vendor-block" *ngFor="let vendorMap of vendorGroup.value">
-                <ng-container *ngFor="let vendor of vendorMap | keyvalue">
+            <ng-container *ngFor="let vendorMap of vendorGroup.value">
+                <div class="vendor-block" *ngFor="let vendor of vendorMap | keyvalue">
                     <img id="vendor-icon" src="https://www.bungie.net{{vendor.key.displayProperties.largeIcon}}" alt=""
                         [title]="vendor.key.displayProperties.name">
                     <div class="vendor-info">
@@ -31,15 +31,13 @@
                                 <ng-container *ngFor="let vendorItem of category.value">
                                     <img *ngIf="vendorItem.displayProperties.hasIcon"
                                         src="https://www.bungie.net{{vendorItem.displayProperties.icon}}"
-                                        [alt]="vendorItem.displayProperties.name"
-                                        [title]="vendorItem.displayProperties.name">
+                                        [alt]="vendorItem.displayProperties.name" title="{{vendorItem.displayProperties.name}} &#013;{{vendorItem.itemTypeDisplayName !== undefined && vendorItem.itemTypeDisplayName.length > 0 ? vendorItem.itemTypeDisplayName : 'Unknown'}}">
                                 </ng-container>
-
                             </div>
                         </div>
                     </div>
-                </ng-container>
-            </div>
+                </div>
+            </ng-container>
         </mat-expansion-panel>
     </mat-accordion>
 </div>
