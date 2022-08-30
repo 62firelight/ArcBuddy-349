@@ -28,11 +28,17 @@
                             <mat-divider></mat-divider>
 
                             <div class="vendor-items">
-                                <ng-container *ngFor="let vendorItem of category.value">
-                                    <img *ngIf="vendorItem.displayProperties.hasIcon"
+                                <div class="vendor-item" *ngFor="let vendorItem of category.value">
+                                    <img id="item-icon" *ngIf="vendorItem.displayProperties.hasIcon"
                                         src="https://www.bungie.net{{vendorItem.displayProperties.icon}}"
-                                        [alt]="vendorItem.displayProperties.name" title="{{vendorItem.displayProperties.name}} &#013;{{vendorItem.itemTypeDisplayName !== undefined && vendorItem.itemTypeDisplayName.length > 0 ? vendorItem.itemTypeDisplayName : 'Unknown'}}">
-                                </ng-container>
+                                        [alt]="vendorItem.displayProperties.name"
+                                        title="{{vendorItem.displayProperties.name}} &#013;{{vendorItem.itemTypeDisplayName !== undefined && vendorItem.itemTypeDisplayName.length > 0 ? vendorItem.itemTypeDisplayName : 'Unknown'}}">
+                                    <p *ngFor="let vendorItemCost of vendorItemCosts.get(vendorItem.hash)">{{vendorItemCost.quantity }} <img id="cost-icon"
+                                            src="https://www.bungie.net{{vendorItemCost.definition.displayProperties.icon}}"
+                                            alt=""
+                                            title="{{vendorItemCost.quantity}} {{vendorItemCost.definition.displayProperties.name}}">
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>

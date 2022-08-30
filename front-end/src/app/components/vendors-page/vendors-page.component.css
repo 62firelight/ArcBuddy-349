@@ -92,12 +92,31 @@
     flex-wrap: wrap;
 }
 
-.vendor-items img {
+.vendor-items #item-icon {
     object-fit: none;
     border: 2px solid white;
     margin: 0 0.16rem 0.16rem 0.16rem;
     max-width: 64px;
     max-height: 64px;
+}
+
+.vendor-item {
+    display: flex;
+    flex-flow: column wrap;
+    font-size: 0.75em;
+}
+
+.vendor-item p {
+    display: flex;
+    margin: 0;
+    justify-content: center;
+    align-content: center;
+}
+
+.vendor-item #cost-icon {
+    margin: 0 0 0 0.16rem;
+    max-width: 16px;
+    max-height: 16px;
 }
 
 /* .vendor-items {

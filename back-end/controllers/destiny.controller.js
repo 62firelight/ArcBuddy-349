@@ -162,7 +162,7 @@ exports.getVendors = (req, res) => {
     destiny.GetVendors('2305843009301648414', '4611686018468181342', 3, { components: [400, 401, 402] }, { access_token: accessToken })
         .then((response) => {
 
-            if (response.ErrorCode == 12) {
+            if (response.ErrorCode == 12 || response.error == true) {
                 // attempt to refresh access token for next request
                 server.refreshAccessToken()
                     .then((accessToken) => {

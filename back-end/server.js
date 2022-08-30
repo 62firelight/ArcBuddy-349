@@ -70,6 +70,8 @@ let refreshAccessToken = exports.refreshAccessToken = async function refreshAcce
 
     const refreshResponse = await oauth.RefreshAccessToken(process.env.REFRESH_TOKEN);
     if (refreshResponse.access_token != undefined) {
+        console.log('Successfully fetched access token.\n');
+
         const accessToken = refreshResponse.access_token;
         return accessToken;
     } else {
@@ -217,7 +219,7 @@ const initializeServer = async () => {
     if (accessToken == undefined) {
         process.exit();
     }
-    console.log('Successfully fetched access token.\n');
+    // console.log('Successfully fetched access token.\n');
 
     app.listen(process.env.PORT || port, () => {
         console.log(`Server running at ${apiUrl}.`);

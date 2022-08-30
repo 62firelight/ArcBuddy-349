@@ -17,6 +17,7 @@ import { MatAccordion } from '@angular/material/expansion';
 export class VendorsPageComponent implements OnInit {
 
   vendorGroups: Map<any, Map<any, Map<any, any[]>>[]> = new Map();
+  vendorItemCosts: Map<any, any> = new Map();
   vendors: Map<any, Map<any, any[]>> = new Map();
   hiddenVendors: Set<string> = new Set([
     '3361454721', // Tess Everis
@@ -58,6 +59,7 @@ export class VendorsPageComponent implements OnInit {
 
           // for each vendor, find its categories and corresponding items
           let vendorsMap = new Map();
+          let vendorItemCostsMap = new Map();
           for (const vendorDefinition of vendorDefinitions) {
             const towerVendorHash = vendorDefinition.hash;
 
@@ -89,6 +91,8 @@ export class VendorsPageComponent implements OnInit {
                     (<any>vendorSaleItem).vendorItemIndex == itemIndex
                   );
                   vendorItems.push(vendorItem);
+
+                  vendorItemCostsMap.set(vendorItem.itemHash, vendorItem.costs);
                 }
                 vendorItemsMap.set(vendorDisplayCategory.displayProperties.name, _.cloneDeep(vendorItems));
                 vendorItems = [];
@@ -106,13 +110,14 @@ export class VendorsPageComponent implements OnInit {
 
           // pass on vendor group data from manifest + current vendor map + API response
           return forkJoin([this.manifestService.selectListFromDefinition('VendorGroup', vendorGroupHashes),
-          of(vendorsMap), of(res)]);
+          of(vendorsMap), of(res), of(vendorItemCostsMap)]);
         }),
         switchMap(array => {
           // retrieve observables from array
           const vendorGroupDefinitions = array[0];
           const vendorsMap = array[1];
           const res = array[2];
+          const vendorItemCostsMap = array[3];
 
           const vendorGroups: any[] = (<any>res).Response.vendorGroups.data.groups;
 
@@ -151,13 +156,14 @@ export class VendorsPageComponent implements OnInit {
           });
 
           return forkJoin([this.manifestService.selectListFromDefinition('InventoryItem', allItemHashes),
-          of(vendorsMap), of(vendorGroupsMap)]);
+          of(vendorsMap), of(vendorGroupsMap), of(vendorItemCostsMap)]);
         }),
         switchMap(array => {
           // retrieve observables from array
           const itemDefinitions = array[0];
           const vendorsMap = array[1];
           const vendorGroupsMap = array[2];
+          const vendorItemCostsMap = array[3];
 
           // create an object containing item hash keys and item definition values
           let itemDefinitionsObj: { [key: string]: any } = {};
@@ -176,6 +182,11 @@ export class VendorsPageComponent implements OnInit {
                 const itemHash = vendorCategoryItem.itemHash;
                 const itemDefinition = itemDefinitionsObj[itemHash];
 
+                // replace entry in map
+                const itemCosts = vendorItemCostsMap.get(itemHash);
+                vendorItemCostsMap.delete(itemHash);
+                vendorItemCostsMap.set(itemDefinition.hash, itemCosts);
+
                 vendorCategoryItems[index] = itemDefinition;
 
                 // mark item for deletion if there is no icon
@@ -192,17 +203,45 @@ export class VendorsPageComponent implements OnInit {
             }
           }
 
-          return of(vendorGroupsMap);
+          const vendorItemCosts: any[] = Array.from(vendorItemCostsMap.values());
+          const allVendorItemCosts: any[] = [].concat(...vendorItemCosts);
+          const allVendorItemCostHashes = allVendorItemCosts.map((allVendorItemCost) => 
+            allVendorItemCost.itemHash
+          );
+
+          return forkJoin([this.manifestService.selectListFromDefinition('InventoryItem', allVendorItemCostHashes),
+            of(vendorGroupsMap), of(vendorItemCostsMap)]);
+        }),
+        switchMap(array => {
+          const allVendorItemCostDefinitions = array[0];
+          const vendorGroupsMap = array[1];
+          const vendorItemCostsMap = array[2];
+
+          // add on definition properties to each item cost object
+          for (const vendorItemCostArray of vendorItemCostsMap.values()) {
+            for (const vendorItemCost of vendorItemCostArray) {
+              const costDefinition = allVendorItemCostDefinitions.find((definition) => definition.hash == vendorItemCost.itemHash);
+
+              vendorItemCost.definition = costDefinition;
+            }
+          }
+
+          return forkJoin([of(vendorGroupsMap), of(vendorItemCostsMap)]);
         })
       )
-      .subscribe(result => {
+      .subscribe(array => {
+        const vendorGroups = array[0];
+        const vendorItemCostsMap = array[1];
+
         this.error = false;
-        this.vendorGroups = result;
+        this.vendorGroups = vendorGroups;
+        this.vendorItemCosts = vendorItemCostsMap;
+
         this.fetchingVendors = false;
-      }, 
-      err => {
-        this.error = true;       
-      });
+      },
+        err => {
+          this.error = true;
+        });
 
     this.fetchingVendors = true;
   }
