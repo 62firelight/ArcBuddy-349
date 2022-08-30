@@ -26,7 +26,7 @@
 
 .vendor-block {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     align-items: flex-start;
     justify-content: flex-start;
     margin: 4rem 0;
@@ -36,6 +36,7 @@
     object-fit: none;
     min-width: 525px;
     min-height: 150px;
+    margin-bottom: 1rem;
 }
 
 .vendor-info {
@@ -67,6 +68,9 @@
 }
 
 .vendor-categories {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 40rem;
     margin-left: 2rem;
 }
 
@@ -89,7 +93,7 @@
 
 .vendor-items {
     display: flex;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
 }
 
 .vendor-items #item-icon {
@@ -102,6 +106,7 @@
 
 .vendor-item {
     display: flex;
+    margin-bottom: 0.67rem;
     flex-flow: column wrap;
     font-size: 0.75em;
 }
