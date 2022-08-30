@@ -14,6 +14,8 @@ export class StatSectionComponent implements OnInit {
 
   helper = Helper;
 
+  breakpoint = 5;
+
   chartableSections = Helper.chartableSections;
 
   stats = new Map<string, string>();
@@ -77,6 +79,8 @@ export class StatSectionComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.breakpoint = this.getColumns(window.innerWidth);
+    
     this.updateStats();
 
     this.newDisplayedStatsEvent.subscribe((fetchedStats) => {
@@ -88,6 +92,22 @@ export class StatSectionComponent implements OnInit {
       }
     });
 
+  }
+
+  getColumns(width: number): number {
+    if (width > 800) {
+      return 5;
+    } else if (width > 700) {
+      return 3;
+    } else if (width > 500) {
+      return 2;
+    } else {
+      return 1;
+    }
+  }
+
+  onResize(event: any) {
+    this.breakpoint = this.getColumns(event.target.innerWidth);
   }
 
   updateStats(): void {
