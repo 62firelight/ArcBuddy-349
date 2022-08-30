@@ -118,29 +118,3 @@
     max-width: 16px;
     max-height: 16px;
 }
-
-/* .vendor-items {
-    display: flex;
-    flex-flow: row wrap;
-    margin-left: 2.5rem;
-    max-width: 50%;
-}
-
-ul {
-    display: inline-flex;
-    justify-content: flex-start;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-ul li {
-    
-}
-
-ul li img {
-    border: 3px solid white;
-    margin: 0rem 0.16rem 0.16rem 0.16rem;
-    max-width: 64px;
-    max-height: 64px;
-} */
