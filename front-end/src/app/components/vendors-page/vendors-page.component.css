@@ -34,9 +34,10 @@
 
 .vendor-block #vendor-icon {
     object-fit: none;
-    min-width: 525px;
-    min-height: 150px;
+    min-width: 212.5px;
+    min-height: 75px;
     margin-bottom: 1rem;
+    filter: blur(2px);
 }
 
 .vendor-info {
@@ -45,15 +46,24 @@
     justify-content: flex-end;
     position: absolute;
     text-align: left;
-    margin-top: 5.4em;
-    min-width: 525px;
-    min-height: 75px;
-    background-color: rgba(11, 11, 11, 0.75);
+    margin-top: 1.5em;
+    min-width: 212.5px;
+    min-height: 37.5px;
 }
 
 @media only screen and (min-width: 525px) {
+    .vendor-block #vendor-icon {
+        min-width: 525px;
+        min-height: 150px;
+        filter: none;
+    }
+
     .vendor-info {
         text-align: right;
+        margin-top: 5.4em;
+        min-width: 525px;
+        min-height: 75px;
+        background-color: rgba(11, 11, 11, 0.75);
     }
 }
 
@@ -65,6 +75,7 @@
 .vendor-info strong {
     margin-bottom: 0.33rem;
     font-size: 2em;
+    font-weight: none;
 }
 
 .vendor-info small {
