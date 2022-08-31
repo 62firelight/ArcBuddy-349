@@ -5,9 +5,10 @@
 
 .landing-page-block {
     display: flex;
+    flex-direction: column;
     margin-bottom: 3rem;
     justify-content: center;
-    align-items: flex-start;    
+    align-items: center;
 }
 
 .landing-page-header {
@@ -32,7 +33,7 @@
 }
 
 .landing-page-block img {
-    width: 50%;
+    max-width: 90%;
     box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
 }
 
@@ -41,4 +42,14 @@
     text-align: left;
     word-wrap: break-word;
     margin-right: 2rem;
+}
+
+@media only screen and (min-width: 480px) {
+    .landing-page-block {
+        flex-direction: row;
+    }
+
+    .landing-page-block img {
+        max-width: 50%;
+    }
 }
