@@ -1,6 +1,8 @@
 .row {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .column {
@@ -37,3 +39,9 @@
     justify-content: center;
 }
 
+@media only screen and (min-width: 376px) {
+    .row {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}

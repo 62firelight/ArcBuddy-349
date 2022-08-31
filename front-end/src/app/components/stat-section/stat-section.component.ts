@@ -101,6 +101,8 @@ export class StatSectionComponent implements OnInit {
       return 3;
     } else if (width > 500) {
       return 2;
+    } else if (width > 265) {
+      return 2;
     } else {
       return 1;
     }
