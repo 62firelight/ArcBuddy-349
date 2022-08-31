@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
+// Angular Material
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,8 +32,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+// Chart.js 
 import { NgChartsModule } from 'ng2-charts';
 
+// Flex layout
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+// generated components
 import { CharactersComponent } from './components/characters/characters.component';
 import { CamelConverterPipe } from './components/pipes/camelConverter/camel-converter.pipe';
 import { DestinyStatPipe } from './components/pipes/destinyStat/destiny-stat.pipe';
@@ -98,7 +104,8 @@ import { VendorsPageComponent } from './components/vendors-page/vendors-page.com
     ClipboardModule,
     MatSnackBarModule,
     MatChipsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
