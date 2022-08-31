@@ -24,6 +24,7 @@
 .landing-page-header-text {
     font-size: 2.5em;
     margin-bottom: 1em;
+    line-height: normal;
 }
 
 .landing-page-header-gap {
