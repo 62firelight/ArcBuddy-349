@@ -11,7 +11,6 @@ body {
 
 .main-content {
     padding-top: 2rem;
-    max-width: 1280px;
     margin: auto;
     padding-bottom: 4rem;
 }
@@ -20,4 +19,10 @@ mat-spinner {
     margin: auto;
     margin-top: 1em;
     margin-bottom: 1em;
+}
+
+@media only screen and (min-width: 480px) {
+    .main-content {
+        max-width: 1280px;
+    }
 }

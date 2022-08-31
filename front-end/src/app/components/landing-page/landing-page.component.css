@@ -38,7 +38,7 @@
 }
 
 .landing-page-text {
-    width: 37%;
+    max-width: 75%;
     text-align: left;
     word-wrap: break-word;
     margin-right: 2rem;
@@ -51,5 +51,9 @@
 
     .landing-page-block img {
         max-width: 50%;
+    }
+
+    .landing-page-text {
+        max-width: 37%;
     }
 }
