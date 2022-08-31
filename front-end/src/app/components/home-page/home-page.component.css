@@ -1,9 +1,8 @@
 html, body, .darkMode {
     position: fixed;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     text-align: center;
-    overflow: scroll;
 }
 
 button {
@@ -61,7 +60,25 @@ mat-spinner {
     margin-top: 32px;
 }
 
-mat-sidenav {
+/* mat-sidenav {
     min-width: 345px;
     max-width: 350px;
+} */
+
+.toolbar-spacer {
+    flex: 0.3 0.3 auto;
+}
+
+.toolbar-header a, .toolbar-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1em;
+}
+
+.toolbar-header {
+    font-size: 1.5em;
+}
+
+.toolbar-spacer-end {
+    flex: 0.4 0.4 auto;
 }
