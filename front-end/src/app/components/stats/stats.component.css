@@ -28,6 +28,7 @@
 
 .stat-section {
     padding: 0 0 4em 0;
+    position: relative;
 }
 
 .stat-container {
@@ -39,9 +40,27 @@
     justify-content: center;
 }
 
+.stats-toggle {
+    padding-bottom: 2em;
+}
+
 @media only screen and (min-width: 376px) {
     .row {
         flex-direction: row;
         align-items: flex-start;
+    }
+
+    .left {
+        position: sticky;
+        top: 4em;
+    }
+
+    .stats-toggle {
+        background-color: #303030;
+
+        position: sticky;
+        top: 0;
+
+        z-index: 1;
     }
 }
