@@ -28,8 +28,9 @@
     <mat-sidenav-container fxFlexFill>
         <mat-sidenav #sidenav fxLayout="column" mode="over" opened="false" fxHide.gt-sm="true">
             <div fxLayout="column">
-                <a mat-button routerLink="/search">Search Players</a>
-                <a mat-button routerLink="/vendors">Vendors</a>
+                <a routerLink="/"><mat-icon>home</mat-icon> Home</a>
+                <a routerLink="/search"><mat-icon>search</mat-icon>Search Players</a>
+                <a routerLink="/vendors"><mat-icon>sell</mat-icon> Vendors</a>
             </div>
         </mat-sidenav>
         <mat-sidenav-content fxFlexFill>
