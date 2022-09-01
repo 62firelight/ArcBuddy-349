@@ -57,5 +57,15 @@ small {
     height: 0;
     border-top: 20px solid transparent;
     border-bottom: 20px solid transparent;
-    border-left: 20px solid gray;
+    border-left: 0;
+    border-right: 20px solid gray;
+}
+
+@media only screen and (min-width: 376px) {
+    .arrow-right {
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        border-left: 20px solid gray;
+        border-right: 0;
+    }
 }
