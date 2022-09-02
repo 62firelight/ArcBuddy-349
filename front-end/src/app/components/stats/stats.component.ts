@@ -166,6 +166,8 @@ export class StatsComponent implements OnInit {
           fetchedStats = this.profile.pvpStats;
           break;
       }
+
+      this.currentMode = newMode;
     } else {
       // show character-specific stats for given mode
       for (var character of this.profile.characters) {
@@ -200,7 +202,13 @@ export class StatsComponent implements OnInit {
     // update displayed events for stat sections
     this.newDisplayedStatsEvent.next(fetchedStats);
 
+    console.log(this.currentMode);
+
     return fetchedStats;
+  }
+
+  log(value: any) {
+    console.log(value);
   }
 
   checkEmptyObject(obj: Object) {

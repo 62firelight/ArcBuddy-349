@@ -29,17 +29,23 @@
                 <div class="stats-toggle">
                     <h2> Stats </h2>
 
-                    <!-- <mat-chip-list>
-                    <mat-chip (click)="displayedStats=getMode('Merged')" color="accent" selected>All</mat-chip>
-                    <mat-chip (click)="displayedStats=getMode('PvE')" color="accent" selected>PvE</mat-chip>
-                    <mat-chip (click)="displayedStats=getMode('PvP')" color="accent" selected>PvP</mat-chip>
-                </mat-chip-list> -->
+                    <mat-chip-list>
+                        <mat-chip (click)="displayedStats=getMode('Merged')" color="accent" [selected]="currentMode == 'Merged'">All</mat-chip>
+                        <mat-chip (click)="displayedStats=getMode('PvE')" color="accent" [selected]="currentMode == 'PvE'">PvE</mat-chip>
+                        <mat-chip (click)="displayedStats=getMode('PvP')" color="accent" [selected]="currentMode == 'PvP'">PvP</mat-chip>
+                    </mat-chip-list>
 
-                    <mat-button-toggle-group [(ngModel)]="currentMode" (change)="displayedStats=getMode(currentMode)">
+                    <!-- <mat-chip-list>
+                        <mat-chip (click)="displayedStats=getMode('Merged')" color="accent" selected>All</mat-chip>
+                        <mat-chip (click)="displayedStats=getMode('PvE')" color="accent" selected>PvE</mat-chip>
+                        <mat-chip (click)="displayedStats=getMode('PvP')" color="accent" selected>PvP</mat-chip>
+                    </mat-chip-list> -->
+
+                    <!-- <mat-button-toggle-group [(ngModel)]="currentMode" (change)="displayedStats=getMode(currentMode)">
                         <mat-button-toggle value="Merged">All</mat-button-toggle>
                         <mat-button-toggle value="PvE">PvE</mat-button-toggle>
                         <mat-button-toggle value="PvP">PvP</mat-button-toggle>
-                    </mat-button-toggle-group>
+                    </mat-button-toggle-group> -->
                 </div>
 
                 <!-- <mat-tab-group mat-align-tabs="center">

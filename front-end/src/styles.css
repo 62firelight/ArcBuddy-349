@@ -26,3 +26,7 @@ mat-spinner {
         max-width: 1280px;
     }
 }
+
+.darkMode .mat-chip.mat-standard-chip {
+    background-color: #212121;
+}
