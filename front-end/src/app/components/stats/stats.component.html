@@ -19,15 +19,19 @@
 
         <div class="row">
             <div class="column left">
-                <h2>Filters</h2>
-                <mat-chip-list>
-                    <mat-chip (click)="displayedStats=getMode('Merged')" color="accent"
-                        [selected]="currentMode == 'Merged'">All</mat-chip>
-                    <mat-chip (click)="displayedStats=getMode('PvE')" color="accent" [selected]="currentMode == 'PvE'">
-                        PvE</mat-chip>
-                    <mat-chip (click)="displayedStats=getMode('PvP')" color="accent" [selected]="currentMode == 'PvP'">
-                        PvP</mat-chip>
-                </mat-chip-list>
+                <div class="padding">
+                    <h2>Filters</h2>
+                    <mat-chip-list>
+                        <mat-chip (click)="displayedStats=getMode('Merged')" color="accent"
+                            [selected]="currentMode == 'Merged'">PvE + PvP</mat-chip>
+                        <mat-chip (click)="displayedStats=getMode('PvE')" color="accent"
+                            [selected]="currentMode == 'PvE'">
+                            PvE</mat-chip>
+                        <mat-chip (click)="displayedStats=getMode('PvP')" color="accent"
+                            [selected]="currentMode == 'PvP'">
+                            PvP</mat-chip>
+                    </mat-chip-list>
+                </div>
                 <app-characters [characters]="profile.characters" [currentId]="currentId"
                     (newCharacterIdEvent)="updateStats($event)">
                 </app-characters>

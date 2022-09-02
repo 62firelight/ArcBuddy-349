@@ -3,6 +3,10 @@
     margin: 1rem 0 2rem 0;
 }
 
+.mat-list-item-content {
+    padding: 0;
+}
+
 .all-characters {
     display: flex;
     align-items: center;

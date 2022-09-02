@@ -10,8 +10,19 @@
 }
 
 .left {
-    margin-top: 4rem;
+    /* margin-top: 4rem; */
     flex: 15%;
+}
+
+.left .padding {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    padding-left: 16px;
+}
+
+.left .padding h2 {
+    padding-left: 4px;
 }
 
 .right {

@@ -30,3 +30,7 @@ mat-spinner {
 .darkMode .mat-chip.mat-standard-chip {
     background-color: #212121;
 }
+
+.mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+    padding: 0;
+}
