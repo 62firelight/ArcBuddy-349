@@ -52,7 +52,7 @@
 
     .left {
         position: sticky;
-        top: 4em;
+        top: 1rem;
     }
 
     .stats-toggle {
