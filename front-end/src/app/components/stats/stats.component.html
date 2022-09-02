@@ -8,11 +8,6 @@
 
     <div *ngIf="profile != undefined && fetchingStats == false">
 
-        <h1> {{ profile.displayName }} <img class="profile-icon" [src]="profile.iconPath"></h1>
-
-        <mat-card-subtitle> Last Updated: {{ profile.dateCreated | date : 'short'}}
-        </mat-card-subtitle>
-
         <!-- <button mat-raised-button [disabled]="profile.mergedStats == undefined" (click)="addProfile(profile)">
             Save
         </button> -->
@@ -38,6 +33,11 @@
             </div>
 
             <div class="column right">
+                <h1> {{ profile.displayName }} <img class="profile-icon" [src]="profile.iconPath"></h1>
+
+                <mat-card-subtitle> Last Updated: {{ profile.dateCreated | date : 'short'}}
+                </mat-card-subtitle>
+
                 <div *ngIf="checkEmptyObject(displayedStats) == true">
                     <br>
                     <br>
