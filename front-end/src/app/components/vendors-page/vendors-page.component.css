@@ -102,9 +102,14 @@
     margin: 0;
     padding: 0;
     text-align: left;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #969893;
 }
 
 .vendor-category .mat-divider {
+    border-top-width: 3px;
+    border-top-color: #777976;
     margin-bottom: 1em;
 }
 
