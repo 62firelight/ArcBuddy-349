@@ -26,6 +26,14 @@ export class VendorsPageComponent implements OnInit {
     '3484140575', // Quest Archive
     '3347378076' // Suraya Hawthorne
   ]);
+  hiddenItems: Set<string> = new Set([
+    '2056267440', // HELP (Crown of Sorrow)
+    '1996058196', // Upgrades (Crown of Sorrow)
+    '2528467705', // Upgrades (War Table)
+    '645883292', // HELP (Star Chart)
+    '3660745864', // Pirate Crew (Star Chart)
+    '1425038744' // Sabotage (Variks the Loyal)
+  ]);
   fetchingVendors = false;
   error = false;
 
@@ -90,6 +98,12 @@ export class VendorsPageComponent implements OnInit {
                   const vendorItem = vendorSaleItems.find(vendorSaleItem =>
                     (<any>vendorSaleItem).vendorItemIndex == itemIndex
                   );
+
+                  // skip specific vendor items
+                  if (this.hiddenItems.has(`${vendorItem.itemHash}`)) {
+                    continue;
+                  }
+
                   vendorItems.push(vendorItem);
 
                   vendorItemCostsMap.set(vendorItem.itemHash, vendorItem.costs);
