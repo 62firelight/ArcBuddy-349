@@ -1,6 +1,6 @@
 <div class="stat-container">
 
-    <div class="in-progress" *ngIf="fetchingStats">
+    <div class="in-progress" *ngIf="fetchingStats" [@inOutAnimation]>
         <mat-spinner [diameter]="50">
         </mat-spinner>
         Fetching stats...
@@ -40,13 +40,13 @@
                     </mat-card-subtitle>
                 </div>
 
-                <div *ngIf="checkEmptyObject(displayedStats) == true">
+                <div *ngIf="checkEmptyObject(displayedStats) == true" [@inOutAnimation]>
                     <br>
                     <br>
                     No {{ currentMode }} stats were found
                 </div>
 
-                <div class="stat-section" *ngIf="checkEmptyObject(displayedStats) == false">
+                <div class="stat-section" *ngIf="checkEmptyObject(displayedStats) == false" [@inOutAnimation]>
                     <app-stat-section *ngFor="let section of sections | keyvalue: helper.numberedKeyOrder"
                         [section]="section.value" [sectionName]="section.key" [displayedStats]="displayedStats"
                         [newDisplayedStatsEvent]="newDisplayedStatsEvent">

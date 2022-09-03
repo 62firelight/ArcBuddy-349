@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -9,7 +10,32 @@ import { DestinyService } from 'src/app/services/destiny.service';
 @Component({
   selector: 'app-stats',
   templateUrl: './stats.component.html',
-  styleUrls: ['./stats.component.css']
+  styleUrls: ['./stats.component.css'],
+  animations: [
+    trigger(
+      'inOutAnimation', 
+      [
+        // fade in
+        transition(
+          ':enter', 
+          [
+            style({ height: 0, opacity: 0 }),
+            animate('0.5s ease-out', 
+                    style({ }))
+          ]
+        ),
+        // fade out
+        transition(
+          ':leave', 
+          [
+            style({ }),
+            animate('0.25s ease-in', 
+                    style({ height: 0, opacity: 0 }))
+          ]
+        )
+      ]
+    )
+  ]
 })
 export class StatsComponent implements OnInit {
 
