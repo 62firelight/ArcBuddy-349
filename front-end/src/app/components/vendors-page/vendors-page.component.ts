@@ -5,14 +5,39 @@ import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { forkJoin } from 'rxjs/index';
 import * as _ from 'lodash';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { KeyValue } from '@angular/common';
 import { MatAccordion } from '@angular/material/expansion';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-vendors-page',
   templateUrl: './vendors-page.component.html',
-  styleUrls: ['./vendors-page.component.css']
+  styleUrls: ['./vendors-page.component.css'],
+  animations: [
+    trigger(
+      'inOutAnimation', 
+      [
+        // fade in
+        transition(
+          ':enter', 
+          [
+            style({ height: 0, opacity: 0 }),
+            animate('0.5s ease-out', 
+                    style({ }))
+          ]
+        ),
+        // fade out
+        transition(
+          ':leave', 
+          [
+            style({ }),
+            animate('0.25s ease-in', 
+                    style({ height: 0, opacity: 0 }))
+          ]
+        )
+      ]
+    )
+  ]
 })
 export class VendorsPageComponent implements OnInit {
 

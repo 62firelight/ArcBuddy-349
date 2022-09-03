@@ -1,6 +1,6 @@
 <h1>Vendors</h1>
 
-<div class="vendors" *ngIf="fetchingVendors == false">
+<div class="vendors" *ngIf="fetchingVendors == false" [@inOutAnimation]>
     <button mat-button (click)="accordion.openAll()">Expand All</button>
     <button mat-button (click)="accordion.closeAll()">Collapse All</button>
 
@@ -48,12 +48,12 @@
     </mat-accordion>
 </div>
 
-<div class="in-progress" *ngIf="fetchingVendors && error == false">
+<div class="in-progress" *ngIf="fetchingVendors && error == false" [@inOutAnimation]>
     <mat-spinner [diameter]="50">
     </mat-spinner>
     Fetching vendors...
 </div>
 
-<div class="error" *ngIf="error">
+<div class="error" *ngIf="error" [@inOutAnimation]>
     Unable to fetch vendors. Please try again later.
 </div>
