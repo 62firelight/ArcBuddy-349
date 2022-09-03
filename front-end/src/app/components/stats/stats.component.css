@@ -29,6 +29,33 @@
     flex: 85%;
 }
 
+.stats-header h1 {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 0.67rem;
+}
+
+.stats-header img {
+    margin-left: 0.5rem;
+}
+
+.stats-header h1 strong {
+    color: #479CE4;
+}
+
+.stats-header {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    /* half circle background */
+    /* background-color: #212121;
+    border-radius: 150px 150px 0 0; */
+}
+
 .mat-card-title {
     margin: 1em 1em 1em 1em;
 }

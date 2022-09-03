@@ -33,10 +33,12 @@
             </div>
 
             <div class="column right">
-                <h1> {{ profile.displayName }} <img class="profile-icon" [src]="profile.iconPath"></h1>
+                <div class="stats-header">
+                    <h1> {{ profile.displayName }}<strong>#{{ profile.bungieGlobalDisplayNameCode }}</strong> <img class="profile-icon" [src]="profile.iconPath"></h1>
 
-                <mat-card-subtitle> Last Updated: {{ profile.dateCreated | date : 'short'}}
-                </mat-card-subtitle>
+                    <mat-card-subtitle> Last Updated: {{ profile.dateCreated | date : 'short'}}
+                    </mat-card-subtitle>
+                </div>
 
                 <div *ngIf="checkEmptyObject(displayedStats) == true">
                     <br>

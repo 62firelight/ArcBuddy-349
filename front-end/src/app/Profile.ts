@@ -4,6 +4,7 @@ export interface Profile {
     _id: string;
     iconPath: string;
     displayName: string;
+    bungieGlobalDisplayNameCode: string;
     membershipType: string;
     membershipId: string;
     
