@@ -1,6 +1,6 @@
-<h1>Search Players</h1>
-<app-search (newProfileEvent)="changingStats.next($event)">
+<h1 [@inOutAnimation]>Search Players</h1>
+<app-search (newProfileEvent)="changingStats.next($event)" [@inOutAnimation]>
             </app-search>
 <app-stats [changingStats]="changingStats" [changingProfiles]="changingProfiles"
-    (addProfileEvent)="addingProfiles.next($event)">
+    (addProfileEvent)="addingProfiles.next($event)"> 
 </app-stats>
