@@ -20,6 +20,6 @@
             
              <small>{{ character.race }}</small>
         </div>
-        <div class="arrow-right" *ngIf="currentId == character.characterId"></div>
+        <div class="arrow-right" *ngIf="currentId == character.characterId" [@inOutAnimation]></div>
     </mat-list-item>
 </mat-list>
