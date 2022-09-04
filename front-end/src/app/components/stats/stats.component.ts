@@ -245,6 +245,25 @@ export class StatsComponent implements OnInit {
     this.addProfileEvent.emit(profile);
   }
 
+  getPlatform(membershipType: string) {
+    switch(parseInt(membershipType)) {
+      case 1:
+        return 'xb';
+      case 2:
+        return 'ps';
+      case 3:
+        return 'pc';
+      case 4:
+        return 'blizz'; // not sure if correct -- Battle.net is no longer supported
+      case 5:
+        return 'stadia';
+      case 6:
+        return 'egs'; // assumption -- EGS is a recent addition
+      default: 
+        return 'pc';
+    }
+  }
+
   ngOnDestroy(): void {
     this.changingStats.unsubscribe();
 
