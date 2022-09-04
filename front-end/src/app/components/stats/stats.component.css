@@ -25,6 +25,11 @@
     padding-left: 4px;
 }
 
+.left .padding a {
+    padding-left: 4px;
+    color: #DDDDDD;
+}
+
 .right {
     flex: 85%;
 }

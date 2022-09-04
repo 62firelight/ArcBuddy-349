@@ -30,6 +30,13 @@
                 <app-characters [characters]="profile.characters" [currentId]="currentId"
                     (newCharacterIdEvent)="updateStats($event)">
                 </app-characters>
+
+                <div class="padding">
+                    <h2>Quick Links</h2>
+
+                    <a href="https://destinytracker.com/destiny-2/profile/bungie/{{profile.membershipId}}/overview">Destiny Tracker</a>
+                </div>
+
             </div>
 
             <div class="column right">
