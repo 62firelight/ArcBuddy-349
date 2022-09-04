@@ -26,9 +26,17 @@
 }
 
 .left .padding a {
+    display: flex;
+    align-items: center;
     padding-left: 4px;
     margin: 0.16rem 0;
     color: #DDDDDD;
+}
+
+.left .padding img {
+    max-width: 16px;
+    max-height: 16px;
+    margin-right: 0.16rem;
 }
 
 .right {
