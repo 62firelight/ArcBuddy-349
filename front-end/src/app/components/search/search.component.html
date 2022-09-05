@@ -1,14 +1,14 @@
-<form class="search-form">
+<form (ngSubmit)="onSubmit()" class="search-form" data-testid="search-form">
     <mat-form-field class="search-full-width" appearance="standard">
         <!-- <mat-label for="text">
             Search Bungie Name...
         </mat-label> -->
         <input matInput name="text" [(ngModel)]="name" placeholder="Guardian#1234" autocomplete="off"
-            [matAutocomplete]="auto">
+            [matAutocomplete]="auto" data-testid="search-input">
         <mat-hint class="mat-error">
             {{ error }}
         </mat-hint>
-        <button mat-icon-button matSuffix mat-button (click)="onSubmit()" data-testid="search-button">
+        <button mat-icon-button matSuffix mat-button data-testid="search-button">
             <mat-icon>
                 search
             </mat-icon>

@@ -32,16 +32,19 @@ describe('SearchComponent', () => {
 
   // TODO: Refactor search component to be either completely template-driven or reactive, not both
   it('submits no input', () => {
-    // Act
-    const result = 1 + 1;
-    
-    const searchButton = debugElement.query(
-      By.css('[data-testid="search-button"]')
+    // const searchButton = debugElement.query(
+    //   By.css('[data-testid="search-button"]')
+    // );
+    // searchButton.triggerEventHandler('click', null);
+    // get form element
+    const searchForm = debugElement.query(
+      By.css('[data-testid="search-form"]')
     );
-    searchButton.triggerEventHandler('click', null);
+    // submit form
+    searchForm.triggerEventHandler('ngSubmit', null);
     fixture.detectChanges();
 
-    // Assert
+    // TODO: Refactor error messages so that they are not hardcoded
     expect(component.error)
       .toBe('Error occurred when parsing Bungie Name. A Bungie Name should formatted similarly to "name#1234".');
   });
