@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { StatComponent } from './stat.component';
 
@@ -8,7 +9,8 @@ describe('StatComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StatComponent ]
+      declarations: [ StatComponent ],
+      imports: [ BrowserAnimationsModule ]
     })
     .compileComponents();
   });
