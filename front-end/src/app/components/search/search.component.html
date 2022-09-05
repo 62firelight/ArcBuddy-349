@@ -3,7 +3,7 @@
         <!-- <mat-label for="text">
             Search Bungie Name...
         </mat-label> -->
-        <input matInput name="text" [(ngModel)]="name" placeholder="Guardian#1234" autocomplete="off"
+        <input matInput name="text" #searchInput [(ngModel)]="name" placeholder="Guardian#1234" autocomplete="off"
             [matAutocomplete]="auto" data-testid="search-input">
         <mat-hint class="mat-error">
             {{ error }}
