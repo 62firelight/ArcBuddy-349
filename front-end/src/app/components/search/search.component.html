@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" class="search-form">
+<form class="search-form">
     <mat-form-field class="search-full-width" appearance="standard">
         <!-- <mat-label for="text">
             Search Bungie Name...
@@ -8,7 +8,7 @@
         <mat-hint class="mat-error">
             {{ error }}
         </mat-hint>
-        <button mat-icon-button matSuffix mat-button>
+        <button mat-icon-button matSuffix mat-button (click)="onSubmit()" data-testid="search-button">
             <mat-icon>
                 search
             </mat-icon>
