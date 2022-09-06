@@ -56,6 +56,9 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { VendorsPageComponent } from './components/vendors-page/vendors-page.component';
 
+// PrimeNG
+import { CarouselModule } from 'primeng/carousel';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,7 +108,8 @@ import { VendorsPageComponent } from './components/vendors-page/vendors-page.com
     MatSnackBarModule,
     MatChipsModule,
     MatExpansionModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

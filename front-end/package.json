@@ -23,6 +23,8 @@
     "chart.js": "^3.8.0",
     "lodash": "^4.17.21",
     "ng2-charts": "^4.0.0",
+    "primeicons": "^5.0.0",
+    "primeng": "^14.0.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
