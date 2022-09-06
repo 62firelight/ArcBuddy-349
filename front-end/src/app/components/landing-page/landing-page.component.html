@@ -9,7 +9,7 @@
     </div>
     <div class="landing-page-header-gap"></div>
 
-    <p-carousel [value]="blocks" [circular]="true" [autoplayInterval]="5000">
+    <p-carousel [value]="blocks" [autoplayInterval]="5000" [circular]="true" [numVisible]="1" [@inOutAnimation]>
         <ng-template let-block pTemplate="item">
             <div class="landing-page-block">
                 <div class="landing-page-text">

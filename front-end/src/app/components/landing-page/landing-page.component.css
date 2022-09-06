@@ -6,7 +6,7 @@
 .landing-page-block {
     display: flex;
     flex-direction: column;
-    margin-bottom: 3rem;
+    /* margin-bottom: 3rem; */
     justify-content: center;
     align-items: center;
 }
@@ -38,16 +38,17 @@
 }
 
 .landing-page-text {
-    max-width: 75%;
-    text-align: left;
+    /* max-width: 75%;
+    text-align: left; */
     word-wrap: break-word;
-    margin-right: 2rem;
+    /* margin-right: 2rem; */
+    text-align: center;
 }
 
 @media only screen and (min-width: 480px) {
     .landing-page-block {
-        flex-direction: row;
-        align-items: flex-start;
+        /* flex-direction: row; */
+        /* align-items: flex-start; */
     }
 
     .landing-page-block img {
