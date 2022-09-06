@@ -29,7 +29,7 @@
 }
 
 .landing-page-header-gap {
-    margin: 5rem 0;
+    margin: 2.5rem 0;
 }
 
 .landing-page-block img {
@@ -46,10 +46,10 @@
 }
 
 @media only screen and (min-width: 480px) {
-    .landing-page-block {
-        /* flex-direction: row; */
-        /* align-items: flex-start; */
-    }
+    /* .landing-page-block {
+        flex-direction: row;
+        align-items: flex-start;
+    } */
 
     .landing-page-block img {
         max-width: 50%;
