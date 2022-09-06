@@ -58,6 +58,7 @@ import { VendorsPageComponent } from './components/vendors-page/vendors-page.com
 
 // PrimeNG
 import { CarouselModule } from 'primeng/carousel';
+import { MenuItem } from 'primeng/api'; 
 
 @NgModule({
   declarations: [

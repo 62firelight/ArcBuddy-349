@@ -9,7 +9,22 @@
     </div>
     <div class="landing-page-header-gap"></div>
 
-    <div class="landing-page-block" [@inOutAnimation]>
+    <p-carousel [value]="blocks" [circular]="true" [autoplayInterval]="5000">
+        <ng-template let-block pTemplate="item">
+            <div class="landing-page-block">
+                <div class="landing-page-text">
+                    <h1>{{ block.heading }}</h1>
+                    <p>
+                        {{ block.text }}
+                    </p>
+                </div>
+
+                <img [src]="block.image" [alt]="block.heading">
+            </div>
+        </ng-template>
+    </p-carousel>
+
+    <!-- <div class="landing-page-block" [@inOutAnimation]>
         <div class="landing-page-text">
             <h1>Track your Destiny 2 stats.</h1>
             <p>
@@ -45,5 +60,5 @@
         </div>
 
         <img src="assets/VendorsLandingPage.png" alt="See graphs of your weapon kills">
-    </div>
+    </div> -->
 </div>
