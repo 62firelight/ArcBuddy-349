@@ -8,6 +8,11 @@
         <mat-hint class="mat-error">
             {{ error }}
         </mat-hint>
+        <button type="button" mat-icon-button matSuffix mat-button *ngIf="name" (click)="clearSearchField()">
+            <mat-icon>
+                close
+            </mat-icon>
+        </button>
         <button mat-icon-button matSuffix mat-button data-testid="search-button">
             <mat-icon>
                 search

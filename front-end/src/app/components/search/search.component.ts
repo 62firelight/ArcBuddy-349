@@ -32,6 +32,10 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  clearSearchField(): void {
+    this.name = '';
+  }
+
   onSubmit(): void {
     if (this.name == undefined) {
       this.error = `Error occurred when parsing Bungie Name. A Bungie Name should formatted similarly to "name#1234".`;
