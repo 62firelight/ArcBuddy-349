@@ -23,7 +23,7 @@ You can access the application through this link if it is live:
 https://arc-buddy-349.herokuapp.com/
 
 ### For developers
-These instructions assume some familiarity with command line interfaces (CLIs). You should also have created a [Bungie.net account](https://www.bungie.net/) and an [AWS account.](https://aws.amazon.com/) 
+These instructions assume some familiarity with command line interfaces (CLIs). You should also have created a [Bungie.net account](https://www.bungie.net/).
 
 1. Register for an API key and client secret by [creating an application on Bungie.net](https://www.bungie.net/en/application)
 2. You will need to obtain an OAuth refresh token for your created application by following the OAuth process [detailed here](https://github.com/Bungie-net/api/wiki/OAuth-Documentation)
@@ -35,6 +35,12 @@ These instructions assume some familiarity with command line interfaces (CLIs). 
 7. Navigate back into the ArcBuddy-349 root folder and then into the "front-end" folder, then type `npm install` to install required dependencies for the front-end
 8. Navigate back into the ArcBuddy-349 root folder and type `npm run dev` to run the development server
 9. Navigate to localhost:4200 to use the application
+
+## Looking Up Stats
+
+You can search for a Bungie Name using the provided search bar. A Bungie Name takes after the format `Guardian#1234`. You can use my Bungie name (62firelight#8173) to test the application. Once finished typing a Bungie Name, you can push "Enter" or click the magnifying glass icon on the right to begin a search. 
+
+An unsuccessful search should return an error message. Otherwise, if the search was successful, you should see a grid-based layout showing the stats of the Bungie Name you've searched for. Below, you can see the various stats for the Bungie Name across all of their characters.
 
 ## Screenshots
 
@@ -57,12 +63,6 @@ These instructions assume some familiarity with command line interfaces (CLIs). 
 ### Vendors (work-in-progress)
 
 ![image](https://user-images.githubusercontent.com/54054879/189048214-ffbea16c-fb3a-443c-beb8-5b40471e4d92.png)
-
-## Search Players
-
-You can search for a Bungie Name using the provided search bar. A Bungie Name takes after the format `Guardian#1234`. You can use my Bungie name (62firelight#8173) to test the application. Once finished typing a Bungie Name, you can push "Enter" or click the magnifying glass icon on the right to begin a search. 
-
-An unsuccessful search should return an error message. Otherwise, if the search was successful, you should see a grid-based layout showing the stats of the Bungie Name you've searched for. Below, you can see the various PvE stats for the Bungie Name across all of their characters.
 
 ## Special Thanks
 
