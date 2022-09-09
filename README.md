@@ -8,7 +8,7 @@ There was formerly a feature where player stats could be saved to MongoDB, but I
 Contributions are welcome, but keep in mind that this project was mainly for me to practice calling an external API and then transforming the responses into something displayable on a web page. I also used this as a way to practice developing with Angular and Node.js. 
 
 ## Usage
-The application should currently be live on Heroku, but may be down for maintenance.
+The application should currently be live on Heroku (at least until the free tier expires in late November), but may be down for maintenance. 
 
 You can access the application through this link if it is live:
 
@@ -18,7 +18,7 @@ https://arc-buddy-349.herokuapp.com/
 
 You can search for a Bungie Name using the provided search bar. A Bungie Name takes after the format `Guardian#1234`. You can use my Bungie name (62firelight#8173) to test the application. Once finished typing a Bungie Name, you can push "Enter" or click the magnifying glass icon on the right to begin a search. 
 
-An unsuccessful search should return an error message. Otherwise, if the search was successful, you should see a grid-based layout showing the stats of the Bungie Name you've searched for. Below, you can see the various stats for the Bungie Name across all of their characters.
+An unsuccessful search should return an error message. Otherwise, if the search was successful, you should see the stats for the Destiny 2 player that you've searched for, along with a few filters on the left-hand side.
 
 ## Screenshots
 
