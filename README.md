@@ -7,7 +7,7 @@ There was formerly a feature where player stats could be saved to MongoDB, but I
 
 Contributions are welcome, but keep in mind that this project was mainly for me to practice calling an external API and then transforming the responses into something displayable on a web page. I also used this as a way to practice developing with Angular and Node.js. 
 
-## Usage
+## Accessing the Application
 The application should currently be live on Heroku, at least until the free tier expires in late November.
 
 You can access the application through this link:
