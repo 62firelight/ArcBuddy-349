@@ -145,3 +145,11 @@
     max-width: 16px;
     max-height: 16px;
 }
+
+#hover-item {
+    display: none;
+}
+
+#parent-item:hover #hover-item {
+    display: block;
+}
