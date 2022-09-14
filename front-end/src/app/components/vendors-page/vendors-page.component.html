@@ -28,13 +28,15 @@
                             <mat-divider></mat-divider>
 
                             <div class="vendor-items">
-                                <div class="vendor-item" id="parent-item" *ngFor="let vendorItem of category.value">
+                                <div class="vendor-item" id="parent-item" *ngFor="let vendorItem of category.value" attr.aria-label="{{vendorItem.displayProperties.name}}">
                                     <img id="item-icon" *ngIf="vendorItem.displayProperties.hasIcon"
                                         src="https://www.bungie.net{{vendorItem.displayProperties.icon}}"
                                         [alt]="vendorItem.displayProperties.name"
-                                        title="{{vendorItem.displayProperties.name}} &#013;{{vendorItem.itemTypeDisplayName !== undefined && vendorItem.itemTypeDisplayName.length > 0 ? vendorItem.itemTypeDisplayName : 'Unknown'}}">
+                                        aria-label="Hello there!">
+                                        <!-- title="{{vendorItem.displayProperties.name}} &#013;{{vendorItem.itemTypeDisplayName !== undefined && vendorItem.itemTypeDisplayName.length > 0 ? vendorItem.itemTypeDisplayName : 'Unknown'}}"> -->
                                     <!-- <div id="hover-item">Item Info</div> -->
-                                    <p *ngFor="let vendorItemCost of vendorItemCosts.get(vendorItem.hash)">{{vendorItemCost.quantity }} <img id="cost-icon"
+                                    <!-- <span aria-label="This is information">This is a test</span> -->
+                                    <p *ngFor="let vendorItemCost of vendorItemCosts.get(vendorItem.hash)"> {{vendorItemCost.quantity }} <img id="cost-icon"
                                             src="https://www.bungie.net{{vendorItemCost.definition.displayProperties.icon}}"
                                             alt="{{vendorItemCost.quantity}} {{vendorItemCost.definition.displayProperties.name}}"
                                             title="{{vendorItemCost.quantity}} {{vendorItemCost.definition.displayProperties.name}}">

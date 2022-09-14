@@ -87,7 +87,7 @@
 .vendor-categories {
     display: flex;
     flex-direction: column;
-    flex-basis: 40rem;
+    flex-basis: 25rem;
     margin-left: 2rem;
 }
 
@@ -152,4 +152,23 @@
 
 #parent-item:hover #hover-item {
     display: block;
+}
+
+/* source: https://stackoverflow.com/questions/38228962/html-title-attribute-style */
+.vendor-item:hover {
+    position: relative;
+}
+.vendor-item[aria-label]:hover:after {
+    content: attr(aria-label);
+    padding: 1rem 1.25rem;
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    white-space: nowrap;
+    z-index: 9999;
+    color: #222222;
+    background: #DCDCDC;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1rem;
 }
