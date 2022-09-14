@@ -12,6 +12,7 @@
 .left {
     /* margin-top: 4rem; */
     flex: 15%;
+    margin-bottom: 2rem;
 }
 
 .left .padding {
