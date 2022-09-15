@@ -38,10 +38,9 @@
                                         <!-- title="{{vendorItem.displayProperties.name}} &#013;{{vendorItem.itemTypeDisplayName !== undefined && vendorItem.itemTypeDisplayName.length > 0 ? vendorItem.itemTypeDisplayName : 'Unknown'}}"> -->
                                     <!-- <div id="hover-item">Item Info</div> -->
                                     <!-- <span aria-label="This is information">This is a test</span> -->
-                                    <p *ngFor="let vendorItemCost of vendorItemCosts.get(vendorItem.hash)"> {{vendorItemCost.quantity }} <img id="cost-icon"
+                                    <p *ngFor="let vendorItemCost of vendorItemCosts.get(vendorItem.hash)" title="{{vendorItemCost.quantity}} {{vendorItemCost.definition.displayProperties.name}}"> {{vendorItemCost.quantity }} <img id="cost-icon"
                                             src="https://www.bungie.net{{vendorItemCost.definition.displayProperties.icon}}"
-                                            alt="{{vendorItemCost.quantity}} {{vendorItemCost.definition.displayProperties.name}}"
-                                            title="{{vendorItemCost.quantity}} {{vendorItemCost.definition.displayProperties.name}}">
+                                            alt="{{vendorItemCost.quantity}} {{vendorItemCost.definition.displayProperties.name}}">
                                     </p>
                                 </div>
                             </div>
