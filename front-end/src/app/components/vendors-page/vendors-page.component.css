@@ -164,11 +164,11 @@
     position: absolute;
     left: 0;
     bottom: 100%;
-    white-space: nowrap;
+    white-space: pre;
     z-index: 9999;
     color: #222222;
     background: #DCDCDC;
-    text-transform: uppercase;
     font-weight: bold;
     font-size: 1rem;
+    text-align: left;
 }

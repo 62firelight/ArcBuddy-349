@@ -28,7 +28,9 @@
                             <mat-divider></mat-divider>
 
                             <div class="vendor-items">
-                                <div class="vendor-item" id="parent-item" *ngFor="let vendorItem of category.value" attr.aria-label="{{vendorItem.displayProperties.name}}">
+                                <div class="vendor-item" id="parent-item" *ngFor="let vendorItem of category.value" 
+                                attr.aria-label="{{vendorItem.displayProperties.name.toUpperCase()}}
+{{vendorItem.itemTypeDisplayName !== undefined && vendorItem.itemTypeDisplayName.length > 0 ? vendorItem.itemTypeDisplayName : 'Unknown'}}">
                                     <img id="item-icon" *ngIf="vendorItem.displayProperties.hasIcon"
                                         src="https://www.bungie.net{{vendorItem.displayProperties.icon}}"
                                         [alt]="vendorItem.displayProperties.name"
