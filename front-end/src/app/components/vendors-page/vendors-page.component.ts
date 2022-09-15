@@ -62,6 +62,8 @@ export class VendorsPageComponent implements OnInit {
   fetchingVendors = false;
   error = false;
 
+  expanded = false;
+
   @ViewChild(MatAccordion)
   accordion!: MatAccordion;
 

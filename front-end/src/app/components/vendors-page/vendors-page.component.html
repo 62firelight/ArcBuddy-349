@@ -1,8 +1,8 @@
 <h1 [@inOutAnimation]>Vendors</h1>
 
 <div class="vendors" *ngIf="fetchingVendors == false" [@inOutAnimation]>
-    <button mat-raised-button (click)="accordion.openAll()" color="primary">Expand All</button>
-    <button mat-raised-button (click)="accordion.closeAll()" color="primary">Collapse All</button>
+    <button mat-raised-button (click)="expanded = !expanded; expanded ? accordion.closeAll() : accordion.openAll()" color="primary">{{ expanded ? 'Expand All' : 'Collapse All' }}</button>
+    <!-- <button mat-raised-button (click)="accordion.closeAll()" color="primary">Collapse All</button> -->
 
     <mat-accordion multi>
         <mat-expansion-panel class="vendor-group"
