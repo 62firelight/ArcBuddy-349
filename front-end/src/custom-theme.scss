@@ -4,7 +4,7 @@
 
 @include mat.core();
 
-$angular-primary: mat.define-palette(mat.$teal-palette, 500, 100, 900);
+$angular-primary: mat.define-palette(mat.$light-blue-palette, A700, 100, 800);
 $angular-accent: mat.define-palette(mat.$grey-palette, 200, 200, 200);
 
 $angular-warn: mat.define-palette(mat.$red-palette);

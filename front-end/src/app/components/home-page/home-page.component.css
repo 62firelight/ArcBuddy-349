@@ -75,8 +75,8 @@ mat-spinner {
     margin: 0 1em;
 }
 
-.toolbar-header a:hover {
-    opacity: 0.5;
+a:hover {
+    opacity: 0.75;
 }
 
 .toolbar-header {
