@@ -51,22 +51,6 @@
     min-height: 37.5px;
 }
 
-@media only screen and (min-width: 525px) {
-    .vendor-block #vendor-icon {
-        min-width: 525px;
-        min-height: 150px;
-        filter: none;
-    }
-
-    .vendor-info {
-        text-align: right;
-        margin-top: 5.4em;
-        min-width: 525px;
-        min-height: 75px;
-        background-color: rgba(11, 11, 11, 0.75);
-    }
-}
-
 .vendor-info * {
     margin: 0 1rem 0 1rem;
     opacity: 1;
@@ -87,8 +71,8 @@
 .vendor-categories {
     display: flex;
     flex-direction: column;
-    flex-basis: 25rem;
-    margin-left: 2rem;
+    flex-basis: 30rem;
+    
 }
 
 .vendor-category {
@@ -160,15 +144,39 @@
 }
 .vendor-item[aria-label]:hover:after {
     content: attr(aria-label);
-    padding: 1rem 1.25rem;
+    padding: 0.67rem 1rem;
     position: absolute;
     left: 0;
     bottom: 100%;
-    white-space: pre;
+    /* white-space: pre; */
     z-index: 9999;
     color: #222222;
     background: #DCDCDC;
     font-weight: bold;
     font-size: 1rem;
     text-align: left;
+}
+
+@media only screen and (min-width: 525px) {
+    .vendor-block #vendor-icon {
+        min-width: 525px;
+        min-height: 150px;
+        filter: none;
+    }
+
+    .vendor-info {
+        text-align: right;
+        margin-top: 5.4em;
+        min-width: 525px;
+        min-height: 75px;
+        background-color: rgba(11, 11, 11, 0.75);
+    }
+
+    .vendor-categories {
+        margin-left: 2rem;
+    }
+
+    .vendor-item[aria-label]:hover:after {
+        white-space: pre;
+    }
 }
