@@ -6,10 +6,6 @@ html, body, .mat-app-background {
 }
 
 @media only screen and (min-width: 1280px) {
-    html, body, .mat-app-background {
-        position: static;
-    }
-
     .footer-content {
         max-width: 1000px;
     }
