@@ -112,3 +112,39 @@ a:hover {
 .mat-icon {
     vertical-align: middle;
 }
+
+footer {
+    background: #0091EA;
+    margin-top: 40rem;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-content {
+    min-width: 1000px;
+    height: 8rem;
+    margin: 2rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: row nowrap;
+}
+
+.footer-content p {
+    text-align: left;
+}
+
+.footer-content a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.footer-content li {
+    display: flex;
+    align-items: center;
+}
+
+.footer-content li i {
+    margin-right: 0.33rem;
+}
