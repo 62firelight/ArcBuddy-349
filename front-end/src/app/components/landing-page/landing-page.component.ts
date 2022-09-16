@@ -46,7 +46,7 @@ export class LandingPageComponent implements OnInit {
     },
     {
       heading: `Watch what in-game vendors are selling.`,
-      text: `Vendors are always refreshing their inventory. Arc Buddy shows you the most up-to-date inventory so that you'll never miss that item you want most.`,
+      text: `Vendors are always refreshing their inventory. Arc Buddy shows you their most up-to-date inventory so that you'll never miss that item (or mod) you want most.`,
       image: 'assets/VendorsLandingPage.png'
     }
   ];
