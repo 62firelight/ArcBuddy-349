@@ -126,7 +126,7 @@ export class StatsComponent implements OnInit {
                 }
               }
             }
-            console.log(this.profile);
+            // console.log(this.profile);
 
             // save current date in profile
             this.profile.dateCreated = new Date();
@@ -147,9 +147,9 @@ export class StatsComponent implements OnInit {
     profile will be shown.
   */
   updateStats(characterId: string): void {
-    console.log(characterId.length == 0 ?
-      `Showing all stats for ${this.profile.displayName}` :
-      `Showing stats for character ID ${characterId}`);
+    // console.log(characterId.length == 0 ?
+    //   `Showing all stats for ${this.profile.displayName}` :
+    //   `Showing stats for character ID ${characterId}`);
 
     if (characterId.length == 0) {
       // show profile-wide stats
@@ -161,7 +161,7 @@ export class StatsComponent implements OnInit {
         if (characterId == character.characterId && character.mergedStats != undefined) {
           this.currentId = character.characterId;
           this.displayedStats = this.getMode(this.currentMode);
-          console.log(this.displayedStats);
+          // console.log(this.displayedStats);
         }
       }
     }
@@ -173,7 +173,7 @@ export class StatsComponent implements OnInit {
     A mode can be Merged (i.e. PvE + PvP), PvE, or PvP.
   */
   getMode(newMode: string): Object {
-    console.log(`Showing ${newMode} stats`);
+    // console.log(`Showing ${newMode} stats`);
 
     var fetchedStats = {};
 
@@ -221,14 +221,14 @@ export class StatsComponent implements OnInit {
     // but if it is, keep displayedStats the same
     if (fetchedStats == {}) {
       fetchedStats = this.displayedStats;
-      console.log('Something went wrong. Displaying previously shown stats...');
+      // console.log('Something went wrong. Displaying previously shown stats...');
     }
     // console.log(fetchedStats);
 
     // update displayed events for stat sections
     this.newDisplayedStatsEvent.next(fetchedStats);
 
-    console.log(this.currentMode);
+    // console.log(this.currentMode);
 
     return fetchedStats;
   }
