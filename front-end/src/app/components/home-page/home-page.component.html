@@ -16,9 +16,11 @@
 
         <span class="toolbar-spacer"></span>
         <div class="toolbar-header">
-            <a routerLink="/">
-                <img src="https://www.bungie.net/common/destiny2_content/icons/DestinyDamageTypeDefinition_092d066688b879c807c3b460afdd61e6.png" alt="Arc Buddy">
-                 Arc Buddy
+            <a routerLink="/" (mouseover)="startAnimation()" (mouseleave)="stopAnimation()">
+                <img src="https://www.bungie.net/common/destiny2_content/icons/DestinyDamageTypeDefinition_092d066688b879c807c3b460afdd61e6.png"
+                    alt="Arc Buddy" [@move]="state"
+                    (@move.done)="onEnd($event)">
+                Arc Buddy
             </a>
         </div>
         <span class="toolbar-spacer-end"></span>
@@ -31,9 +33,15 @@
     <mat-sidenav-container fxFlexFill>
         <mat-sidenav #sidenav fxLayout="column" mode="over" opened="false" fxHide.gt-sm="true">
             <div fxLayout="column">
-                <a routerLink="/"><mat-icon>home</mat-icon> Home</a>
-                <a routerLink="/search"><mat-icon>search</mat-icon>Search Players</a>
-                <a routerLink="/vendors"><mat-icon>sell</mat-icon> Vendors</a>
+                <a routerLink="/">
+                    <mat-icon>home</mat-icon> Home
+                </a>
+                <a routerLink="/search">
+                    <mat-icon>search</mat-icon>Search Players
+                </a>
+                <a routerLink="/vendors">
+                    <mat-icon>sell</mat-icon> Vendors
+                </a>
             </div>
         </mat-sidenav>
         <mat-sidenav-content fxFlexFill>
