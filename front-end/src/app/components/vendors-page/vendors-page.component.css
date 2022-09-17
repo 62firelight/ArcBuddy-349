@@ -36,7 +36,7 @@
     min-width: 212.5px;
     min-height: 75px;
     margin-bottom: 1rem;
-    filter: blur(2px);
+    filter: blur(1px);
 }
 
 .vendor-info {
