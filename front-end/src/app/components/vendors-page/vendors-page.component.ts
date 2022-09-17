@@ -89,6 +89,7 @@ export class VendorsPageComponent implements OnInit {
           const res = array[1];
 
           // get sale items and categories for all vendors
+          const generalData = (<any>res).Response.vendors.data;
           const saleItems = (<any>res).Response.sales.data;
           const categories = (<any>res).Response.categories.data;
 
@@ -104,6 +105,13 @@ export class VendorsPageComponent implements OnInit {
             }
 
             const vendorDisplayCategories = vendorDefinition.displayCategories;
+
+            // find vendor location
+            const vendorGeneralData: any = generalData[towerVendorHash];
+            const vendorLocationIndex = vendorGeneralData.vendorLocationIndex;
+            vendorDefinition.vendorLocationIndex = vendorLocationIndex;
+            vendorDefinition.vendorLocation = vendorDefinition.locations[vendorDefinition.vendorLocationIndex];
+
             const vendorCategories: any[] = categories[towerVendorHash].categories;
             const vendorSaleItems: any[] = Object.values(saleItems[towerVendorHash].saleItems);
 
@@ -148,17 +156,20 @@ export class VendorsPageComponent implements OnInit {
           // look up vendor group hashes in manifest
           const vendorGroups: any[] = (<any>res).Response.vendorGroups.data.groups;
           const vendorGroupHashes: any[] = vendorGroups.map(vendorGroup => vendorGroup.vendorGroupHash);
+          const vendorDestinationHashes: any[] = Array.from(vendorsMap.keys()).map(vendor => vendor.vendorLocation.destinationHash);
 
           // pass on vendor group data from manifest + current vendor map + API response
-          return forkJoin([this.manifestService.selectListFromDefinition('VendorGroup', vendorGroupHashes),
+          return forkJoin([this.manifestService.selectListFromDefinition('VendorGroup', vendorGroupHashes), 
+          this.manifestService.selectListFromDefinition('Destination', vendorDestinationHashes),
           of(vendorsMap), of(res), of(vendorItemCostsMap)]);
         }),
         switchMap(array => {
           // retrieve observables from array
           const vendorGroupDefinitions = array[0];
-          const vendorsMap = array[1];
-          const res = array[2];
-          const vendorItemCostsMap = array[3];
+          const vendorDestinationDefinitions = array[1];
+          const vendorsMap = array[2];
+          const res = array[3];
+          const vendorItemCostsMap = array[4];
 
           const vendorGroups: any[] = (<any>res).Response.vendorGroups.data.groups;
 
@@ -170,6 +181,10 @@ export class VendorsPageComponent implements OnInit {
 
             for (const [vendor, categories] of vendorsMap.entries()) {
               if (vendorHashes.includes(vendor.hash)) {
+                // map vendor location
+                const vendorLocation = vendorDestinationDefinitions.find(vendorDestinationDefiniton => vendor.vendorLocation.destinationHash == vendorDestinationDefiniton.hash);
+                vendor.vendorLocation = vendorLocation;
+
                 let vendorsInVendorGroup: Map<any, Map<any, any[]>>[] | undefined = vendorGroupsMap.get(vendorGroupDefinition);
                 if (vendorsInVendorGroup === undefined) {
                   vendorsInVendorGroup = [];
