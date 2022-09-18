@@ -6,6 +6,10 @@
     color: red;
 }
 
+p .mat-icon {
+    vertical-align: middle;
+}
+
 .vendors {
     margin: 2rem 0;
 }
@@ -59,6 +63,11 @@
     margin-bottom: 0.33rem;
     font-size: 2em;
     font-weight: none;
+}
+
+.vendor-info strong .mat-icon {
+    margin: 0;
+    vertical-align: middle;
 }
 
 .vendor-info small {

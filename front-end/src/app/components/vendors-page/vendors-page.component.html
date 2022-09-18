@@ -3,6 +3,7 @@
 <div class="vendors" *ngIf="fetchingVendors == false" [@inOutAnimation]>
     <button mat-raised-button (click)="expanded = !expanded; expanded ? accordion.closeAll() : accordion.openAll()" color="primary">{{ expanded ? 'Expand All' : 'Collapse All' }}</button>
     <!-- <button mat-raised-button (click)="accordion.closeAll()" color="primary">Collapse All</button> -->
+    <p>Hover over the <mat-icon title="Location: Top of the page, I should hope :)">info</mat-icon> icon to see each vendor's location.</p>
 
     <mat-accordion multi>
         <mat-expansion-panel class="vendor-group"
@@ -18,7 +19,7 @@
                     <img id="vendor-icon" src="https://www.bungie.net{{vendor.key.displayProperties.largeIcon}}" [alt]="vendor.key.displayProperties.name"
                         [title]="vendor.key.displayProperties.name">
                     <div class="vendor-info">
-                        <strong>{{ vendor.key.displayProperties.name }} ({{ vendor.key.vendorLocation.displayProperties.name }})</strong>
+                        <strong>{{ vendor.key.displayProperties.name }} <mat-icon title="Location: {{ vendor.key.vendorLocation.displayProperties.name }} &#013;{{ vendor.key.vendorLocation.displayProperties.description }}">info</mat-icon></strong>
                         <small>{{ vendor.key.displayProperties.subtitle }}</small>
                     </div>
 
