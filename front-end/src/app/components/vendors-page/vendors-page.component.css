@@ -167,7 +167,7 @@ p .mat-icon {
 
 .scroll-to-top {
     position: fixed;
-    bottom: 0.67rem;
+    bottom: -0.33rem;
     min-width: 1280px;
     display: flex;
     justify-content: center;
