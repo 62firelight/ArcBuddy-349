@@ -165,6 +165,14 @@ p .mat-icon {
     text-align: left;
 }
 
+.scroll-to-top {
+    position: fixed;
+    bottom: 0.67rem;
+    min-width: 1280px;
+    display: flex;
+    justify-content: center;
+}
+
 @media only screen and (min-width: 525px) {
     .vendor-block #vendor-icon {
         min-width: 525px;

@@ -1,4 +1,4 @@
-<h1 [@inOutAnimation]>Vendors</h1>
+<h1 [@inOutAnimation] id="top">Vendors</h1>
 
 <div class="vendors" *ngIf="fetchingVendors == false" [@inOutAnimation]>
     <button mat-raised-button (click)="expanded = !expanded; expanded ? accordion.closeAll() : accordion.openAll()" color="primary">{{ expanded ? 'Expand All' : 'Collapse All' }}</button>
@@ -52,6 +52,12 @@
             </ng-container>
         </mat-expansion-panel>
     </mat-accordion>
+
+    <div class="scroll-to-top">
+        <a mat-raised-button color="primary" href="#top">
+            Scroll To Top
+        </a>
+    </div>
 </div>
 
 <div class="in-progress" *ngIf="fetchingVendors && error == false" [@inOutAnimation]>
