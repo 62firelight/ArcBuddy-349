@@ -59,7 +59,7 @@
 
             <div class="column right">
                 <div class="stats-header">
-                    <h1> {{ profile.displayName }}<strong>#{{ profile.bungieGlobalDisplayNameCode }}</strong> <img class="profile-icon" [src]="profile.iconPath"></h1>
+                    <h1> {{ profile.displayName }}<strong *ngIf="profile.bungieGlobalDisplayNameCode">#{{ profile.bungieGlobalDisplayNameCode }}</strong> <img class="profile-icon" [src]="profile.iconPath"></h1>
 
                     <mat-card-subtitle> Last Updated: {{ profile.dateCreated | date : 'short'}}
                     </mat-card-subtitle>
