@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { Character } from 'src/app/Character';
 import { Helper } from 'src/app/Helper';
@@ -70,12 +71,25 @@ export class StatsComponent implements OnInit {
   @Output()
   addProfileEvent = new EventEmitter<Profile>();
 
-  constructor(private destinyService: DestinyService) { }
+  constructor(private route: ActivatedRoute, private destinyService: DestinyService) { }
 
   ngOnInit(): void {
+    // extract route parameters
+    const routeParams = this.route.snapshot.paramMap;
+    
+    const membershipType = routeParams.get('membershipType');
+    const membershipId = routeParams.get('membershipId');
+
     // by default, show PvE stats for all characters
     this.currentMode = 'PvE';
     this.currentId = '';
+
+    if (membershipType != null && membershipId != null) {
+      this.fetchStats({
+        membershipType: membershipType,
+        membershipId: membershipId
+      });
+    }
 
     // update stats and profiles when needed
     this.changingStats.subscribe((profile) => {
@@ -96,15 +110,17 @@ export class StatsComponent implements OnInit {
     Fetches all historical stats that are associated with a given
     profile.  
   */
-  fetchStats(profile: Profile): void {
+  fetchStats(profile: any): void {
     this.profile = profile;
     this.fetchingStats = true;
     this.fetchingCharacters = true;
 
     // get IDs for all characters associated with given profile
     this.destinyService.getCharacters(this.profile.membershipType, this.profile.membershipId)
-      .subscribe((characters) => {
-        this.profile.characters = characters;
+      .subscribe((characters: any) => {
+        // console.log(characters);
+        this.profile = characters;
+        // this.profile.characters = characters.characters;
         this.fetchingCharacters = false;
 
         // get all stats for the given profile
@@ -134,6 +150,8 @@ export class StatsComponent implements OnInit {
 
             // update displayed stats
             this.displayedStats = this.getMode(this.currentMode);
+
+            // console.log(this.profile);
 
             this.fetchingStats = false;
           });

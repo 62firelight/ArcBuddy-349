@@ -30,7 +30,6 @@ exports.searchDestinyPlayer = (req, res) => {
     destiny.SearchDestinyPlayerByBungieName(-1, bungieName)
         .then(response => {
             const data = response.Response[0];
-            // console.log(data);
 
             const membershipType = data.membershipType;
             const membershipId = data.membershipId;
@@ -107,9 +106,10 @@ exports.getProfile = (req, res) => {
     const membershipType = req.params.type;
     const membershipId = req.params.id;
 
-    destiny.GetProfile(membershipId, membershipType, {components: [200]})
+    destiny.GetProfile(membershipId, membershipType, {components: [100, 200]})
         .then(response => {
             // console.log(JSON.stringify(response.Response, null, 2));
+            let profile = response.Response.profile.data.userInfo;
             const characters = response.Response.characters.data;
 
             let fetchedCharacters = [];
@@ -135,7 +135,9 @@ exports.getProfile = (req, res) => {
 
             // console.log(fetchedCharacters);
 
-            res.status(200).send(fetchedCharacters);
+            profile.characters = fetchedCharacters;
+
+            res.status(200).send(profile);
         })
         .catch(err => {
             console.log(err);

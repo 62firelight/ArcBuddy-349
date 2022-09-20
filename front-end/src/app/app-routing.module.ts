@@ -13,6 +13,7 @@ const routes: Routes = [
   // { path: '', redirectTo: '/search', pathMatch: 'full' },
   { path: '', component: LandingPageComponent},
   { path: 'search', component: SearchPageComponent },
+  { path: ':membershipType/:membershipId', component: StatsComponent },
   { path: 'profiles', component: ProfilesComponent },
   { path: 'vendors', component: VendorsPageComponent }
 ];
