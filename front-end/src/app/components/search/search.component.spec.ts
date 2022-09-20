@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { SearchComponent } from './search.component';
 
@@ -13,7 +14,7 @@ describe('SearchComponent', () => {
   beforeEach(async () => {
     // Arrange
     await TestBed.configureTestingModule({
-      imports: [ HttpClientModule ],
+      imports: [ HttpClientModule, RouterTestingModule ],
       declarations: [ SearchComponent ]
     })
     .compileComponents();
