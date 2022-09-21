@@ -3,6 +3,7 @@ import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { result } from 'lodash';
 import { Subject } from 'rxjs';
 import { Character } from 'src/app/Character';
 import { Helper } from 'src/app/Helper';
@@ -60,6 +61,8 @@ export class StatsComponent implements OnInit {
   fetchingStats = false;
 
   fetchingProfiles = false;
+
+  error = false;
 
   newDisplayedStatsEvent = new Subject<Object>();
 
@@ -119,9 +122,7 @@ export class StatsComponent implements OnInit {
     // get IDs for all characters associated with given profile
     this.destinyService.getCharacters(this.profile.membershipType, this.profile.membershipId)
       .subscribe((characters: any) => {
-        // console.log(characters);
         this.profile = characters;
-        // this.profile.characters = characters.characters;
         this.fetchingCharacters = false;
 
         // get all stats for the given profile
@@ -130,6 +131,11 @@ export class StatsComponent implements OnInit {
             this.profile.mergedStats = profile.mergedStats;
             this.profile.pveStats = profile.pveStats;
             this.profile.pvpStats = profile.pvpStats;
+            
+            if (this.profile.characters === undefined) {
+              this.error = true;
+              return;
+            }
 
             // match IDs from getCharacters() to IDs in getStats() 
             // to find associated stats
@@ -143,7 +149,6 @@ export class StatsComponent implements OnInit {
                 }
               }
             }
-            // console.log(this.profile);
 
             // save current date in profile
             this.profile.dateCreated = new Date();
@@ -152,13 +157,16 @@ export class StatsComponent implements OnInit {
             // update displayed stats
             this.displayedStats = this.getMode(this.currentMode);
 
-            // console.log(this.profile);
-
+            // hide progress spinner
             this.fetchingStats = false;
 
             // (usually the title strategy would be used for the website name suffix)
             this.titleService.setTitle(`${this.profile.displayName} | Arc Buddy`);
+          }, err => {
+            this.error = true;
           });
+      }, err => {
+        this.error = true;
       });
   }
 

@@ -1,9 +1,13 @@
 <div class="stat-container">
 
-    <div class="in-progress" *ngIf="fetchingStats" [@inOutAnimation]>
+    <div class="in-progress" *ngIf="fetchingStats && error == false" [@inOutAnimation]>
         <mat-spinner [diameter]="50">
         </mat-spinner>
         Fetching stats...
+    </div>
+
+    <div class="error" *ngIf="error" [@inOutAnimation]>
+        Unable to fetch stats for the specified Destiny player. Please try again later.
     </div>
 
     <div *ngIf="profile != undefined && fetchingStats == false">
