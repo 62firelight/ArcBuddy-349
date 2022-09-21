@@ -16,14 +16,14 @@ export class DestinyService {
     return this.http.get<Profile>(url);
   }
 
-  getStats(type: string, id: string): Observable<Object> {
+  getStats(type: string, id: string): Observable<any> {
     const url = `api/players/account/${type}/${id}`;
-    return this.http.get<Object>(url);
+    return this.http.get<any>(url);
   }
 
-  getCharacters(type: string, id: string): Observable<Character[]> {
+  getCharacters(type: string, id: string): Observable<any> {
     const url = `api/players/character/${type}/${id}`;
-    return this.http.get<Character[]>(url);
+    return this.http.get<any>(url);
   }
 
   getVendors(): Observable<Object> {

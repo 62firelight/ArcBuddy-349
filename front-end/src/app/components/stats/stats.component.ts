@@ -4,7 +4,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { result } from 'lodash';
+import { of } from 'rxjs';
+import { forkJoin } from 'rxjs/index';
 import { Subject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Character } from 'src/app/Character';
 import { Helper } from 'src/app/Helper';
 import { Profile } from 'src/app/Profile';
@@ -16,24 +19,24 @@ import { DestinyService } from 'src/app/services/destiny.service';
   styleUrls: ['./stats.component.css'],
   animations: [
     trigger(
-      'inOutAnimation', 
+      'inOutAnimation',
       [
         // fade in
         transition(
-          ':enter', 
+          ':enter',
           [
             style({ height: 0, opacity: 0 }),
-            animate('0.5s ease-out', 
-                    style({ }))
+            animate('0.5s ease-out',
+              style({}))
           ]
         ),
         // fade out
         transition(
-          ':leave', 
+          ':leave',
           [
-            style({ }),
-            animate('0.25s ease-in', 
-                    style({ height: 0, opacity: 0 }))
+            style({}),
+            animate('0.25s ease-in',
+              style({ height: 0, opacity: 0 }))
           ]
         )
       ]
@@ -80,7 +83,7 @@ export class StatsComponent implements OnInit {
   ngOnInit(): void {
     // extract route parameters
     const routeParams = this.route.snapshot.paramMap;
-    
+
     const membershipType = routeParams.get('membershipType');
     const membershipId = routeParams.get('membershipId');
 
@@ -121,50 +124,52 @@ export class StatsComponent implements OnInit {
 
     // get IDs for all characters associated with given profile
     this.destinyService.getCharacters(this.profile.membershipType, this.profile.membershipId)
-      .subscribe((characters: any) => {
-        this.profile = characters;
-        this.fetchingCharacters = false;
+      .pipe(
+        switchMap(res => {
+          let profile = res;
+          this.fetchingCharacters = false;
 
-        // get all stats for the given profile
-        this.destinyService.getStats(this.profile.membershipType, this.profile.membershipId)
-          .subscribe((profile: any) => {
-            this.profile.mergedStats = profile.mergedStats;
-            this.profile.pveStats = profile.pveStats;
-            this.profile.pvpStats = profile.pvpStats;
-            
-            if (this.profile.characters === undefined) {
-              this.error = true;
-              return;
-            }
+          return forkJoin([this.destinyService.getStats(this.profile.membershipType, this.profile.membershipId), of(profile)]);
+        }),
+        switchMap(array => {
+          const stats = array[0];
+          const profile = array[1];
 
-            // match IDs from getCharacters() to IDs in getStats() 
-            // to find associated stats
-            for (var character1 of this.profile.characters) {
-              for (var character2 of profile.characters) {
-                if (character1.characterId == character2.characterId) {
-                  character1.mergedStats = character2.mergedStats;
-                  character1.pveStats = character2.pveStats;
-                  character1.pvpStats = character2.pvpStats;
-                  break;
-                }
+          profile.mergedStats = stats.mergedStats;
+          profile.pveStats = stats.pveStats;
+          profile.pvpStats = stats.pvpStats;
+
+          // match IDs from getCharacters() to IDs in getStats() 
+          // to find associated stats
+          for (var character1 of profile.characters) {
+            for (var character2 of stats.characters) {
+              if (character1.characterId == character2.characterId) {
+                character1.mergedStats = character2.mergedStats;
+                character1.pveStats = character2.pveStats;
+                character1.pvpStats = character2.pvpStats;
+                break;
               }
             }
+          }
 
-            // save current date in profile
-            this.profile.dateCreated = new Date();
-            this.currentId = '';
+          // save current date in profile
+          profile.dateCreated = new Date();
 
-            // update displayed stats
-            this.displayedStats = this.getMode(this.currentMode);
+          return of(profile);
+        })
+      )
+      .subscribe(res => {
+        this.profile = res;
 
-            // hide progress spinner
-            this.fetchingStats = false;
+        // hide progress spinner
+        this.fetchingStats = false;
 
-            // (usually the title strategy would be used for the website name suffix)
-            this.titleService.setTitle(`${this.profile.displayName} | Arc Buddy`);
-          }, err => {
-            this.error = true;
-          });
+        // update displayed stats
+        this.currentId = '';
+        this.displayedStats = this.getMode(this.currentMode);
+
+        // (usually the title strategy would be used for the website name suffix)
+        this.titleService.setTitle(`${this.profile.displayName} | Arc Buddy`);
       }, err => {
         this.error = true;
       });
@@ -276,7 +281,7 @@ export class StatsComponent implements OnInit {
   }
 
   getPlatform(membershipType: string) {
-    switch(parseInt(membershipType)) {
+    switch (parseInt(membershipType)) {
       case 1:
         return 'xb';
       case 2:
@@ -289,7 +294,7 @@ export class StatsComponent implements OnInit {
         return 'stadia';
       case 6:
         return 'egs'; // assumption -- EGS is a recent addition
-      default: 
+      default:
         return 'pc';
     }
   }
