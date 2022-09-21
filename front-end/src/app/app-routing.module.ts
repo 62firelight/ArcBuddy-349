@@ -11,11 +11,11 @@ import { VendorsPageComponent } from './components/vendors-page/vendors-page.com
 
 const routes: Routes = [
   // { path: '', redirectTo: '/search', pathMatch: 'full' },
-  { path: '', component: LandingPageComponent},
-  { path: 'search', component: SearchPageComponent },
-  { path: ':membershipType/:membershipId', component: StatsComponent },
-  { path: 'profiles', component: ProfilesComponent },
-  { path: 'vendors', component: VendorsPageComponent }
+  { path: '', component: LandingPageComponent, title: 'Home | Arc Buddy'},
+  { path: 'search', component: SearchPageComponent, title: 'Search | Arc Buddy'},
+  { path: ':membershipType/:membershipId', component: StatsComponent, title: 'Stats | Arc Buddy' },
+  // { path: 'profiles', component: ProfilesComponent, title: 'Saved Profiles | Arc Buddy' },
+  { path: 'vendors', component: VendorsPageComponent, title: 'Vendors | Arc Buddy' }
 ];
 
 @NgModule({
