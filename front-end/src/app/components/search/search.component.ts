@@ -1,8 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-
 import { Profile } from 'src/app/Profile';
 import { DestinyService } from 'src/app/services/destiny.service';
 
@@ -28,7 +26,7 @@ export class SearchComponent implements OnInit {
   @Output()
   newProfileEvent = new EventEmitter<Profile>();
 
-  constructor(private destinyService: DestinyService, private route: Router) { }
+  constructor(private destinyService: DestinyService) { }
 
   ngOnInit(): void {
   }
@@ -55,14 +53,8 @@ export class SearchComponent implements OnInit {
     // console.log("Bungie name: " + name + "#" + id);
 
     this.destinyService.getName(name, id).subscribe((result) => {
-      // console.log(result);
       this.error = ``;
-      // this.newProfileEvent.emit(result);
-
-      const membershipType = result.membershipType;
-      const membershipId = result.membershipId;
-
-      this.route.navigate([`${membershipType}/${membershipId}`]);
+      this.newProfileEvent.emit(result);
 
       // add successful result to autocomplete panel 
       // if (this.options.some((option) => option == this.name) == false) {

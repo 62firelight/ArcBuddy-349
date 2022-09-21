@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Profile } from 'src/app/Profile';
 import { ProfileService } from 'src/app/services/profile.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-page',
@@ -43,9 +44,12 @@ export class SearchPageComponent implements OnInit {
 
   changingProfiles = new Subject<Profile>();
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService, private route: Router) { }
 
   ngOnInit(): void {
+    this.changingStats.subscribe((profile) => {
+      this.route.navigate([`${profile.membershipType}/${profile.membershipId}`]);
+    });
   }
 
 }
