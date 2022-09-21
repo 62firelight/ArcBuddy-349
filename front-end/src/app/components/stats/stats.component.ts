@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { Character } from 'src/app/Character';
@@ -71,7 +72,7 @@ export class StatsComponent implements OnInit {
   @Output()
   addProfileEvent = new EventEmitter<Profile>();
 
-  constructor(private route: ActivatedRoute, private destinyService: DestinyService) { }
+  constructor(private route: ActivatedRoute, private destinyService: DestinyService, private readonly titleService: Title) { }
 
   ngOnInit(): void {
     // extract route parameters
@@ -154,6 +155,9 @@ export class StatsComponent implements OnInit {
             // console.log(this.profile);
 
             this.fetchingStats = false;
+
+            // (usually the title strategy would be used for the website name suffix)
+            this.titleService.setTitle(`${this.profile.displayName} | Arc Buddy`);
           });
       });
   }
