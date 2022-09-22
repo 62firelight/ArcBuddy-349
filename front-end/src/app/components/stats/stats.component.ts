@@ -192,13 +192,20 @@ export class StatsComponent implements OnInit {
       this.displayedStats = this.getMode(this.currentMode);
     } else {
       // show all stats with associated character
-      for (var character of this.profile.characters) {
-        if (characterId == character.characterId && character.mergedStats != undefined) {
-          this.currentId = character.characterId;
-          this.displayedStats = this.getMode(this.currentMode);
-          // console.log(this.displayedStats);
-        }
+      const matchedCharacter = this.profile.characters.find(character => character.characterId == characterId);
+
+      if (matchedCharacter !== undefined && matchedCharacter.mergedStats !== undefined) {
+        this.currentId = matchedCharacter.characterId;
+        this.displayedStats = this.getMode(this.currentMode);
       }
+
+      // for (var character of this.profile.characters) {
+      //   if (characterId == character.characterId && character.mergedStats != undefined) {
+      //     this.currentId = character.characterId;
+      //     this.displayedStats = this.getMode(this.currentMode);
+      //     // console.log(this.displayedStats);
+      //   }
+      // }
     }
   }
 
@@ -231,39 +238,37 @@ export class StatsComponent implements OnInit {
       this.currentMode = newMode;
     } else {
       // show character-specific stats for given mode
-      for (var character of this.profile.characters) {
-        if (character.characterId == this.currentId) {
-          switch (newMode) {
-            case 'Merged':
-              if (character.mergedStats != undefined) fetchedStats = character.mergedStats;
-              break;
+      const matchedCharacter = this.profile.characters.find(character => character.characterId == this.currentId);
+  
+      if (matchedCharacter !== undefined) {
+        switch (newMode) {
+          case 'Merged':
+            if (matchedCharacter.mergedStats != undefined) fetchedStats = matchedCharacter.mergedStats;
+            break;
 
-            case 'PvE':
-              if (character.pveStats != undefined) fetchedStats = character.pveStats;
-              break;
+          case 'PvE':
+            if (matchedCharacter.pveStats != undefined) fetchedStats = matchedCharacter.pveStats;
+            break;
 
-            case 'PvP':
-              if (character.pvpStats != undefined) fetchedStats = character.pvpStats;
-              break;
-          }
-
-          this.currentMode = newMode;
+          case 'PvP':
+            if (matchedCharacter.pvpStats != undefined) fetchedStats = matchedCharacter.pvpStats;
+            break;
         }
+
+        this.currentMode = newMode;
+      } else {
+        fetchedStats = {};
       }
     }
 
-    // fetchedStats should not be empty;
-    // but if it is, keep displayedStats the same
-    if (Object.values(fetchedStats).length == 0) {
-      fetchedStats = this.displayedStats;
-      // console.log('Something went wrong. Displaying previously shown stats...');
-    }
-    // console.log(fetchedStats);
+    // code block for if we want to handle the empty stats object
+    // if (Object.values(fetchedStats).length == 0) {
+    //   fetchedStats = this.displayedStats;
+    //   console.log('Something went wrong. Displaying previously shown stats...');
+    // }
 
     // update displayed events for stat sections
     this.newDisplayedStatsEvent.next(fetchedStats);
-
-    // console.log(this.currentMode);
 
     return fetchedStats;
   }
