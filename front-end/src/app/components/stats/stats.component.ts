@@ -254,7 +254,7 @@ export class StatsComponent implements OnInit {
 
     // fetchedStats should not be empty;
     // but if it is, keep displayedStats the same
-    if (fetchedStats == {}) {
+    if (Object.values(fetchedStats).length == 0) {
       fetchedStats = this.displayedStats;
       // console.log('Something went wrong. Displaying previously shown stats...');
     }
