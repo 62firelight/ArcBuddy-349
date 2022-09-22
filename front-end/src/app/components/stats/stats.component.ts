@@ -88,7 +88,7 @@ export class StatsComponent implements OnInit {
     const membershipId = routeParams.get('membershipId');
 
     // by default, show PvE stats for all characters
-    this.currentMode = 'PvE';
+    this.currentMode = 'Merged';
     this.currentId = '';
 
     if (membershipType != null && membershipId != null) {
