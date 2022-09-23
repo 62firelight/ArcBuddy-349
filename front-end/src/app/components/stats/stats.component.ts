@@ -132,23 +132,22 @@ export class StatsComponent implements OnInit {
           return forkJoin([this.destinyService.getStats(this.profile.membershipType, this.profile.membershipId), of(profile)]);
         }),
         switchMap(array => {
-          const stats = array[0];
+          const statsObj = array[0];
           const profile = array[1];
 
-          profile.mergedStats = stats.mergedStats;
-          profile.pveStats = stats.pveStats;
-          profile.pvpStats = stats.pvpStats;
+          profile.mergedStats = statsObj.mergedStats;
+          profile.pveStats = statsObj.pveStats;
+          profile.pvpStats = statsObj.pvpStats;
 
           // match IDs from getCharacters() to IDs in getStats() 
           // to find associated stats
-          for (var character1 of profile.characters) {
-            for (var character2 of stats.characters) {
-              if (character1.characterId == character2.characterId) {
-                character1.mergedStats = character2.mergedStats;
-                character1.pveStats = character2.pveStats;
-                character1.pvpStats = character2.pvpStats;
-                break;
-              }
+          for (var profileCharacter of profile.characters) {
+            const matchedCharacter = statsObj.characters.find((character: { characterId: any; }) => character.characterId == profileCharacter.characterId);
+
+            if (matchedCharacter !== undefined) {
+              profileCharacter.mergedStats = matchedCharacter.mergedStats;
+              profileCharacter.pveStats = matchedCharacter.pveStats;
+              profileCharacter.pvpStats = matchedCharacter.pvpStats;
             }
           }
 
@@ -239,7 +238,7 @@ export class StatsComponent implements OnInit {
     } else {
       // show character-specific stats for given mode
       const matchedCharacter = this.profile.characters.find(character => character.characterId == this.currentId);
-  
+
       if (matchedCharacter !== undefined) {
         switch (newMode) {
           case 'Merged':
