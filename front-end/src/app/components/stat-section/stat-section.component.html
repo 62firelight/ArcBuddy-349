@@ -10,7 +10,8 @@
         </button>
     </mat-card-title-group>
 
-    <mat-grid-list [cols]="breakpoint" rowHeight="9em" gutterSize="0" *ngIf="showAsChart == false" (window:resize)="onResize($event)">
+    <mat-grid-list [cols]="breakpoint" rowHeight="9em" gutterSize="0" *ngIf="showAsChart == false"
+        (window:resize)="onResize($event)">
         <mat-grid-tile *ngFor="let stat of stats | keyvalue: helper.numberedKeyOrder">
             <app-stat [statName]="stat.key" [statValue]="stat.value | destinyStat">
             </app-stat>
@@ -18,12 +19,14 @@
     </mat-grid-list>
 
     <div *ngIf="showAsChart == true">
-        <div>
-            <div>
-                <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType">
-                </canvas>
-            </div>
-        </div>
+        <canvas baseChart [data]="primaryChartData" [options]="barChartOptions" [type]="barChartType">
+        </canvas>
+
+        <canvas baseChart [data]="specialChartData" [options]="barChartOptions" [type]="barChartType">
+        </canvas>
+
+        <canvas baseChart [data]="heavyChartData" [options]="barChartOptions" [type]="barChartType">
+        </canvas>
     </div>
 </mat-card>
 

@@ -17,3 +17,7 @@
 .mat-card {
     padding: 0 0 0.67rem 0;
 }
+
+canvas {
+    margin: 2rem;
+}
