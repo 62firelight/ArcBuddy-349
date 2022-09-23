@@ -64,6 +64,31 @@ export class Helper {
         'Weapon Kills'
     ]);
 
+    static primaryWeapons = [
+        'Auto Rifle',
+        'Pulse Rifle',
+        'Scout Rifle',
+        'Hand Cannon',
+        'Submachine Gun',
+        'Sidearm',
+        'Bow'
+    ];
+
+    static specialWeapons = [
+        'Glaive',
+        'Fusion Rifle',
+        'Trace Rifle',
+        'Shotgun',
+        'Sniper Rifle'
+    ];
+
+    static heavyWeapons = [
+        'Machine Gun',
+        'Rocket Launcher',
+        'Sword',
+        'Grenade Launcher'
+    ];
+
     static asIsOrder() {
         return 1;
     }

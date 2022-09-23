@@ -1,4 +1,4 @@
-import { Component, Input, ModuleWithComponentFactories, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ModuleWithComponentFactories, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import * as _ from 'lodash';
 import { BaseChartDirective } from 'ng2-charts';
@@ -23,7 +23,7 @@ export class StatSectionComponent implements OnInit {
 
   isVisible = true;
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  @ViewChildren(BaseChartDirective) charts!: QueryList<BaseChartDirective>;
 
   barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -184,37 +184,14 @@ export class StatSectionComponent implements OnInit {
 
   convertToChart(): void {
     this.showAsChart = true;
-
-    const primaryWeapons = [
-      'Auto Rifle',
-      'Pulse Rifle',
-      'Scout Rifle',
-      'Hand Cannon',
-      'Submachine Gun',
-      'Sidearm',
-      'Bow'
-    ];
-
-    const specialWeapons = [
-      'Glaive',
-      'Fusion Rifle',
-      'Trace Rifle',
-      'Shotgun',
-      'Sniper Rifle'
-    ];
-
-    const heavyWeapons = [
-      'Machine Gun',
-      'Rocket Launcher',
-      'Sword',
-      'Grenade Launcher'
-    ];
     
     // Primary Weapons
-    this.primaryChartData.labels = Array.from(this.stats.keys()).filter(key => primaryWeapons.includes(key));
+    this.primaryChartData.labels = Array.from(this.stats.keys()).filter(key => Helper.primaryWeapons.includes(key));
     this.primaryChartData.datasets[0].data = Array.from(this.stats.values()).filter((item) => {
       const statName = Helper.sections.get('Weapon Kills')?.get(item.statId);
-      if (statName != undefined && primaryWeapons.includes(statName)) return true;
+      if (statName != undefined && Helper.primaryWeapons.includes(statName)) {
+        return true;
+      }
 
       return false;
     }).map((item) => {
@@ -223,10 +200,12 @@ export class StatSectionComponent implements OnInit {
     });
 
     // Special Weapons
-    this.specialChartData.labels = Array.from(this.stats.keys()).filter(key => specialWeapons.includes(key));
+    this.specialChartData.labels = Array.from(this.stats.keys()).filter(key => Helper.specialWeapons.includes(key));
     this.specialChartData.datasets[0].data = Array.from(this.stats.values()).filter((item) => {
       const statName = Helper.sections.get('Weapon Kills')?.get(item.statId);
-      if (statName != undefined && specialWeapons.includes(statName)) return true;
+      if (statName != undefined && Helper.specialWeapons.includes(statName)) {
+        return true; 
+      }
 
       return false;
     }).map((item) => {
@@ -235,10 +214,12 @@ export class StatSectionComponent implements OnInit {
     });
 
     // Heavy Weapons
-    this.heavyChartData.labels = Array.from(this.stats.keys()).filter(key => heavyWeapons.includes(key));
+    this.heavyChartData.labels = Array.from(this.stats.keys()).filter(key => Helper.heavyWeapons.includes(key));
     this.heavyChartData.datasets[0].data = Array.from(this.stats.values()).filter((item) => {
       const statName = Helper.sections.get('Weapon Kills')?.get(item.statId);
-      if (statName != undefined && heavyWeapons.includes(statName)) return true;
+      if (statName != undefined && Helper.heavyWeapons.includes(statName)) { 
+        return true; 
+      }
 
       return false;
     }).map((item) => {
@@ -246,7 +227,16 @@ export class StatSectionComponent implements OnInit {
       return parseFloat(destinyStatPipe.transform(item, true));
     });
 
-    this.chart?.update();
+    Promise.all([this.primaryChartData.datasets[0].data, this.specialChartData.datasets[0].data, this.heavyChartData.datasets[0].data]).then(() => {
+      // update all charts
+      if (this.charts !== undefined) {
+        this.charts.forEach((child) => {
+          if (child !== undefined && child.chart !== undefined) {
+            child.chart.update();
+          }
+        });
+      }
+    });
   }
 
   convertToDefault(): void {
