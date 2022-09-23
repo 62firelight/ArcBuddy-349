@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ModuleWithComponentFactories, OnInit, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import * as _ from 'lodash';
 import { BaseChartDirective } from 'ng2-charts';
 import { Subject } from 'rxjs';
 import { Helper } from 'src/app/Helper';
@@ -18,7 +19,7 @@ export class StatSectionComponent implements OnInit {
 
   chartableSections = Helper.chartableSections;
 
-  stats = new Map<string, string>();
+  stats = new Map<string, any>();
 
   isVisible = true;
 
@@ -27,6 +28,11 @@ export class StatSectionComponent implements OnInit {
   barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     plugins: {
+      // title: {
+      //   display: true,
+      //   text: 'Weapon Kills',
+      //   color: 'white'
+      // },
       legend: {
         display: true,
         labels: {
@@ -50,14 +56,38 @@ export class StatSectionComponent implements OnInit {
 
   barChartType: ChartType = 'bar';
 
-  barChartData: ChartData<'bar'> = {
+  primaryChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [
       {
         data: [],
-        label: 'Kills',
-        backgroundColor: '#008080',
-        hoverBackgroundColor: 'white'
+        label: 'Primary Weapon Kills',
+        backgroundColor: 'white',
+        hoverBackgroundColor: 'orange'
+      }
+    ],
+  };
+
+  specialChartData: ChartData<'bar'> = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        label: 'Special Weapon Kills',
+        backgroundColor: '#82D56A',
+        hoverBackgroundColor: 'orange'
+      }
+    ],
+  };
+
+  heavyChartData: ChartData<'bar'> = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        label: 'Heavy Weapon Kills',
+        backgroundColor: '#8063D7',
+        hoverBackgroundColor: 'orange'
       }
     ],
   };
@@ -80,7 +110,7 @@ export class StatSectionComponent implements OnInit {
 
   ngOnInit(): void {
     this.breakpoint = this.getColumns(window.innerWidth);
-    
+
     this.updateStats();
 
     this.newDisplayedStatsEvent.subscribe((fetchedStats) => {
@@ -155,8 +185,63 @@ export class StatSectionComponent implements OnInit {
   convertToChart(): void {
     this.showAsChart = true;
 
-    this.barChartData.labels = Array.from(this.stats.keys());
-    this.barChartData.datasets[0].data = Array.from(this.stats.values()).map((item) => {
+    const primaryWeapons = [
+      'Auto Rifle',
+      'Pulse Rifle',
+      'Scout Rifle',
+      'Hand Cannon',
+      'Submachine Gun',
+      'Sidearm',
+      'Bow'
+    ];
+
+    const specialWeapons = [
+      'Glaive',
+      'Fusion Rifle',
+      'Trace Rifle',
+      'Shotgun',
+      'Sniper Rifle'
+    ];
+
+    const heavyWeapons = [
+      'Machine Gun',
+      'Rocket Launcher',
+      'Sword',
+      'Grenade Launcher'
+    ];
+    
+    // Primary Weapons
+    this.primaryChartData.labels = Array.from(this.stats.keys()).filter(key => primaryWeapons.includes(key));
+    this.primaryChartData.datasets[0].data = Array.from(this.stats.values()).filter((item) => {
+      const statName = Helper.sections.get('Weapon Kills')?.get(item.statId);
+      if (statName != undefined && primaryWeapons.includes(statName)) return true;
+
+      return false;
+    }).map((item) => {
+      const destinyStatPipe = new DestinyStatPipe();
+      return parseFloat(destinyStatPipe.transform(item, true));
+    });
+
+    // Special Weapons
+    this.specialChartData.labels = Array.from(this.stats.keys()).filter(key => specialWeapons.includes(key));
+    this.specialChartData.datasets[0].data = Array.from(this.stats.values()).filter((item) => {
+      const statName = Helper.sections.get('Weapon Kills')?.get(item.statId);
+      if (statName != undefined && specialWeapons.includes(statName)) return true;
+
+      return false;
+    }).map((item) => {
+      const destinyStatPipe = new DestinyStatPipe();
+      return parseFloat(destinyStatPipe.transform(item, true));
+    });
+
+    // Heavy Weapons
+    this.heavyChartData.labels = Array.from(this.stats.keys()).filter(key => heavyWeapons.includes(key));
+    this.heavyChartData.datasets[0].data = Array.from(this.stats.values()).filter((item) => {
+      const statName = Helper.sections.get('Weapon Kills')?.get(item.statId);
+      if (statName != undefined && heavyWeapons.includes(statName)) return true;
+
+      return false;
+    }).map((item) => {
       const destinyStatPipe = new DestinyStatPipe();
       return parseFloat(destinyStatPipe.transform(item, true));
     });
