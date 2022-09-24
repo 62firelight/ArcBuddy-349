@@ -12,16 +12,27 @@ import { VendorsPageComponent } from './components/vendors-page/vendors-page.com
 import { StatsResolver } from './StatsResolver';
 
 const routes: Routes = [
-  // { path: '', redirectTo: '/search', pathMatch: 'full' },
-  { path: '', component: LandingPageComponent, title: 'Home'},
-  { path: 'search', component: SearchPageComponent, title: 'Search'},
-  { path: ':membershipType/:membershipId', component: StatsComponent, title: StatsResolver },
-  // { path: 'profiles', component: ProfilesComponent, title: 'Saved Profiles | Arc Buddy' },
-  { path: 'vendors', component: VendorsPageComponent, title: 'Vendors' }
+  {
+    path: '', component: HomePageComponent,
+    children: [
+      // { path: '', redirectTo: '/search', pathMatch: 'full' },
+      { path: '', component: LandingPageComponent, title: 'Home' },
+      { path: 'search', component: SearchPageComponent, title: 'Search' },
+      { path: ':membershipType/:membershipId', component: StatsComponent, title: StatsResolver },
+      // { path: 'profiles', component: ProfilesComponent, title: 'Saved Profiles | Arc Buddy' },
+      { path: 'vendors', component: VendorsPageComponent, title: 'Vendors' }
+    ]
+  }
+  // // { path: '', redirectTo: '/search', pathMatch: 'full' },
+  // { path: '', component: LandingPageComponent, title: 'Home'},
+  // { path: 'search', component: SearchPageComponent, title: 'Search'},
+  // { path: ':membershipType/:membershipId', component: StatsComponent, title: StatsResolver },
+  // // { path: 'profiles', component: ProfilesComponent, title: 'Saved Profiles | Arc Buddy' },
+  // { path: 'vendors', component: VendorsPageComponent, title: 'Vendors' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'top'})],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
   exports: [RouterModule],
   providers: [
     { provide: TitleStrategy, useClass: ArcBuddyTitleStrategy },
