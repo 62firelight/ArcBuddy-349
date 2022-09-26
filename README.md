@@ -5,7 +5,7 @@ Arc Buddy is a web application that uses the [Bungie.Net API](https://bungie-net
 
 There was formerly a feature where player stats could be saved to MongoDB, but I ended up scrapping it after not knowing how to expand it into something useful. 
 
-Contributions are welcome, but keep in mind that this project was mainly for me to practice calling an external API and then transforming the responses into something displayable on a web page. I also used this as a way to practice developing with Angular and Node.js. 
+Contributions are welcome, but keep in mind that this project was initially built as part of a University course. It was mainly for me to practice calling an external API and then transforming the responses into something displayable on a web page. I also used this application to practice developing with Angular and Node.js. 
 
 ## Accessing the Application
 The application should currently be live on Heroku, at least until the free tier expires in late November.
