@@ -24,25 +24,25 @@ An unsuccessful search should return an error message. Otherwise, if the search 
 
 ## Screenshots
 
-### Homepage
+### Landing Page
 
-![image](https://user-images.githubusercontent.com/54054879/189047757-36e7ae32-7ce2-4254-b781-02696c6ba30c.png)
+![image](https://user-images.githubusercontent.com/54054879/192176627-b0533889-3c63-41a9-b28d-39d6b9b048ac.png)
 
 ### Search Players
 
-![image](https://user-images.githubusercontent.com/54054879/189047912-bfc64b9f-fffe-49c6-9df5-289b4033ea76.png)
+![image](https://user-images.githubusercontent.com/54054879/192176564-841d8b9d-a855-47b5-8b29-490ff59cee0b.png)
 
 ### Search Players (player found)
 
-![image](https://user-images.githubusercontent.com/54054879/189048005-ad9927bf-ab69-4633-bed8-7eda05f56925.png)
+![image](https://user-images.githubusercontent.com/54054879/192176774-30b7d3ac-a93e-4981-b434-b98398f61b13.png)
 
 ### Search Players (no player found)
 
-![image](https://user-images.githubusercontent.com/54054879/189048080-f986e690-1371-4117-a0b6-a0a2d179c7b5.png)
+![image](https://user-images.githubusercontent.com/54054879/192176657-f131d77e-0502-481b-86d2-1d055cdc792a.png)
 
 ### Vendors (work-in-progress)
 
-![image](https://user-images.githubusercontent.com/54054879/189048214-ffbea16c-fb3a-443c-beb8-5b40471e4d92.png)
+![image](https://user-images.githubusercontent.com/54054879/192176829-d5c1d3a4-5fac-4a9f-9253-0f9ad1c30445.png)
 
 ## Special Thanks
 
