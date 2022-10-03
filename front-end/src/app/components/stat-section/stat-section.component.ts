@@ -56,6 +56,18 @@ export class StatSectionComponent implements OnInit {
 
   barChartType: ChartType = 'bar';
 
+  allWeaponsChartData: ChartData<'bar'> = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        label: 'Weapon Kills',
+        backgroundColor: '#008080',
+        hoverBackgroundColor: 'orange'
+      }
+    ],
+  };
+
   primaryChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [
@@ -184,6 +196,13 @@ export class StatSectionComponent implements OnInit {
 
   convertToChart(): void {
     this.showAsChart = true;
+
+    // All Weapons
+    this.allWeaponsChartData.labels = Array.from(this.stats.keys());
+    this.allWeaponsChartData.datasets[0].data = Array.from(this.stats.values()).map((item) => {
+      const destinyStatPipe = new DestinyStatPipe();
+      return parseFloat(destinyStatPipe.transform(item, true));
+    });
     
     // Primary Weapons
     this.primaryChartData.labels = Array.from(this.stats.keys()).filter(key => Helper.primaryWeapons.includes(key));

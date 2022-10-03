@@ -19,6 +19,9 @@
     </mat-grid-list>
 
     <div *ngIf="showAsChart == true">
+        <canvas baseChart [data]="allWeaponsChartData" [options]="barChartOptions" [type]="barChartType">
+        </canvas>
+
         <canvas baseChart [data]="primaryChartData" [options]="barChartOptions" [type]="barChartType">
         </canvas>
 
