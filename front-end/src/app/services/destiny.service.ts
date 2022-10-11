@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Character } from '../Character';
 import { Profile } from '../Profile';
+import { APIResponse, DestinyVendorsResponse } from 'quria';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +27,8 @@ export class DestinyService {
     return this.http.get<any>(url);
   }
 
-  getVendors(): Observable<Object> {
+  getVendors(): Observable<APIResponse<DestinyVendorsResponse>> {
     const url = `api/vendors`;
-    return this.http.get<Object>(url);
+    return this.http.get<APIResponse<DestinyVendorsResponse>>(url);
   }
 }

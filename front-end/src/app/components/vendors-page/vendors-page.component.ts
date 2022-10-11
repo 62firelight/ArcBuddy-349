@@ -76,7 +76,7 @@ export class VendorsPageComponent implements OnInit {
       .pipe(
         switchMap(res => {
           // get all vendor hashes converted from a 2D array to a 1D array
-          const vendorGroups: any[] = (<any>res).Response.vendorGroups.data.groups;
+          const vendorGroups: any[] = res.Response.vendorGroups.data.groups;
           const vendorHashes: any[] = [].concat(...vendorGroups.map(vendorGroup => vendorGroup.vendorHashes));
 
           // pass on vendor data from manifest + API response
@@ -84,7 +84,7 @@ export class VendorsPageComponent implements OnInit {
           of(res)]);
         }),
         switchMap(array => {
-          // retrieve observables from array
+          // retrieve observables from arrayq
           const vendorDefinitions = array[0];
           const res = array[1];
 
