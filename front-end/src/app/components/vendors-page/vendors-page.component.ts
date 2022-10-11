@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import { KeyValue } from '@angular/common';
 import { MatAccordion } from '@angular/material/expansion';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { DestinyVendorGroup } from 'quria';
 
 @Component({
   selector: 'app-vendors-page',
@@ -76,8 +77,10 @@ export class VendorsPageComponent implements OnInit {
       .pipe(
         switchMap(res => {
           // get all vendor hashes converted from a 2D array to a 1D array
-          const vendorGroups: any[] = res.Response.vendorGroups.data.groups;
-          const vendorHashes: any[] = [].concat(...vendorGroups.map(vendorGroup => vendorGroup.vendorHashes));
+          const vendorGroups: DestinyVendorGroup[] = res.Response.vendorGroups.data.groups;
+
+          // convert 2D number array of vendor hashes to 1D number array
+          const vendorHashes: string[] = _.flatten(vendorGroups.map(vendorGroup => vendorGroup.vendorHashes)).map(String);
 
           // pass on vendor data from manifest + API response
           return forkJoin([this.manifestService.selectListFromDefinition('Vendor', vendorHashes),
