@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import { KeyValue } from '@angular/common';
 import { MatAccordion } from '@angular/material/expansion';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { DestinyVendorGroup } from 'quria';
+import { APIResponse, DestinyVendorGroup, DestinyVendorsResponse } from 'quria';
 
 @Component({
   selector: 'app-vendors-page',
@@ -89,12 +89,12 @@ export class VendorsPageComponent implements OnInit {
         switchMap(array => {
           // retrieve observables from arrayq
           const vendorDefinitions = array[0];
-          const res = array[1];
+          const res: APIResponse<DestinyVendorsResponse> = array[1];
 
           // get sale items and categories for all vendors
-          const generalData = (<any>res).Response.vendors.data;
-          const saleItems = (<any>res).Response.sales.data;
-          const categories = (<any>res).Response.categories.data;
+          const generalData = res.Response.vendors.data;
+          const saleItems = res.Response.sales.data;
+          const categories = res.Response.categories.data;
 
           // for each vendor, find its categories and corresponding items
           let vendorsMap = new Map();
@@ -157,7 +157,7 @@ export class VendorsPageComponent implements OnInit {
           }
 
           // look up vendor group hashes in manifest
-          const vendorGroups: any[] = (<any>res).Response.vendorGroups.data.groups;
+          const vendorGroups: any[] = res.Response.vendorGroups.data.groups;
           const vendorGroupHashes: any[] = vendorGroups.map(vendorGroup => vendorGroup.vendorGroupHash);
           const vendorDestinationHashes: any[] = Array.from(vendorsMap.keys()).map(vendor => vendor.vendorLocation.destinationHash);
 
@@ -171,10 +171,10 @@ export class VendorsPageComponent implements OnInit {
           const vendorGroupDefinitions = array[0];
           const vendorDestinationDefinitions = array[1];
           const vendorsMap = array[2];
-          const res = array[3];
+          const res: APIResponse<DestinyVendorsResponse> = array[3];
           const vendorItemCostsMap = array[4];
 
-          const vendorGroups: any[] = (<any>res).Response.vendorGroups.data.groups;
+          const vendorGroups: any[] = res.Response.vendorGroups.data.groups;
 
           // divide vendors into vendor groups
           let vendorGroupsMap: Map<any, Map<any, Map<any, any[]>>[]> = new Map();
