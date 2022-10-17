@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import { KeyValue } from '@angular/common';
 import { MatAccordion } from '@angular/material/expansion';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { APIResponse, DestinyInventoryItemDefinition, DestinyVendorCategory, DestinyVendorComponent, DestinyVendorGroup, DestinyVendorSaleItemComponent, DestinyVendorsResponse } from 'quria';
+import { APIResponse, DestinyInventoryItemDefinition, DestinyVendorCategory, DestinyVendorComponent, DestinyVendorDefinition, DestinyVendorGroup, DestinyVendorSaleItemComponent, DestinyVendorsResponse } from 'quria';
 
 @Component({
   selector: 'app-vendors-page',
@@ -119,7 +119,7 @@ export class VendorsPageComponent implements OnInit {
 
             // create an array of display category indexes
             const displayCategoryIndexes = vendorCategories.map(
-              (vendorCategory: { displayCategoryIndex: any; }) => vendorCategory.displayCategoryIndex
+              (vendorCategory: { displayCategoryIndex: number; }) => vendorCategory.displayCategoryIndex
             );
 
             // map display category data from API to display category data from manifest
@@ -185,7 +185,7 @@ export class VendorsPageComponent implements OnInit {
           const vendorGroups: DestinyVendorGroup[] = res.Response.vendorGroups.data.groups;
 
           // divide vendors into vendor groups
-          let vendorGroupsMap: Map<any, Map<any, Map<any, any[]>>[]> = new Map();
+          let vendorGroupsMap: Map<DestinyVendorGroup, Map<DestinyVendorDefinition, Map<string, DestinyInventoryItemDefinition[]>>[]> = new Map();
           for (const vendorGroup of vendorGroups) {
             const vendorGroupDefinition = vendorGroupDefinitions.find(vendorGroupDefinition => vendorGroupDefinition.hash == vendorGroup.vendorGroupHash);
             const vendorHashes = vendorGroup.vendorHashes;
@@ -196,7 +196,7 @@ export class VendorsPageComponent implements OnInit {
                 const vendorLocation = vendorDestinationDefinitions.find(vendorDestinationDefiniton => vendor.vendorLocation.destinationHash == vendorDestinationDefiniton.hash);
                 vendor.vendorLocation = vendorLocation;
 
-                let vendorsInVendorGroup: Map<any, Map<any, any[]>>[] | undefined = vendorGroupsMap.get(vendorGroupDefinition);
+                let vendorsInVendorGroup = vendorGroupsMap.get(vendorGroupDefinition);
                 if (vendorsInVendorGroup === undefined) {
                   vendorsInVendorGroup = [];
                 }
