@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import { KeyValue } from '@angular/common';
 import { MatAccordion } from '@angular/material/expansion';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { APIResponse, DestinyVendorCategory, DestinyVendorComponent, DestinyVendorGroup, DestinyVendorSaleItemComponent, DestinyVendorsResponse } from 'quria';
+import { APIResponse, DestinyInventoryItemDefinition, DestinyVendorCategory, DestinyVendorComponent, DestinyVendorGroup, DestinyVendorSaleItemComponent, DestinyVendorsResponse } from 'quria';
 
 @Component({
   selector: 'app-vendors-page',
@@ -233,7 +233,7 @@ export class VendorsPageComponent implements OnInit {
           const vendorItemCostsMap = array[3];
 
           // create an object containing item hash keys and item definition values
-          let itemDefinitionsObj: { [key: string]: any } = {};
+          let itemDefinitionsObj: { [key: string]: DestinyInventoryItemDefinition } = {};
           for (var i = 0; i < itemDefinitions.length; i++) {
             itemDefinitionsObj[itemDefinitions[i].hash] = itemDefinitions[i];
           }
@@ -245,7 +245,7 @@ export class VendorsPageComponent implements OnInit {
               const vendorCategoryItems = vendorItemsMap.get(vendorCategory);
 
               let indexesToDelete: number[] = [];
-              vendorCategoryItems.forEach((vendorCategoryItem: any, index: number) => {
+              vendorCategoryItems.forEach((vendorCategoryItem: DestinyVendorSaleItemComponent, index: number) => {
                 const itemHash = vendorCategoryItem.itemHash;
                 const itemDefinition = itemDefinitionsObj[itemHash];
 
@@ -270,6 +270,7 @@ export class VendorsPageComponent implements OnInit {
             }
           }
 
+          // retrieve hashes for currencies
           const vendorItemCosts: any[] = Array.from(vendorItemCostsMap.values());
           const allVendorItemCosts: any[] = [].concat(...vendorItemCosts);
           const allVendorItemCostHashes = allVendorItemCosts.map((allVendorItemCost) => 
