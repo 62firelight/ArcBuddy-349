@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import { KeyValue } from '@angular/common';
 import { MatAccordion } from '@angular/material/expansion';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { APIResponse, DestinyVendorGroup, DestinyVendorsResponse } from 'quria';
+import { APIResponse, DestinyVendorCategory, DestinyVendorComponent, DestinyVendorGroup, DestinyVendorSaleItemComponent, DestinyVendorsResponse } from 'quria';
 
 @Component({
   selector: 'app-vendors-page',
@@ -110,13 +110,12 @@ export class VendorsPageComponent implements OnInit {
             const vendorDisplayCategories = vendorDefinition.displayCategories;
 
             // find vendor location
-            const vendorGeneralData: any = generalData[towerVendorHash];
-            const vendorLocationIndex = vendorGeneralData.vendorLocationIndex;
-            vendorDefinition.vendorLocationIndex = vendorLocationIndex;
+            const vendorGeneralData: DestinyVendorComponent = generalData[towerVendorHash];
+            vendorDefinition.vendorLocationIndex = vendorGeneralData.vendorLocationIndex;
             vendorDefinition.vendorLocation = vendorDefinition.locations[vendorDefinition.vendorLocationIndex];
 
-            const vendorCategories: any[] = categories[towerVendorHash].categories;
-            const vendorSaleItems: any[] = Object.values(saleItems[towerVendorHash].saleItems);
+            const vendorCategories: DestinyVendorCategory[] = categories[towerVendorHash].categories;
+            const vendorSaleItems: DestinyVendorSaleItemComponent[] = Object.values(saleItems[towerVendorHash].saleItems);
 
             // create an array of display category indexes
             const displayCategoryIndexes = vendorCategories.map(
@@ -127,15 +126,24 @@ export class VendorsPageComponent implements OnInit {
             let vendorItemsMap = new Map();
             for (const vendorDisplayCategory of vendorDisplayCategories) {
               if (displayCategoryIndexes.includes(vendorDisplayCategory.index)) {
-                const itemIndexes = vendorCategories.find(
+                const matchingVendorCategory = vendorCategories.find(
                   vendorCategory => vendorCategory.displayCategoryIndex == vendorDisplayCategory.index
-                ).itemIndexes;
+                );
+
+                if (matchingVendorCategory === undefined) {
+                  continue;
+                }
+                const itemIndexes = matchingVendorCategory.itemIndexes;
 
                 let vendorItems = [];
                 for (const itemIndex of itemIndexes) {
                   const vendorItem = vendorSaleItems.find(vendorSaleItem =>
-                    (<any>vendorSaleItem).vendorItemIndex == itemIndex
+                    vendorSaleItem.vendorItemIndex == itemIndex
                   );
+
+                  if (vendorItem === undefined) {
+                    continue;
+                  }
 
                   // skip specific vendor items
                   if (this.hiddenItems.has(`${vendorItem.itemHash}`)) {
@@ -157,9 +165,9 @@ export class VendorsPageComponent implements OnInit {
           }
 
           // look up vendor group hashes in manifest
-          const vendorGroups: any[] = res.Response.vendorGroups.data.groups;
-          const vendorGroupHashes: any[] = vendorGroups.map(vendorGroup => vendorGroup.vendorGroupHash);
-          const vendorDestinationHashes: any[] = Array.from(vendorsMap.keys()).map(vendor => vendor.vendorLocation.destinationHash);
+          const vendorGroups: DestinyVendorGroup[] = res.Response.vendorGroups.data.groups;
+          const vendorGroupHashes: string[] = vendorGroups.map(vendorGroup => vendorGroup.vendorGroupHash).map(String);
+          const vendorDestinationHashes: string[] = Array.from(vendorsMap.keys()).map(vendor => vendor.vendorLocation.destinationHash);
 
           // pass on vendor group data from manifest + current vendor map + API response
           return forkJoin([this.manifestService.selectListFromDefinition('VendorGroup', vendorGroupHashes), 
@@ -174,7 +182,7 @@ export class VendorsPageComponent implements OnInit {
           const res: APIResponse<DestinyVendorsResponse> = array[3];
           const vendorItemCostsMap = array[4];
 
-          const vendorGroups: any[] = res.Response.vendorGroups.data.groups;
+          const vendorGroups: DestinyVendorGroup[] = res.Response.vendorGroups.data.groups;
 
           // divide vendors into vendor groups
           let vendorGroupsMap: Map<any, Map<any, Map<any, any[]>>[]> = new Map();
@@ -200,16 +208,16 @@ export class VendorsPageComponent implements OnInit {
           }
 
           // get a list of all item hashes
-          let allItemHashes: any[] = [];
+          let allItemHashes: string[] = [];
           Array.from(vendorsMap.values()).forEach(vendorItemsMap => {
             // retrieve 2D array containing item indexes arrays
-            const vendorItemArrays: any[] = Array.from(vendorItemsMap.values());
+            const vendorItemArrays: DestinyVendorSaleItemComponent[][] = Array.from(vendorItemsMap.values());
 
             // convert 2D array into 1D array
-            const vendorItems: any[] = [].concat(...vendorItemArrays);
+            const vendorItems: DestinyVendorSaleItemComponent[] = _.flatten(vendorItemArrays);
 
             // retrieve all item hashes and store in 1D array
-            const vendorItemHashes = vendorItems.map(vendorItem => vendorItem.itemHash);
+            const vendorItemHashes: string[] = vendorItems.map(vendorItem => vendorItem.itemHash).map(String);
 
             allItemHashes = allItemHashes.concat(vendorItemHashes);
           });
