@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import { KeyValue } from '@angular/common';
 import { MatAccordion } from '@angular/material/expansion';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { APIResponse, DestinyDestinationDefinition, DestinyInventoryItemDefinition, DestinyVendorCategory, DestinyVendorComponent, DestinyVendorDefinition, DestinyVendorGroup, DestinyVendorGroupDefinition, DestinyVendorSaleItemComponent, DestinyVendorsResponse } from 'quria';
+import { APIResponse, DestinyDestinationDefinition, DestinyInventoryItemDefinition, DestinyVendorCategory, DestinyVendorComponent, DestinyVendorDefinition, DestinyVendorGroup, DestinyVendorGroupDefinition, DestinyVendorItemQuantity, DestinyVendorSaleItemComponent, DestinyVendorsResponse } from 'quria';
 
 @Component({
   selector: 'app-vendors-page',
@@ -43,8 +43,9 @@ import { APIResponse, DestinyDestinationDefinition, DestinyInventoryItemDefiniti
 export class VendorsPageComponent implements OnInit {
 
   vendorGroups: Map<any, Map<any, Map<any, any[]>>[]> = new Map();
+  vendorItemCosts: Map<number, DestinyVendorItemQuantity[]> = new Map();
+  vendorItemCostDefinitions: Map<number, DestinyInventoryItemDefinition> = new Map();
   vendorLocations: Map<number, DestinyDestinationDefinition> = new Map();
-  vendorItemCosts: Map<any, any> = new Map();
   vendors: Map<any, Map<any, any[]>> = new Map();
   hiddenVendors: Set<string> = new Set([
     '3361454721', // Tess Everis
@@ -292,26 +293,31 @@ export class VendorsPageComponent implements OnInit {
           const vendorItemCostsMap = array[2];
           const vendorLocations = array[3];
 
-          // add on definition properties to each item cost object
+          // store item cost definitions in corresponding map
+          let vendorItemCostDefinitions: Map<number, any> = new Map();
           for (const vendorItemCostArray of vendorItemCostsMap.values()) {
             for (const vendorItemCost of vendorItemCostArray) {
               const costDefinition = allVendorItemCostDefinitions.find((definition) => definition.hash == vendorItemCost.itemHash);
 
-              vendorItemCost.definition = costDefinition;
+              vendorItemCostDefinitions.set(vendorItemCost.itemHash, costDefinition);
             }
           }
 
-          return forkJoin([of(vendorGroupsMap), of(vendorItemCostsMap), of(vendorLocations)]);
+          return forkJoin([of(vendorGroupsMap), of(vendorItemCostsMap), of(vendorItemCostDefinitions), of(vendorLocations)]);
         })
       )
       .subscribe(array => {
         const vendorGroups = array[0];
         const vendorItemCostsMap = array[1];
-        const vendorLocations = array[2];
+        const vendorItemCostDefinitions = array[2];
+        const vendorLocations = array[3];
 
         this.vendorGroups = vendorGroups;
         this.vendorItemCosts = vendorItemCostsMap;
+        this.vendorItemCostDefinitions = vendorItemCostDefinitions;
         this.vendorLocations = vendorLocations;
+
+        console.log(this.vendorItemCosts);
 
         this.error = false;
 
