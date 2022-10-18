@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import { KeyValue } from '@angular/common';
 import { MatAccordion } from '@angular/material/expansion';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { APIResponse, DestinyInventoryItemDefinition, DestinyVendorCategory, DestinyVendorComponent, DestinyVendorDefinition, DestinyVendorGroup, DestinyVendorSaleItemComponent, DestinyVendorsResponse } from 'quria';
+import { APIResponse, DestinyDestinationDefinition, DestinyInventoryItemDefinition, DestinyVendorCategory, DestinyVendorComponent, DestinyVendorDefinition, DestinyVendorGroup, DestinyVendorGroupDefinition, DestinyVendorSaleItemComponent, DestinyVendorsResponse } from 'quria';
 
 @Component({
   selector: 'app-vendors-page',
@@ -43,6 +43,7 @@ import { APIResponse, DestinyInventoryItemDefinition, DestinyVendorCategory, Des
 export class VendorsPageComponent implements OnInit {
 
   vendorGroups: Map<any, Map<any, Map<any, any[]>>[]> = new Map();
+  vendorLocations: Map<number, DestinyDestinationDefinition> = new Map();
   vendorItemCosts: Map<any, any> = new Map();
   vendors: Map<any, Map<any, any[]>> = new Map();
   hiddenVendors: Set<string> = new Set([
@@ -177,7 +178,7 @@ export class VendorsPageComponent implements OnInit {
         switchMap(array => {
           // retrieve observables from array
           const vendorGroupDefinitions = array[0];
-          const vendorDestinationDefinitions = array[1];
+          const vendorDestinationDefinitions: DestinyDestinationDefinition[] = array[1];
           const vendorsMap = array[2];
           const res: APIResponse<DestinyVendorsResponse> = array[3];
           const vendorItemCostsMap = array[4];
@@ -185,7 +186,8 @@ export class VendorsPageComponent implements OnInit {
           const vendorGroups: DestinyVendorGroup[] = res.Response.vendorGroups.data.groups;
 
           // divide vendors into vendor groups
-          let vendorGroupsMap: Map<DestinyVendorGroup, Map<DestinyVendorDefinition, Map<string, DestinyInventoryItemDefinition[]>>[]> = new Map();
+          let vendorGroupsMap: Map<DestinyVendorGroupDefinition, Map<DestinyVendorDefinition, Map<string, DestinyInventoryItemDefinition[]>>[]> = new Map();
+          let vendorLocations: Map<number, DestinyDestinationDefinition> = new Map();
           for (const vendorGroup of vendorGroups) {
             const vendorGroupDefinition = vendorGroupDefinitions.find(vendorGroupDefinition => vendorGroupDefinition.hash == vendorGroup.vendorGroupHash);
             const vendorHashes = vendorGroup.vendorHashes;
@@ -194,7 +196,10 @@ export class VendorsPageComponent implements OnInit {
               if (vendorHashes.includes(vendor.hash)) {
                 // map vendor location
                 const vendorLocation = vendorDestinationDefinitions.find(vendorDestinationDefiniton => vendor.vendorLocation.destinationHash == vendorDestinationDefiniton.hash);
-                vendor.vendorLocation = vendorLocation;
+                // vendor.vendorLocation = vendorLocation;
+                if (vendorLocation != undefined) {
+                  vendorLocations.set(vendor.hash, vendorLocation);
+                }
 
                 let vendorsInVendorGroup = vendorGroupsMap.get(vendorGroupDefinition);
                 if (vendorsInVendorGroup === undefined) {
@@ -223,7 +228,7 @@ export class VendorsPageComponent implements OnInit {
           });
 
           return forkJoin([this.manifestService.selectListFromDefinition('InventoryItem', allItemHashes),
-          of(vendorsMap), of(vendorGroupsMap), of(vendorItemCostsMap)]);
+          of(vendorsMap), of(vendorGroupsMap), of(vendorItemCostsMap), of(vendorLocations)]);
         }),
         switchMap(array => {
           // retrieve observables from array
@@ -231,6 +236,7 @@ export class VendorsPageComponent implements OnInit {
           const vendorsMap = array[1];
           const vendorGroupsMap = array[2];
           const vendorItemCostsMap = array[3];
+          const vendorLocations = array[4];
 
           // create an object containing item hash keys and item definition values
           let itemDefinitionsObj: { [key: string]: DestinyInventoryItemDefinition } = {};
@@ -278,12 +284,13 @@ export class VendorsPageComponent implements OnInit {
           );
 
           return forkJoin([this.manifestService.selectListFromDefinition('InventoryItem', allVendorItemCostHashes),
-            of(vendorGroupsMap), of(vendorItemCostsMap)]);
+            of(vendorGroupsMap), of(vendorItemCostsMap), of(vendorLocations)]);
         }),
         switchMap(array => {
           const allVendorItemCostDefinitions = array[0];
           const vendorGroupsMap = array[1];
           const vendorItemCostsMap = array[2];
+          const vendorLocations = array[3];
 
           // add on definition properties to each item cost object
           for (const vendorItemCostArray of vendorItemCostsMap.values()) {
@@ -294,16 +301,19 @@ export class VendorsPageComponent implements OnInit {
             }
           }
 
-          return forkJoin([of(vendorGroupsMap), of(vendorItemCostsMap)]);
+          return forkJoin([of(vendorGroupsMap), of(vendorItemCostsMap), of(vendorLocations)]);
         })
       )
       .subscribe(array => {
         const vendorGroups = array[0];
         const vendorItemCostsMap = array[1];
+        const vendorLocations = array[2];
 
-        this.error = false;
         this.vendorGroups = vendorGroups;
         this.vendorItemCosts = vendorItemCostsMap;
+        this.vendorLocations = vendorLocations;
+
+        this.error = false;
 
         this.fetchingVendors = false;
       },

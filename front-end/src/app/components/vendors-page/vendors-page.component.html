@@ -29,7 +29,7 @@
                     <img id="vendor-icon" src="https://www.bungie.net{{vendor.key.displayProperties.largeIcon}}" [alt]="vendor.key.displayProperties.name"
                         [title]="vendor.key.displayProperties.name">
                     <div class="vendor-info">
-                        <strong>{{ vendor.key.displayProperties.name }} <mat-icon title="Location: {{ vendor.key.vendorLocation.displayProperties.name }} &#013;{{ vendor.key.vendorLocation.displayProperties.description }}">info</mat-icon></strong>
+                        <strong>{{ vendor.key.displayProperties.name }} <mat-icon title="Location: {{ vendorLocations.get(vendor.key.hash)?.displayProperties?.name }} &#013;{{ vendorLocations.get(vendor.key.hash)?.displayProperties?.description }}">info</mat-icon></strong>
                         <small>{{ vendor.key.displayProperties.subtitle }}</small>
                     </div>
 
