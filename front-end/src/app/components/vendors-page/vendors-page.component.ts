@@ -42,11 +42,11 @@ import { APIResponse, DestinyDestinationDefinition, DestinyInventoryItemDefiniti
 })
 export class VendorsPageComponent implements OnInit {
 
-  vendorGroups: Map<any, Map<any, Map<any, any[]>>[]> = new Map();
-  vendorItemCosts: Map<number, DestinyVendorItemQuantity[]> = new Map();
+  vendorGroups: Map<DestinyVendorGroupDefinition, Map<DestinyVendorDefinition, Map<string, DestinyInventoryItemDefinition[]>>[]> = new Map();
+  vendorItemCosts: Map<number, Map<number, DestinyVendorItemQuantity[]>> = new Map();
   vendorItemCostDefinitions: Map<number, DestinyInventoryItemDefinition> = new Map();
   vendorLocations: Map<number, DestinyDestinationDefinition> = new Map();
-  vendors: Map<any, Map<any, any[]>> = new Map();
+
   hiddenVendors: Set<string> = new Set([
     '3361454721', // Tess Everis
     '1976548992', // Ikora Rey
@@ -62,6 +62,7 @@ export class VendorsPageComponent implements OnInit {
     '3660745864', // Pirate Crew (Star Chart)
     '1425038744' // Sabotage (Variks the Loyal)
   ]);
+  
   fetchingVendors = false;
   error = false;
 
@@ -126,6 +127,7 @@ export class VendorsPageComponent implements OnInit {
 
             // map display category data from API to display category data from manifest
             let vendorItemsMap = new Map();
+            let individualVendorItemCostsMap = new Map();
             for (const vendorDisplayCategory of vendorDisplayCategories) {
               if (displayCategoryIndexes.includes(vendorDisplayCategory.index)) {
                 const matchingVendorCategory = vendorCategories.find(
@@ -154,7 +156,7 @@ export class VendorsPageComponent implements OnInit {
 
                   vendorItems.push(vendorItem);
 
-                  vendorItemCostsMap.set(vendorItem.itemHash, vendorItem.costs);
+                  individualVendorItemCostsMap.set(vendorItem.itemHash, vendorItem.costs);
                 }
                 vendorItemsMap.set(vendorDisplayCategory.displayProperties.name, _.cloneDeep(vendorItems));
                 vendorItems = [];
@@ -163,6 +165,9 @@ export class VendorsPageComponent implements OnInit {
               }
             }
             vendorsMap.set(vendorDefinition, vendorItemsMap);
+            vendorItemCostsMap.set(vendorDefinition.hash, individualVendorItemCostsMap);
+
+            // uncomment for easier debugging
             // break;
           }
 
@@ -195,13 +200,14 @@ export class VendorsPageComponent implements OnInit {
 
             for (const [vendor, categories] of vendorsMap.entries()) {
               if (vendorHashes.includes(vendor.hash)) {
+
                 // map vendor location
                 const vendorLocation = vendorDestinationDefinitions.find(vendorDestinationDefiniton => vendor.vendorLocation.destinationHash == vendorDestinationDefiniton.hash);
-                // vendor.vendorLocation = vendorLocation;
                 if (vendorLocation != undefined) {
                   vendorLocations.set(vendor.hash, vendorLocation);
                 }
 
+                // map vendor
                 let vendorsInVendorGroup = vendorGroupsMap.get(vendorGroupDefinition);
                 if (vendorsInVendorGroup === undefined) {
                   vendorsInVendorGroup = [];
@@ -246,6 +252,7 @@ export class VendorsPageComponent implements OnInit {
           }
 
           // map item data from API to item data in manifest
+          let allVendorItemCostHashes: string[] = [];
           for (const vendorName of vendorsMap.keys()) {
             const vendorItemsMap = vendorsMap.get(vendorName);
             for (const vendorCategory of vendorItemsMap.keys()) {
@@ -256,10 +263,10 @@ export class VendorsPageComponent implements OnInit {
                 const itemHash = vendorCategoryItem.itemHash;
                 const itemDefinition = itemDefinitionsObj[itemHash];
 
-                // replace entry in map
-                const itemCosts = vendorItemCostsMap.get(itemHash);
-                vendorItemCostsMap.delete(itemHash);
-                vendorItemCostsMap.set(itemDefinition.hash, itemCosts);
+                // add item cost hash so we can look it up in the manifest later
+                const itemCosts = vendorItemCostsMap.get(vendorName.hash).get(itemHash);
+                const itemCostHashes = itemCosts.map((itemCost: DestinyVendorItemQuantity) => itemCost.itemHash);
+                allVendorItemCostHashes.push(itemCostHashes);
 
                 vendorCategoryItems[index] = itemDefinition;
 
@@ -277,12 +284,7 @@ export class VendorsPageComponent implements OnInit {
             }
           }
 
-          // retrieve hashes for currencies
-          const vendorItemCosts: any[] = Array.from(vendorItemCostsMap.values());
-          const allVendorItemCosts: any[] = [].concat(...vendorItemCosts);
-          const allVendorItemCostHashes = allVendorItemCosts.map((allVendorItemCost) => 
-            allVendorItemCost.itemHash
-          );
+          allVendorItemCostHashes = _.flatten(allVendorItemCostHashes);
 
           return forkJoin([this.manifestService.selectListFromDefinition('InventoryItem', allVendorItemCostHashes),
             of(vendorGroupsMap), of(vendorItemCostsMap), of(vendorLocations)]);
@@ -294,13 +296,9 @@ export class VendorsPageComponent implements OnInit {
           const vendorLocations = array[3];
 
           // store item cost definitions in corresponding map
-          let vendorItemCostDefinitions: Map<number, any> = new Map();
-          for (const vendorItemCostArray of vendorItemCostsMap.values()) {
-            for (const vendorItemCost of vendorItemCostArray) {
-              const costDefinition = allVendorItemCostDefinitions.find((definition) => definition.hash == vendorItemCost.itemHash);
-
-              vendorItemCostDefinitions.set(vendorItemCost.itemHash, costDefinition);
-            }
+          let vendorItemCostDefinitions: Map<number, DestinyInventoryItemDefinition> = new Map();
+          for (const allVendorItemCostDefinition of allVendorItemCostDefinitions) {
+            vendorItemCostDefinitions.set(allVendorItemCostDefinition.hash, allVendorItemCostDefinition);
           }
 
           return forkJoin([of(vendorGroupsMap), of(vendorItemCostsMap), of(vendorItemCostDefinitions), of(vendorLocations)]);
@@ -316,8 +314,6 @@ export class VendorsPageComponent implements OnInit {
         this.vendorItemCosts = vendorItemCostsMap;
         this.vendorItemCostDefinitions = vendorItemCostDefinitions;
         this.vendorLocations = vendorLocations;
-
-        console.log(this.vendorItemCosts);
 
         this.error = false;
 
