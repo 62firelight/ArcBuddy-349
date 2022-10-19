@@ -16,24 +16,24 @@ import { APIResponse, DestinyDestinationDefinition, DestinyInventoryItemDefiniti
   styleUrls: ['./vendors-page.component.css'],
   animations: [
     trigger(
-      'inOutAnimation', 
+      'inOutAnimation',
       [
         // fade in
         transition(
-          ':enter', 
+          ':enter',
           [
             style({ height: 0, opacity: 0 }),
-            animate('0.5s ease-out', 
-                    style({ }))
+            animate('0.5s ease-out',
+              style({}))
           ]
         ),
         // fade out
         transition(
-          ':leave', 
+          ':leave',
           [
-            style({ }),
-            animate('0.25s ease-in', 
-                    style({ height: 0, opacity: 0 }))
+            style({}),
+            animate('0.25s ease-in',
+              style({ height: 0, opacity: 0 }))
           ]
         )
       ]
@@ -62,7 +62,11 @@ export class VendorsPageComponent implements OnInit {
     '3660745864', // Pirate Crew (Star Chart)
     '1425038744' // Sabotage (Variks the Loyal)
   ]);
-  
+
+  // 919809084 - Eva
+  // 3791058503 - Epic Mystery Grab Bag
+  // 1265334432 - Manifested Page
+
   fetchingVendors = false;
   error = false;
 
@@ -84,6 +88,8 @@ export class VendorsPageComponent implements OnInit {
 
           // convert 2D number array of vendor hashes to 1D number array
           const vendorHashes: string[] = _.flatten(vendorGroups.map(vendorGroup => vendorGroup.vendorHashes)).map(String);
+
+          // console.log('1 done');
 
           // pass on vendor data from manifest + API response
           return forkJoin([this.manifestService.selectListFromDefinition('Vendor', vendorHashes),
@@ -176,8 +182,10 @@ export class VendorsPageComponent implements OnInit {
           const vendorGroupHashes: string[] = vendorGroups.map(vendorGroup => vendorGroup.vendorGroupHash).map(String);
           const vendorDestinationHashes: string[] = Array.from(vendorsMap.keys()).map(vendor => vendor.vendorLocation.destinationHash);
 
+          // console.log('2 done');
+
           // pass on vendor group data from manifest + current vendor map + API response
-          return forkJoin([this.manifestService.selectListFromDefinition('VendorGroup', vendorGroupHashes), 
+          return forkJoin([this.manifestService.selectListFromDefinition('VendorGroup', vendorGroupHashes),
           this.manifestService.selectListFromDefinition('Destination', vendorDestinationHashes),
           of(vendorsMap), of(res), of(vendorItemCostsMap)]);
         }),
@@ -234,6 +242,8 @@ export class VendorsPageComponent implements OnInit {
             allItemHashes = allItemHashes.concat(vendorItemHashes);
           });
 
+          // console.log('3 done');
+
           return forkJoin([this.manifestService.selectListFromDefinition('InventoryItem', allItemHashes),
           of(vendorsMap), of(vendorGroupsMap), of(vendorItemCostsMap), of(vendorLocations)]);
         }),
@@ -263,16 +273,16 @@ export class VendorsPageComponent implements OnInit {
                 const itemHash = vendorCategoryItem.itemHash;
                 const itemDefinition = itemDefinitionsObj[itemHash];
 
-                // add item cost hash so we can look it up in the manifest later
-                const itemCosts = vendorItemCostsMap.get(vendorName.hash).get(itemHash);
-                const itemCostHashes = itemCosts.map((itemCost: DestinyVendorItemQuantity) => itemCost.itemHash);
-                allVendorItemCostHashes.push(itemCostHashes);
-
-                vendorCategoryItems[index] = itemDefinition;
-
                 // mark item for deletion if there is no icon
-                if (itemDefinition.displayProperties.hasIcon == false) {
+                if (itemDefinition === undefined) {
                   indexesToDelete.push(index);
+                } else {
+                  // add item cost hash so we can look it up in the manifest later
+                  const itemCosts = vendorItemCostsMap.get(vendorName.hash).get(itemHash);
+                  const itemCostHashes = itemCosts.map((itemCost: DestinyVendorItemQuantity) => itemCost.itemHash);
+                  allVendorItemCostHashes.push(itemCostHashes);
+
+                  vendorCategoryItems[index] = itemDefinition;
                 }
               });
 
@@ -286,8 +296,10 @@ export class VendorsPageComponent implements OnInit {
 
           allVendorItemCostHashes = _.flatten(allVendorItemCostHashes);
 
+          // console.log('4 done');
+
           return forkJoin([this.manifestService.selectListFromDefinition('InventoryItem', allVendorItemCostHashes),
-            of(vendorGroupsMap), of(vendorItemCostsMap), of(vendorLocations)]);
+          of(vendorGroupsMap), of(vendorItemCostsMap), of(vendorLocations)]);
         }),
         switchMap(array => {
           const allVendorItemCostDefinitions = array[0];
@@ -300,6 +312,8 @@ export class VendorsPageComponent implements OnInit {
           for (const allVendorItemCostDefinition of allVendorItemCostDefinitions) {
             vendorItemCostDefinitions.set(allVendorItemCostDefinition.hash, allVendorItemCostDefinition);
           }
+
+          // console.log('5 done');
 
           return forkJoin([of(vendorGroupsMap), of(vendorItemCostsMap), of(vendorItemCostDefinitions), of(vendorLocations)]);
         })
@@ -315,11 +329,19 @@ export class VendorsPageComponent implements OnInit {
         this.vendorItemCostDefinitions = vendorItemCostDefinitions;
         this.vendorLocations = vendorLocations;
 
+        // console.log(this.vendorGroups);
+        // console.log(this.vendorItemCosts);
+        // console.log(this.vendorItemCostDefinitions);
+
         this.error = false;
 
         this.fetchingVendors = false;
+
+        // console.log('6 done');
       },
         err => {
+          // console.log(err);
+
           this.error = true;
         });
 
