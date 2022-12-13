@@ -1,0 +1,44 @@
+@startuml
+skinparam style strictuml
+
+participant "HTTP Client" as client
+participant "Bungie.net" as bnet
+
+' Rough diagram that was created to help me understand the OAuth2 process
+
+group Bungie.net Authorizes Client
+    client -> bnet: Authorization Request
+    client++
+    note over client: GET Authorization Endpoint with query parameters\nclient_id: provided by the portal\nresponse_type: code\nstate (optional): for maintaining state
+    / note over bnet: Example: GET \nhttps://www.bungie.net/en/oauth/authorize\n?client_id=12345&response_type=code&\nstate=6i0mkLx79Hp91nzWVeHrzHG4
+    bnet++
+
+    bnet -> client: Authorization Response
+    note over client: Response includes authorization code (with a short lifespan)\nand state (if state was present in the initial request)\nas query parameters
+    bnet--
+    client--
+end
+
+group Client Obtains Token
+    client -> bnet: Access Token Request
+    client++
+    bnet++
+    note over client: POST Token Endpoint \nAuthorization: Basic (username is client ID and password is client secret)\nContent-Type: application/x-www-form-urlencoded\nRequest Body: grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
+
+    bnet -> client: Access Token Response
+    note over client: Response includes access token (valid for 1 hour) and refresh token (valid for 3 months)
+    bnet--
+end
+
+group Client Refreshes Token
+    client -> bnet: Refresh Token Request
+    client++
+    bnet++
+    note over client: POST Token Endpoint \nAuthorization: Basic (username is client ID and password is client secret)\nContent-Type: application/x-www-form-urlencoded\nRequest Body: grant_type=refresh_token&code=[refresh_token]
+
+    bnet -> client: Access Token Response
+    note over client: Response includes access token (valid for 1 hour) and refresh token (valid for 3 months)
+    bnet--
+end
+
+@enduml
