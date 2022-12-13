@@ -217,9 +217,10 @@ const initializeServer = async () => {
     console.log('Attempting to fetch access token...')
     accessToken = await refreshAccessToken();
     if (accessToken == undefined) {
+        console.log('Could not fetch access token. Terminating server...\n');
         process.exit();
     }
-    // console.log('Successfully fetched access token.\n');
+    console.log('Successfully fetched access token.\n');
 
     app.listen(process.env.PORT || port, () => {
         console.log(`Server running at ${apiUrl}.`);
