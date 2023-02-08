@@ -214,13 +214,14 @@ const initializeServer = async () => {
     }
 
     // Attempt to fetch access token
-    console.log('Attempting to fetch access token...')
-    accessToken = await refreshAccessToken();
-    if (accessToken == undefined) {
-        console.log('Could not fetch access token. Terminating server...\n');
-        process.exit();
-    }
-    console.log('Successfully fetched access token.\n');
+    // console.log('Attempting to fetch access token...')
+    // accessToken = await refreshAccessToken();
+    // if (accessToken == undefined) {
+    //     console.log('Could not fetch access token. Terminating server...\n');
+    //     process.exit();
+    // }
+    // console.log('Successfully fetched access token.\n');
+    console.log('WARNING: OAuth access token was not retrieved.');
 
     app.listen(process.env.PORT || port, () => {
         console.log(`Server running at ${apiUrl}.`);
