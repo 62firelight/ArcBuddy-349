@@ -52,7 +52,8 @@ export class VendorsPageComponent implements OnInit {
     '1976548992', // Ikora Rey
     '4230408743', // Monument to Lost Lights
     '3484140575', // Quest Archive
-    '3347378076' // Suraya Hawthorne
+    '3347378076', // Suraya Hawthorne
+    '4254652401' // Exo Stranger
   ]);
   hiddenItems: Set<string> = new Set([
     '2056267440', // HELP (Crown of Sorrow)
@@ -108,6 +109,7 @@ export class VendorsPageComponent implements OnInit {
           // for each vendor, find its categories and corresponding items
           let vendorsMap = new Map();
           let vendorItemCostsMap = new Map();
+          // console.log(`finding categories and items for ${vendorDefinitions.length} vendors`);
           for (const vendorDefinition of vendorDefinitions) {
             const towerVendorHash = vendorDefinition.hash;
 
@@ -115,6 +117,7 @@ export class VendorsPageComponent implements OnInit {
             if (this.hiddenVendors.has(`${towerVendorHash}`)) {
               continue;
             }
+            // console.log(vendorDefinition);
 
             const vendorDisplayCategories = vendorDefinition.displayCategories;
 
