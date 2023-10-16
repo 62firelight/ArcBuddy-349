@@ -7,15 +7,6 @@ There was formerly a feature where player stats could be saved to MongoDB, but I
 
 Contributions are welcome, but keep in mind that this project was initially built as part of a University course. It was mainly for me to practice calling an external API and then transforming the responses into something displayable on a web page. I also used this application to practice developing with Angular and Node.js. 
 
-## Accessing the Application
-The application should currently be live on Heroku, at least until the free tier expires in late November.
-
-You can access the application through this link:
-
-https://arc-buddy-349.herokuapp.com/
-
-Note that the application may be down for maintenance.
-
 ## Using the Application
 
 You can search for a Bungie Name using the provided search bar. A Bungie Name takes after the format `Guardian#1234`. You can use my Bungie name (62firelight#8173) to test the application. Once finished typing a Bungie Name, you can push "Enter" or click the magnifying glass icon on the right to begin a search. 
