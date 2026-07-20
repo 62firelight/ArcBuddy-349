@@ -167,6 +167,17 @@ const initializeServer = async () => {
     }
     // 3, '4611686018468181342', '2305843009301648414' (Exo Hunter)
 
+    // Check for "manifest" folder. If it does not exist, create it.
+    try {
+        if (!fs.existsSync('./manifest')) {
+            console.log('"manifest" folder not found. Creating "manifest" folder...');
+            fs.mkdirSync('./manifest');
+        }
+    } catch (err) {
+        console.error(err);
+        exit(1);
+    }
+
     // Download Destiny manifest
     if (isEmpty('./manifest') == false && fs.existsSync('./manifest.zip')) {
         console.log('Manifest file detected.');
@@ -214,12 +225,12 @@ const initializeServer = async () => {
     }
 
     // Attempt to fetch access token
-    console.log('Attempting to fetch access token...')
-    accessToken = await refreshAccessToken();
-    if (accessToken == undefined) {
-        console.log('Could not fetch access token. Terminating server...\n');
-        process.exit();
-    }
+    // console.log('Attempting to fetch access token...')
+    // accessToken = await refreshAccessToken();
+    // if (accessToken == undefined) {
+    //     console.log('Could not fetch access token. Terminating server...\n');
+    //     process.exit();
+    // }
     // console.log('Successfully fetched access token.\n');
     // console.log('WARNING: OAuth access token was not retrieved. API endpoints that require OAuth authentication cannot be used.');
 
