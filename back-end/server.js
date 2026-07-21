@@ -68,8 +68,10 @@ let refreshAccessToken = exports.refreshAccessToken = async function refreshAcce
         return undefined;
     }
 
-    const refreshResponse = await oauth.RefreshAccessToken(process.env.ARC_REFRESH_TOKEN);
-    if (refreshResponse.access_token != undefined) {
+    const accessToken = process.env.ARC_REFRESH_TOKEN;
+
+    const refreshResponse = await oauth.RefreshAccessToken(accessToken);
+    if (accessToken != undefined && refreshResponse != undefined && refreshResponse.access_token != undefined) {
         console.log('Successfully fetched access token.\n');
 
         const accessToken = refreshResponse.access_token;
@@ -228,10 +230,11 @@ const initializeServer = async () => {
     console.log('Attempting to fetch access token...')
     accessToken = await refreshAccessToken();
     if (accessToken == undefined) {
-        console.log('Could not fetch access token. Terminating server...\n');
-        process.exit();
+        console.log("Could not fetch access token. Features that require OAuth cannot be used.");
+        
+        // console.log('Could not fetch access token. Terminating server...\n');
+        // process.exit();
     }
-    console.log('Successfully fetched access token.\n');
     // console.log('WARNING: OAuth access token was not retrieved. API endpoints that require OAuth authentication cannot be used.');
 
     app.listen(process.env.PORT || port, () => {
