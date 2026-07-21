@@ -68,7 +68,7 @@ let refreshAccessToken = exports.refreshAccessToken = async function refreshAcce
         return undefined;
     }
 
-    const refreshResponse = await oauth.RefreshAccessToken(process.env.REFRESH_TOKEN);
+    const refreshResponse = await oauth.RefreshAccessToken(process.env.ARC_REFRESH_TOKEN);
     if (refreshResponse.access_token != undefined) {
         console.log('Successfully fetched access token.\n');
 
