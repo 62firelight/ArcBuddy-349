@@ -8,7 +8,7 @@
     "dev": "concurrently \"cd back-end && npm run dev\" \"cd front-end && npm start\" ",
     "install-back-end": "cd back-end && npm install",
     "install-front-end": "cd front-end && npm install",
-    "install": "npm install && npm run install-back-end && npm run install-front-end",
+    "install": "npm run install-back-end && npm run install-front-end",
     "start": "cd back-end && npm run start",
     "heroku-deploy": "cd front-end && ng build && git add -A && git commit -m \"Update app on Heroku\" && git push heroku master"
   },
