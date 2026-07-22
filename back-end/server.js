@@ -13,6 +13,11 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const dotenv = require('dotenv').config();
 
+console.log(process.env.ARC_KEY);
+console.log(process.env.ARC_REFRESH_TOKEN);
+console.log(process.env.PORT);
+
+
 const app = express();
 const port = 3000;
 
