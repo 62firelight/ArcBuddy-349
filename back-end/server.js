@@ -13,11 +13,6 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const dotenv = require('dotenv').config();
 
-console.log(process.env.ARC_KEY);
-console.log(process.env.ARC_REFRESH_TOKEN);
-console.log(process.env.PORT);
-
-
 const app = express();
 const port = 3000;
 
@@ -74,12 +69,15 @@ let refreshAccessToken = exports.refreshAccessToken = async function refreshAcce
         return undefined;
     }
 
+    console.log("==1==");
     const accessToken = process.env.ARC_REFRESH_TOKEN;
+    console.log("==2==");
 
     const refreshResponse = await oauth.RefreshAccessToken(accessToken);
+    console.log("==3==");
     if (accessToken != undefined && refreshResponse != undefined && refreshResponse.access_token != undefined) {
         console.log('Successfully fetched access token.\n');
-
+        
         const accessToken = refreshResponse.access_token;
         return accessToken;
     } else {
