@@ -69,17 +69,14 @@ let refreshAccessToken = exports.refreshAccessToken = async function refreshAcce
         return undefined;
     }
 
-    console.log("==1==");
     const accessToken = process.env.ARC_REFRESH_TOKEN;
-    console.log("==2==");
     let refreshResponse;
     try {
         refreshResponse = await oauth.RefreshAccessToken(accessToken);
     } catch (error) {
-        console.log("Failed to parse JSON. Error type:", error.message);
+        console.log(error.message);
         console.log(error.stack);
     }
-    console.log("==3==");
     if (accessToken != undefined && refreshResponse != undefined && refreshResponse.access_token != undefined) {
         console.log('Successfully fetched access token.\n');
         
