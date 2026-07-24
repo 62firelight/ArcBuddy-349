@@ -25,10 +25,12 @@ exports.searchDestinyPlayer = (req, res) => {
     const name = req.params.name;
     const id = req.params.id;
 
-    const bungieName = name + "#" + id;
+    // const bungieName = name + "#" + id;
 
-    destiny.SearchDestinyPlayerByBungieName(-1, bungieName)
+    destiny.SearchDestinyPlayerByBungieName(-1, name, id)
         .then(response => {
+            console.log(response);
+            
             const data = response.Response[0];
 
             const membershipType = data.membershipType;
