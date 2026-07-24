@@ -77,6 +77,7 @@ let refreshAccessToken = exports.refreshAccessToken = async function refreshAcce
         refreshResponse = await oauth.RefreshAccessToken(accessToken);
     } catch (error) {
         console.log("Failed to parse JSON. Error type:", error.message);
+        console.log(error.stack);
     }
     console.log("==3==");
     if (accessToken != undefined && refreshResponse != undefined && refreshResponse.access_token != undefined) {
