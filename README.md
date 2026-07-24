@@ -4,7 +4,6 @@
 Arc Buddy is a web application that uses the [Bungie.Net API](https://bungie-net.github.io/) to look up stats for [Destiny 2](https://store.steampowered.com/app/1085660/Destiny_2/) players. There is also another page dedicated to viewing the items for in-game vendors, though this is currently a work-in-progress feature. There was formerly a feature where player stats could be saved to [MongoDB](https://www.mongodb.com/) or [an S3 bucket](https://aws.amazon.com/s3/) in [Amazon Web Services](https://aws.amazon.com/) (see the [submission release](https://github.com/62firelight/ArcBuddy-349/releases/tag/v1.0.0-submission)), but this has been scrapped as of the current release. 
 
 Contributions are welcome, but keep in mind that this project was initially built as part of the Cloud Computing Architecture (COSC349) course at Otago Uni. It was mainly intended for me to practice calling an external API and then transform the responses into something displayable on a web page. I also used this application to practice developing with Angular and Node.js. 
-Contributions are welcome, but keep in mind that this project was initially built as part of the Cloud Computing Architecture (COSC349) course at Otago Uni. It was mainly intended for me to practice calling an external API and then transform the responses into something displayable on a web page. I also used this application to practice developing with Angular and Node.js. 
 
 ## Using the Application
 
@@ -14,7 +13,7 @@ Contributions are welcome, but keep in mind that this project was initially buil
 
 ### Search Players
 
-You can search for a Bungie Name using the provided search bar. A Bungie Name takes after the format `Guardian#1234`. You can use my Bungie name (`62firelight#8173`) to test the application. Once finished typing a Bungie Name, you can push "Enter" or click the magnifying glass icon on the right to begin a search. 
+You can search for a Bungie Name using the provided search bar. A Bungie Name takes after the format `Guardian#1234`. You can use my Bungie name (`62firelight#8173`) to test the application. Once finished typing a Bungie Name, you can push the "Enter" key or click the magnifying glass icon on the right to begin a search. 
 
 An unsuccessful search should return an error message. Otherwise, if the search was successful, you should see the stats for the Destiny 2 player that you've searched for, along with a few filters on the left-hand side.
 
